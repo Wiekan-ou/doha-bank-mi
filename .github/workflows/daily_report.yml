@@ -142,7 +142,10 @@ jobs:
 
           print("Supabase send_log inserted successfully")
           PYEOF
-
+      - name: Copy live JSON files to docs for dashboard
+        run: |
+          cp market_data.json docs/market_data.json
+          if [ -f send_log.json ]; then cp send_log.json docs/send_log.json; fi
       - name: Commit send log
         run: |
           git config user.name "Doha Bank MI Bot"
