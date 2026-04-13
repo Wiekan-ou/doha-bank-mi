@@ -15,49 +15,61 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-04-13T16:19:18.231498",
+  "generated_at": "2026-04-13T18:06:33.388905",
   "global_indices": [
     {
       "name": "US S&P 500",
       "ticker": "^GSPC",
-      "px_last": 6825.72,
-      "change_1d": "+0.1%",
-      "ytd": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10582.96,
-      "change_1d": "-0.2%",
-      "ytd": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Japan Nikkei",
       "ticker": "^N225",
-      "px_last": 56924.11,
+      "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 23742.44,
-      "change_1d": "-0.3%",
-      "ytd": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Hong Kong HSI",
       "ticker": "^HSI",
-      "px_last": 25893.54,
+      "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "India Sensex",
       "ticker": "^BSESN",
-      "px_last": 76847.57,
-      "change_1d": "-0.9%",
-      "ytd": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     }
   ],
   "gcc_indices": [
@@ -66,246 +78,310 @@
       "ticker": "^QSI",
       "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Saudi Tadawul",
       "ticker": "^TASI.SR",
-      "px_last": 11426.77,
+      "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Dubai DFM",
       "ticker": "^DFMGI",
       "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Abu Dhabi ADX",
       "ticker": "ADSMI.AD",
       "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Kuwait Boursa",
       "ticker": "^BKW",
       "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Bahrain",
       "ticker": "^BHSE",
       "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     }
   ],
   "spot_currency": [
     {
       "name": "USD Index",
       "ticker": "DX-Y.NYB",
-      "px_last": 98.77,
-      "change_1d": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "EUR/USD",
       "ticker": "EURUSD=X",
-      "px_last": 1.17,
-      "change_1d": "+0.0%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "GBP/USD",
       "ticker": "GBPUSD=X",
-      "px_last": 1.35,
-      "change_1d": "+0.7%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "CHF/USD",
       "ticker": "CHFUSD=X",
-      "px_last": 1.26,
-      "change_1d": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 159.73,
-      "change_1d": "+0.4%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "CNY/USD",
       "ticker": "CNYUSD=X",
-      "px_last": 0.15,
-      "change_1d": "+0.0%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     }
   ],
   "qar_cross_rates": [
     {
       "name": "USD/QAR",
       "ticker": "USDQAR=X",
-      "px_last": 3.64,
-      "change_1d": "-0.3%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "EUR/QAR",
       "ticker": "EURQAR=X",
-      "px_last": 4.26,
-      "change_1d": "+3.4%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "GBP/QAR",
       "ticker": "GBPQAR=X",
-      "px_last": 4.9,
-      "change_1d": "+0.0%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "CHF/QAR",
       "ticker": "CHFQAR=X",
-      "px_last": 4.62,
-      "change_1d": "N/A"
-    },
-    {
-      "name": "CNY/QAR",
-      "ticker": "CNYQAR=X",
       "px_last": "N/A",
-      "change_1d": "N/A"
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     }
   ],
   "qatari_banks": [
     {
       "name": "Doha",
       "ticker": "BRES.QA",
-      "px_last": 2.35,
-      "change_1d": "+0.0%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "QNB",
       "ticker": "QNBK.QA",
-      "px_last": 17.89,
-      "change_1d": "+0.5%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "QIB",
       "ticker": "QIBK.QA",
-      "px_last": 23.6,
-      "change_1d": "+0.7%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "CBQ",
       "ticker": "CBQK.QA",
-      "px_last": 4.33,
-      "change_1d": "-2.7%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "QIIB",
       "ticker": "QIIK.QA",
-      "px_last": 11.12,
-      "change_1d": "+0.2%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Al Rayan",
       "ticker": "MARK.QA",
-      "px_last": 2.2,
-      "change_1d": "-0.5%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Dukhan",
       "ticker": "DBIS.QA",
-      "px_last": 1.09,
-      "change_1d": "+4.8%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Ahli",
       "ticker": "ABQK.QA",
-      "px_last": 3.73,
-      "change_1d": "-0.3%"
-    },
-    {
-      "name": "Lesha",
-      "ticker": "IQCD.QA",
-      "px_last": 11.9,
-      "change_1d": "-0.3%"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     }
   ],
   "commodities": [
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 101.54,
+      "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
-    },
-    {
-      "name": "Gold (QAR)",
-      "ticker": "GC=F",
-      "px_last": 4739.3,
-      "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 74.29,
+      "px_last": "N/A",
       "change_1d": "N/A",
-      "ytd": "N/A"
-    },
-    {
-      "name": "LNG JP/KR",
-      "ticker": "NG=F",
-      "px_last": 2.64,
-      "change_1d": "N/A",
-      "ytd": "N/A"
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     }
   ],
   "fixed_income": [
     {
       "name": "UST 5-Year",
       "ticker": "^FVX",
-      "px_last": 3.96,
-      "change_1d": "+0.5%",
-      "ytd": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     },
     {
       "name": "UST 10-Year",
       "ticker": "^TNX",
-      "px_last": 4.34,
-      "change_1d": "+0.5%",
-      "ytd": "N/A"
+      "px_last": "N/A",
+      "change_1d": "N/A",
+      "mtd": "N/A",
+      "ytd": "N/A",
+      "source": "Yahoo Finance"
     }
   ],
   "global_news": [
     {
-      "headline": "Stocks Inch Higher as US Blockades Hormuz: Markets Wrap",
-      "summary": "US stocks reversed earlier losses while oil prices rose after President Donald Trump ordered a blockade of the Strait of",
+      "headline": "Treasuries Erase Losses as Investors Weigh Trump Iran Warnin",
+      "summary": "Treasuries erased early losses, swinging to small gains as oil prices pulled back from the day\u2019s highs following US Pres",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-12/oil-surges-us-futures-drop-on-hormuz-blockade-markets-wrap",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-13/global-bonds-slide-as-failure-of-talks-adds-to-inflation-fears",
       "metric": "\u2014",
       "metric_label": ""
     },
     {
-      "headline": "I Squared, Blackstone Said to Mull Joint Bid for Str\u00f6er Unit",
-      "summary": "I Squared Capital is teaming up with Blackstone Inc. on a potential new offer for German media group Str\u00f6er SE\u2019s core ad",
+      "headline": "Goldman Sachs Extends Borrowing Run With $6.5 Billion Bond S",
+      "summary": "Goldman Sachs Group Inc. is selling $6.5 billion of US investment-grade notes on Monday, extending a borrowing spree tha",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-13/i-squared-blackstone-are-said-to-mull-joint-bid-for-stroer-unit",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-13/goldman-sachs-kicks-off-three-part-investment-grade-bond-sale",
       "metric": "\u2014",
       "metric_label": ""
     },
     {
-      "headline": "Milei\u2019s Auction Favors Group With Past China Ties, US Dredge",
-      "summary": "A US dredging company is calling out the bid terms of President Javier Milei\u2019s signature concession in Argentina, claimi",
+      "headline": "Gold Eases as US Plan to Blockade Hormuz Raises Inflation Ri",
+      "summary": "Gold edged down amid mounting inflation concerns after US President Donald Trump\u2019s order to blockade the Strait of Hormu",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-13/milei-s-river-auction-favors-group-with-past-china-ties-us-dredger-warns",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-12/gold-falls-as-us-prepares-to-blockade-hormuz-after-failed-talks",
       "metric": "\u2014",
       "metric_label": ""
     },
     {
-      "headline": "China\u2019s Wang Yi Urges Talks to Sustain Fragile Iran-US Cease",
-      "summary": "China\u2019s Foreign Minister Wang Yi urged the international community to step up efforts to promote peace talks between Ira",
+      "headline": "Dollar Flips to Losses After Trump Says Iran Wants a Deal",
+      "summary": "The dollar erased gains after President Donald Trump said Iran called Monday morning and wants a deal. The remarks follo",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-13/china-s-wang-yi-urges-talks-to-sustain-fragile-iran-us-ceasefire",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-13/dollar-gains-as-hormuz-blockade-sparks-oil-rally-risk-off-mode",
+      "metric": "\u2014",
+      "metric_label": ""
+    },
+    {
+      "headline": "Austin Seeks $1 Billion of Munis for Airport Expansion Plan",
+      "summary": "Austin is set to bring a $1.18 billion airport revenue bond sale to market on Tuesday as growth in one of the nation\u2019s f",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-13/austin-seeks-1-billion-of-munis-for-airport-expansion-plan",
+      "metric": "\u2014",
+      "metric_label": ""
+    },
+    {
+      "headline": "Oil Prices Will Soon Converge to Reflect Crisis, IEA Says",
+      "summary": "Oil prices don\u2019t yet reflect the severity of the unprecedented supply crisis caused by the Iran war, but they soon will,",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-13/oil-prices-will-soon-converge-to-reflect-crisis-iea-chief-says",
       "metric": "\u2014",
       "metric_label": ""
     }
@@ -313,27 +389,27 @@
   "qatar_news": [],
   "kpis": [
     {
-      "value": "Positive",
+      "value": "Mixed",
       "label": "Global Equities",
-      "sublabel": "US +0.1% YTD \u00b7 UK N/A YTD"
+      "sublabel": "US N/A \u00b7 UK N/A"
     },
     {
-      "value": "$101.54",
+      "value": "$N/A",
       "label": "Brent Crude",
-      "sublabel": "+N/A Year-to-Date"
+      "sublabel": "N/A Year-to-Date"
     },
     {
-      "value": "4,739.3",
+      "value": "N/A",
       "label": "Gold (QAR)",
-      "sublabel": "Safe-haven demand"
+      "sublabel": "N/A YTD \u00b7 Safe-haven demand"
     },
     {
       "value": "N/A",
       "label": "QSE Index",
-      "sublabel": "N/A today"
+      "sublabel": "N/A today \u00b7 N/A YTD"
     },
     {
-      "value": "4.34%",
+      "value": "N/A%",
       "label": "UST 10Y Yield",
       "sublabel": "N/A YTD \u00b7 Rising yields"
     },
