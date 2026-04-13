@@ -202,6 +202,34 @@ const SAMPLE = {
     {name:'UST 5-Year', px:'3.98%',d:'+2bps',m:'+8bps', y:'+22bps'},
     {name:'UST 10-Year',px:'4.41%',d:'+3bps',m:'+10bps',y:'+31bps'},
   ],
+  global_news:[
+    {metric:'HIGH',    metric_label:'Global Risk Level', source:'Reuters',
+     headline:'IMF, World Bank & IEA Coordinate on Iran War Impact',
+     summary:'Three institutions will share data, coordinate policy advice and assess financing needs as the conflict disrupts supply chains, driving oil, gas, fertiliser and food prices higher globally.'},
+    {metric:'$107.74', metric_label:'Brent per barrel',  source:'Reuters',
+     headline:'OPEC Output Falls 7.3mn bpd — Hormuz Disruption',
+     summary:'Output at 21.57mn bpd after cuts in Kuwait, Iraq, Saudi Arabia and UAE following Strait of Hormuz disruptions. Brent at $107.74, +78.8% YTD — Qatar fiscal position strengthens.'},
+    {metric:'+6%',     metric_label:'LME Al Futures 1D', source:'Bloomberg',
+     headline:'Iran Strikes Gulf Aluminium — LME Futures +6%',
+     summary:'Iranian strikes on Gulf aluminium facilities pushed LME futures sharply higher. Markets face tighter inventories and limited capacity to absorb further supply shocks.'},
+    {metric:'WTI $105',metric_label:'WTI Crude Price',   source:'Reuters',
+     headline:'Oil +5% After Trump Confirms Continued Iran Strikes',
+     summary:'Brent rose to $107.49 and WTI to $105.40 after President Trump confirmed US strikes continue — prolonged Gulf supply disruption concerns push oil higher.'},
+  ],
+  qatar_news:[
+    {metric:'+12.6%', metric_label:'Q3 Rental Growth',   source:'The Peninsula',
+     headline:'Rental Market Strong Growth in 2025',
+     summary:'Aqarat reports rental contracts in 2025 exceeded 2024 levels across all quarters. Q3 growth +12.6%; Q4 reached 35,957 agreements — robust demand in residential and commercial segments.'},
+    {metric:'1 Apr',  metric_label:'Service Launch Date', source:'Qatar Tribune',
+     headline:'GTA Launches Excise Tax Warehouse Licensing',
+     summary:'General Tax Authority introduces licensed premises service for excise goods under tax-suspension regime. Rollout begins 1 April 2026 for producers — key compliance milestone.'},
+    {metric:'125K',   metric_label:'Absher Points Max',   source:'The Peninsula',
+     headline:'QIB Rewards — Up to 125,000 Absher Points',
+     summary:'Campaign runs 1 April – 30 June 2026 for eligible salary-transfer customers on selected QIB cards. Rewards linked to sign-on and spending thresholds.'},
+    {metric:'2.7x',   metric_label:'Bid-to-Cover Ratio',  source:'Qatar Tribune',
+     headline:'QCB Issues QR3bn Government Ijara Sukuk',
+     summary:'Issued on behalf of Ministry of Finance at 4.5% yield. Total bids reached QR8bn — 2.7x oversubscribed, confirming deep market demand.'},
+  ],
   send_log:[
     {date:'2026-04-10',time:'07:01',status:'success',email_count:3,wa_count:5},
     {date:'2026-04-09',time:'07:00',status:'success',email_count:3,wa_count:5},
@@ -323,7 +351,7 @@ function MarketTab({data}){
       </div>
 
       {/* Tables: 2 columns */}
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:16}}>
         <div style={S.card}>
           <TableSection title="Global Indices"    headers={hdrs} rows={toRows(d.global_indices)}/>
           <TableSection title="Spot Currency"     headers={hdrs} rows={toRows(d.spot_currency)}/>
@@ -335,6 +363,59 @@ function MarketTab({data}){
           <TableSection title="Qatari Banks"           headers={hdrs} rows={toRows(d.qatari_banks)}/>
           <TableSection title="Commodities & Energy"   headers={hdrs} rows={toRows(d.commodities)}/>
         </div>
+      </div>
+
+      <NewsSection title="Regional & Global News" items={d.global_news||[]}/>
+      <div style={{marginTop:16}}>
+        <NewsSection title="Qatar News" items={d.qatar_news||[]}/>
+      </div>
+    </div>
+  );
+}
+
+function NewsCard({item}){
+  return(
+    <div style={{background:C.white,border:`1px solid ${C.border}`,borderRadius:6,
+         display:'flex',overflow:'hidden',borderTop:`2px solid ${C.cyan}`}}>
+      <div style={{flex:1,padding:'10px 12px'}}>
+        <div style={{fontSize:12,fontWeight:700,color:C.navy,marginBottom:4,lineHeight:1.4}}>
+          {item.headline}
+        </div>
+        <div style={{fontSize:11,fontWeight:700,color:C.cyan,marginBottom:4,letterSpacing:0.5}}>
+          {item.source}
+        </div>
+        <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>
+          {item.summary}
+        </div>
+      </div>
+      <div style={{width:72,minWidth:72,background:C.navy,display:'flex',
+           flexDirection:'column',alignItems:'center',justifyContent:'center',
+           padding:'8px 4px',borderLeft:`2px solid ${C.cyan}`}}>
+        <div style={{fontSize:12,fontWeight:700,color:C.cyan,textAlign:'center',
+             lineHeight:1.2,marginBottom:4,wordBreak:'break-word'}}>
+          {item.metric}
+        </div>
+        <div style={{fontSize:9,color:'#9ac4e8',textAlign:'center',lineHeight:1.3}}>
+          {item.metric_label}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NewsSection({title,items}){
+  if(!items||items.length===0) return null;
+  return(
+    <div style={S.card}>
+      <div style={S.cardHdr}>
+        <div style={{display:'flex',alignItems:'center',gap:8}}>
+          <div style={{width:3,height:16,background:C.cyan,borderRadius:2}}/>
+          <div style={{fontSize:11,fontWeight:700,color:C.blue,
+               letterSpacing:1,textTransform:'uppercase'}}>{title}</div>
+        </div>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {items.map((item,i)=><NewsCard key={i} item={item}/>)}
       </div>
     </div>
   );
