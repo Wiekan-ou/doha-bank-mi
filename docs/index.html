@@ -6,413 +6,889 @@
   <title>Doha Bank Market Intelligence Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a2a3a}
-    .wrap{max-width:1200px;margin:0 auto;padding:24px}
-    .header{background:#0d2c5e;color:#fff}.header-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:14px}.logo{width:38px;height:38px;border-radius:6px;background:#fff;color:#1a5fa8;border:1px solid #00aeef;display:flex;align-items:center;justify-content:center;font-weight:700}
-    .cyanbar{height:3px;background:#00aeef}.tabs{display:flex;gap:2px;background:#fff;border-bottom:1px solid #c5d8ee;padding:0 24px}.tab{padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;color:#5a7a96;font-size:13px;font-weight:600}.tab.active{color:#1a5fa8;border-color:#1a5fa8}
-    .card{background:#fff;border:1px solid #c5d8ee;border-radius:8px;padding:18px;margin-bottom:16px}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-    .kpi{background:#fff;border:1px solid #c5d8ee;border-radius:8px;padding:12px 14px;border-top:3px solid #00aeef}.kval{font-size:18px;font-weight:700;color:#0d2c5e}.klbl{font-size:11px;font-weight:700;margin-top:4px}.ksub{font-size:10px;color:#5a7a96;margin-top:2px}
-    table{width:100%;border-collapse:collapse;font-size:12px} thead tr{background:#0d2c5e} th{padding:7px 10px;text-align:left;color:#fff;font-size:11px} th.r{text-align:right} td{padding:6px 10px;border-bottom:1px solid #c5d8ee}
-    td.r{text-align:right} tbody tr:nth-child(odd){background:#f5f8fc}.sec{display:flex;align-items:center;gap:8px;margin-bottom:10px}.line{width:3px;height:16px;background:#00aeef;border-radius:2px}.sectitle{font-size:11px;font-weight:700;color:#1a5fa8;letter-spacing:1px;text-transform:uppercase}
-    .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.news-card{background:#fff;border:1px solid #c5d8ee;border-radius:6px;display:flex;overflow:hidden;border-top:2px solid #00aeef}
-    .news-body{flex:1;padding:10px 12px}.news-title{font-size:12px;font-weight:700;color:#0d2c5e;margin-bottom:4px;line-height:1.35}.news-source{font-size:11px;font-weight:700;color:#00aeef;margin-bottom:4px}.news-sum{font-size:11px;color:#5a7a96;line-height:1.45}
-    .news-badge{width:74px;min-width:74px;background:#0d2c5e;border-left:2px solid #00aeef;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:8px 4px}
-    .news-metric{font-size:12px;font-weight:700;color:#00aeef;text-align:center;line-height:1.2;margin-bottom:4px}.news-mlbl{font-size:9px;color:#9ac4e8;text-align:center;line-height:1.25}
-    .btn{padding:8px 14px;border:none;border-radius:6px;background:#1a5fa8;color:#fff;font-size:12px;font-weight:700;cursor:pointer}.btn.alt{background:#6c757d}.btn.danger{background:#c0392b}
-    .row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px}.input,select{width:100%;padding:8px 10px;border:1px solid #c5d8ee;border-radius:6px;font-size:13px}
-    .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:16px;font-size:11px;font-weight:700}.ok{background:#edf7f1;color:#1a7a45}.bad{background:#faedef;color:#c0392b}
-    .muted{color:#5a7a96;font-size:12px}.empty{padding:24px;text-align:center;color:#5a7a96}
-    .login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0d2c5e}.loginbox{background:#fff;border-radius:12px;padding:36px;width:360px;box-shadow:0 8px 32px rgba(0,0,0,.25)}
-    .flex{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    :root{
+      --blue:#153b7a;
+      --blue2:#1a5fa8;
+      --navy:#0d2c5e;
+      --cyan:#00aeef;
+      --border:#b9d2ef;
+      --bg:#eef3f9;
+      --card:#ffffff;
+      --text:#17324d;
+      --muted:#6b86a3;
+      --green:#1a7a45;
+      --red:#c0392b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:#dfe6ee;
+      color:var(--text);
+    }
+    .topbar{
+      background:var(--navy);
+      color:#fff;
+      padding:14px 20px;
+      border-bottom:4px solid var(--cyan);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      min-width:0;
+    }
+    .logo{
+      width:62px;
+      height:62px;
+      border-radius:12px;
+      background:#fff;
+      border:3px solid var(--cyan);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--blue2);
+      font-weight:700;
+      font-size:22px;
+      flex:0 0 auto;
+    }
+    .brand-text{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      min-width:0;
+    }
+    .brand-bank{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+      padding-right:18px;
+      border-right:2px solid rgba(255,255,255,.18);
+      flex:0 0 auto;
+    }
+    .brand-bank .ar{
+      font-size:14px;
+      opacity:.9;
+      letter-spacing:.3px;
+    }
+    .brand-bank .en{
+      font-size:18px;
+      font-weight:700;
+      letter-spacing:.8px;
+    }
+    .brand-title{
+      font-size:18px;
+      font-weight:700;
+      letter-spacing:.6px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .btn{
+      border:none;
+      border-radius:10px;
+      background:var(--blue2);
+      color:#fff;
+      padding:12px 18px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.gray{background:#7f8b99}
+    .btn.small{padding:8px 12px;border-radius:8px;font-size:13px}
+    .btn.red{background:#b64035}
+    .btn.outline{
+      background:#fff;
+      color:var(--blue2);
+      border:1px solid var(--border);
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      background:#f6f8fb;
+      border-bottom:1px solid var(--border);
+      padding:0 14px;
+      overflow:auto;
+    }
+    .tab{
+      padding:18px 16px 16px;
+      color:#4e6d90;
+      font-size:15px;
+      font-weight:700;
+      border-bottom:3px solid transparent;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .tab.active{
+      color:var(--blue2);
+      border-bottom-color:var(--blue2);
+    }
+
+    .page{
+      padding:22px;
+    }
+    .card{
+      background:var(--card);
+      border:2px solid var(--border);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:0 1px 0 rgba(0,0,0,.02);
+    }
+    .mb16{margin-bottom:16px}
+    .mb20{margin-bottom:20px}
+    .grid{
+      display:grid;
+      gap:18px;
+    }
+    .grid-2{
+      grid-template-columns:1fr 1fr;
+    }
+    .meta-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .live{
+      color:var(--green);
+      font-weight:700;
+    }
+
+    .kpis{
+      display:grid;
+      grid-template-columns:repeat(6, 1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .kpi{
+      background:#fff;
+      border:2px solid var(--border);
+      border-top:4px solid var(--cyan);
+      border-radius:8px;
+      padding:10px 10px 8px;
+      min-height:72px;
+    }
+    .kpi .value{
+      font-size:28px;
+      font-weight:700;
+      color:var(--navy);
+      line-height:1;
+      margin-bottom:6px;
+    }
+    .kpi .label{
+      font-size:13px;
+      font-weight:700;
+      color:var(--navy);
+      margin-bottom:4px;
+    }
+    .kpi .sub{
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.2;
+    }
+
+    .panel-title{
+      color:var(--navy);
+      font-size:15px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:1.6px;
+      margin-bottom:10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .panel-title::before{
+      content:"";
+      width:3px;
+      height:20px;
+      background:var(--cyan);
+      border-radius:2px;
+      display:block;
+    }
+
+    .data-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+    }
+    th{
+      background:var(--navy);
+      color:#fff;
+      font-size:12px;
+      padding:8px 8px;
+      text-align:right;
+    }
+    th:first-child, td:first-child{text-align:left}
+    td{
+      font-size:12px;
+      padding:7px 8px;
+      border-bottom:1px solid #d7e3f2;
+      text-align:right;
+      background:#fff;
+    }
+    tr:nth-child(even) td{background:#f8fbff}
+    .pos{color:var(--green);font-weight:700}
+    .neg{color:var(--red);font-weight:700}
+    .neu{color:#5f7d9d;font-weight:700}
+    .empty{
+      text-align:center;
+      color:var(--muted);
+      padding:36px 16px;
+    }
+
+    .news-section{margin-top:18px}
+    .news-grid-6{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .news-card{
+      border:2px solid var(--border);
+      background:#fff;
+      min-height:102px;
+      display:grid;
+      grid-template-columns:1fr 82px;
+      border-radius:4px;
+      overflow:hidden;
+    }
+    .news-body{
+      padding:10px 12px;
+    }
+    .news-head{
+      font-size:13px;
+      font-weight:700;
+      color:#1f344f;
+      line-height:1.2;
+      margin-bottom:6px;
+    }
+    .news-src{
+      font-size:11px;
+      font-weight:700;
+      color:var(--blue2);
+      margin-bottom:5px;
+    }
+    .news-sum{
+      font-size:11px;
+      color:#5b7593;
+      line-height:1.25;
+    }
+    .news-metric{
+      background:#f8fafc;
+      border-left:1px solid #d6e2f0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:6px;
+      text-align:center;
+    }
+    .news-metric .metric{
+      color:var(--blue2);
+      font-weight:700;
+      font-size:15px;
+      line-height:1.05;
+      margin-bottom:4px;
+    }
+    .news-metric .metric-label{
+      color:#7a8da5;
+      font-size:10px;
+      line-height:1.15;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:26px;
+    }
+    .subcard{
+      border:2px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+      padding:18px;
+    }
+    .subcard h3{
+      margin:0 0 16px;
+      color:var(--navy);
+      font-size:17px;
+      font-weight:800;
+      text-transform:uppercase;
+    }
+
+    .toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .recipient-form{
+      display:grid;
+      grid-template-columns:1.2fr 1.2fr .55fr auto;
+      gap:10px;
+      margin-top:14px;
+    }
+    .recipient-form.email{
+      grid-template-columns:1fr 1.2fr auto;
+    }
+    input, select{
+      width:100%;
+      padding:12px 14px;
+      border:2px solid var(--border);
+      border-radius:10px;
+      font-size:14px;
+      outline:none;
+      background:#fff;
+    }
+    .pill{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      background:#eaf8ef;
+      color:var(--green);
+    }
+    .pill.off{
+      background:#fdeceb;
+      color:var(--red);
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    .log-list{
+      display:grid;
+      gap:10px;
+    }
+    .log-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px;
+      border:2px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+    }
+    .log-item .left{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .log-item .title{
+      font-weight:700;
+      color:var(--navy);
+    }
+    .log-item .meta{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .notice{
+      font-size:13px;
+      color:#6b7f95;
+      margin-top:8px;
+    }
+
+    @media (max-width: 1200px){
+      .kpis{grid-template-columns:repeat(3,1fr)}
+      .data-grid{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+    }
+    @media (max-width: 800px){
+      .kpis{grid-template-columns:repeat(2,1fr)}
+      .news-grid-6{grid-template-columns:1fr}
+      .recipient-form,
+      .recipient-form.email{grid-template-columns:1fr}
+      .brand-title{display:none}
+      .page{padding:14px}
+      .topbar{padding:12px 14px}
+    }
   </style>
 </head>
 <body>
-<div id="app"></div>
-<script>
-const PASS_HASH = "db_mi_2026";
-const SUPABASE_URL = "https://wanqirnlsnfrrzvkxeby.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_w77b_FV1Xor8rubRqczyGg__P9NJ9We";
-const sb = (SUPABASE_URL.startsWith("http") && !SUPABASE_ANON_KEY.startsWith("PASTE_")) ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
-
-const state = {
-  loggedIn: sessionStorage.getItem("db_logged_in") === "1",
-  tab: "Market Snapshot",
-  market: null,
-  recipients: [],
-  logs: [],
-};
-
-const app = document.getElementById("app");
-
-function pctColor(v){
-  v = String(v || "");
-  if(v.startsWith("+")) return "#1a7a45";
-  if(v.startsWith("-")) return "#c0392b";
-  return "#5a7a96";
-}
-
-function formatPx(v){
-  if(typeof v === "number") return v.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2});
-  return v ?? "N/A";
-}
-
-function render(){
-  app.innerHTML = "";
-  if(!state.loggedIn){
-    return renderLogin();
-  }
-
-  const root = document.createElement("div");
-  root.innerHTML = `
-    <div class="header">
-      <div class="header-inner">
-        <div class="brand">
-          <div class="logo">D</div>
-          <div>
-            <div style="font-size:10px;color:#9ac4e8">بنك الدوحة</div>
-            <div style="font-size:14px;font-weight:700;letter-spacing:1px">DOHA BANK</div>
-          </div>
-          <div style="width:1px;height:28px;background:rgba(255,255,255,.2);margin:0 8px"></div>
-          <div style="font-size:14px;font-weight:700;letter-spacing:1px">Market Intelligence Dashboard</div>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">D</div>
+      <div class="brand-text">
+        <div class="brand-bank">
+          <div class="ar">بنك الدوحة</div>
+          <div class="en">DOHA BANK</div>
         </div>
-        <button class="btn alt" id="logoutBtn">Sign out</button>
+        <div class="brand-title">Market Intelligence Dashboard</div>
       </div>
     </div>
-    <div class="cyanbar"></div>
-    <div class="tabs">
-      ${["Market Snapshot","Recipients","Report Log"].map(t=>`<div class="tab ${state.tab===t?'active':''}" data-tab="${t}">${t}</div>`).join("")}
-    </div>
-    <div class="wrap" id="content"></div>
-  `;
-  app.appendChild(root);
+    <button class="btn gray" id="signOutBtn">Sign out</button>
+  </div>
 
-  document.querySelectorAll(".tab").forEach(el => el.onclick = () => { state.tab = el.dataset.tab; render(); });
-  document.getElementById("logoutBtn").onclick = () => { sessionStorage.removeItem("db_logged_in"); state.loggedIn = false; render(); };
+  <div class="tabs">
+    <div class="tab active" data-tab="market">Market Snapshot</div>
+    <div class="tab" data-tab="recipients">Recipients</div>
+    <div class="tab" data-tab="log">Report Log</div>
+  </div>
 
-  const content = document.getElementById("content");
-  if(state.tab === "Market Snapshot") renderMarket(content);
-  if(state.tab === "Recipients") renderRecipients(content);
-  if(state.tab === "Report Log") renderLogs(content);
-}
+  <div class="page">
+    <div id="marketView"></div>
+    <div id="recipientsView" style="display:none;"></div>
+    <div id="logView" style="display:none;"></div>
+  </div>
 
-function renderLogin(){
-  const div = document.createElement("div");
-  div.className = "login";
-  div.innerHTML = `
-    <div class="loginbox">
-      <div style="text-align:center;margin-bottom:24px">
-        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px">
-          <div class="logo" style="width:44px;height:44px;border-width:2px">D</div>
-          <div>
-            <div style="font-size:9px;color:#5a7a96">بنك الدوحة</div>
-            <div style="font-size:16px;font-weight:700;color:#0d2c5e">DOHA BANK</div>
-          </div>
-        </div>
-        <div style="font-size:16px;font-weight:700;color:#0d2c5e">Market Intelligence</div>
-        <div class="muted" style="margin-top:4px">Dashboard Staff Access</div>
-      </div>
-      <div style="margin-bottom:8px;font-size:12px;font-weight:700;color:#0d2c5e">Password</div>
-      <input id="pw" class="input" type="password" placeholder="Enter dashboard password" />
-      <div id="err" style="color:#c0392b;font-size:11px;margin-top:6px;display:none">Incorrect password</div>
-      <button class="btn" id="loginBtn" style="width:100%;margin-top:14px">Sign In</button>
-    </div>
-  `;
-  app.appendChild(div);
-  document.getElementById("loginBtn").onclick = () => {
-    const pw = document.getElementById("pw").value;
-    if(pw === PASS_HASH){
-      sessionStorage.setItem("db_logged_in","1");
-      state.loggedIn = true;
-      init();
-    } else {
-      document.getElementById("err").style.display = "block";
+  <script>
+    const SUPABASE_URL = "https://wanqirnlsnfrrzvkxeby.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_w77b_FV1Xor8rubRqczyGg__P9NJ9We";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const DASHBOARD_PASSWORD = "db_mi_2026";
+    const BASE_PATH = `${window.location.origin}/doha-bank-mi`;
+
+    let marketData = null;
+    let waRecipients = [];
+    let emailRecipients = [];
+    let sendLog = [];
+    let activeTab = "market";
+
+    const marketView = document.getElementById("marketView");
+    const recipientsView = document.getElementById("recipientsView");
+    const logView = document.getElementById("logView");
+
+    function checkLogin() {
+      const ok = sessionStorage.getItem("db_mi_auth") === "1";
+      if (!ok) {
+        const input = prompt("Enter dashboard password");
+        if (input !== DASHBOARD_PASSWORD) {
+          document.body.innerHTML = '<div style="padding:40px;font-family:Arial">Access denied.</div>';
+          return false;
+        }
+        sessionStorage.setItem("db_mi_auth", "1");
+      }
+      return true;
     }
-  };
-}
 
-function renderMarket(container){
-  if(!state.market){
-    container.innerHTML = `<div class="card">Loading live market data...</div>`;
-    return;
-  }
+    document.getElementById("signOutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("db_mi_auth");
+      location.reload();
+    });
 
-  const d = state.market;
-  const kpis = d.kpis || [];
-  const globalNews = d.global_news || [];
-  const qatarNews = d.qatar_news || [];
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        activeTab = tab.dataset.tab;
+        render();
+      });
+    });
 
-  container.innerHTML = `
-    <div class="flex" style="margin-bottom:16px">
-      <div class="muted">Last updated: ${d.generated_at ? new Date(d.generated_at).toLocaleString() : "N/A"}</div>
-      <div class="badge ok">Live Data</div>
-    </div>
+    function escapeHtml(v) {
+      return String(v ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-    <div class="grid6">
-      ${kpis.map(k => `
+    function pctClass(v) {
+      const s = String(v ?? "");
+      if (s.startsWith("+")) return "pos";
+      if (s.startsWith("-")) return "neg";
+      return "neu";
+    }
+
+    function fmtPx(v) {
+      if (typeof v === "number") {
+        return Number.isInteger(v) ? String(v) : v.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 0 });
+      }
+      return String(v ?? "N/A");
+    }
+
+    function renderTable(title, headers, rows) {
+      const tableRows = rows.length
+        ? rows.map(r => `
+          <tr>
+            <td>${escapeHtml(r.name || "")}</td>
+            <td>${escapeHtml(fmtPx(r.px_last))}</td>
+            <td class="${pctClass(r.change_1d)}">${escapeHtml(r.change_1d || "N/A")}</td>
+            <td class="${pctClass(r.mtd)}">${escapeHtml(r.mtd || "N/A")}</td>
+            <td class="${pctClass(r.ytd)}">${escapeHtml(r.ytd || "N/A")}</td>
+          </tr>
+        `).join("")
+        : `<tr><td colspan="5" class="empty">No data found</td></tr>`;
+
+      return `
+        <div class="card">
+          <div class="panel-title">${escapeHtml(title)}</div>
+          <table>
+            <thead>
+              <tr>${headers.map((h, i) => `<th ${i===0 ? 'style="width:40%"' : ''}>${escapeHtml(h)}</th>`).join("")}</tr>
+            </thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderNewsSection(title, items) {
+      const cards = (items || []).length
+        ? items.map(item => `
+          <div class="news-card">
+            <div class="news-body">
+              <div class="news-head">${escapeHtml(item.headline || "")}</div>
+              <div class="news-src">${escapeHtml(item.source || "")}</div>
+              <div class="news-sum">${escapeHtml(item.summary || "")}</div>
+            </div>
+            <div class="news-metric">
+              <div class="metric">${escapeHtml(item.metric || "—")}</div>
+              <div class="metric-label">${escapeHtml(item.metric_label || "")}</div>
+            </div>
+          </div>
+        `).join("")
+        : `<div class="empty">No news found</div>`;
+
+      return `
+        <div class="news-section card">
+          <div class="panel-title">${escapeHtml(title)}</div>
+          <div class="news-grid-6">${cards}</div>
+        </div>
+      `;
+    }
+
+    function renderMarket() {
+      if (!marketData) {
+        marketView.innerHTML = `<div class="card">Loading live market data...</div>`;
+        return;
+      }
+
+      if (marketData.error) {
+        marketView.innerHTML = `<div class="card">Failed to load market data: ${escapeHtml(marketData.error)}</div>`;
+        return;
+      }
+
+      const d = marketData;
+      const generatedAt = d.generated_at ? new Date(d.generated_at).toLocaleString() : "Unknown";
+
+      const kpis = (d.kpis || []).map(k => `
         <div class="kpi">
-          <div class="kval" style="color:${String(k.value||'').startsWith('+') ? '#1a7a45' : String(k.value||'').startsWith('-') ? '#c0392b' : '#0d2c5e'}">${k.value ?? "N/A"}</div>
-          <div class="klbl">${k.label ?? ""}</div>
-          <div class="ksub">${k.sublabel ?? ""}</div>
+          <div class="value">${escapeHtml(k.value ?? "N/A")}</div>
+          <div class="label">${escapeHtml(k.label ?? "")}</div>
+          <div class="sub">${escapeHtml(k.sublabel ?? "")}</div>
         </div>
-      `).join("")}
-    </div>
+      `).join("");
 
-    <div class="grid2" style="margin-top:16px">
-      <div class="card">${tableSection("Global Indices", d.global_indices)}
-                      ${tableSection("Spot Currency", d.spot_currency)}
-                      ${tableSection("QAR Cross Rates", d.qar_cross_rates)}
-                      ${tableSection("Fixed Income — UST Yields", d.fixed_income)}</div>
-      <div class="card">${tableSection("GCC & Regional Indices", d.gcc_indices)}
-                      ${tableSection("Qatari Banks", d.qatari_banks)}
-                      ${tableSection("Commodities & Energy", d.commodities)}</div>
-    </div>
+      marketView.innerHTML = `
+        <div class="meta-row">
+          <div>Last updated: ${escapeHtml(generatedAt)}</div>
+          <div class="live">● Live Data</div>
+        </div>
 
-    <div class="card">
-      <div class="sec"><div class="line"></div><div class="sectitle">Regional & Global News</div></div>
-      <div class="news-grid">${globalNews.map(newsCard).join("")}</div>
-    </div>
+        <div class="kpis">${kpis}</div>
 
-    <div class="card">
-      <div class="sec"><div class="line"></div><div class="sectitle">Qatar News</div></div>
-      <div class="news-grid">${qatarNews.map(newsCard).join("")}</div>
-    </div>
-  `;
-}
-
-function tableSection(title, rows){
-  const arr = Array.isArray(rows) ? rows : [];
-  const hdr1 = title.includes("Fixed Income") ? "Yield" : "PX Last";
-  return `
-    <div style="margin-bottom:12px">
-      <div class="sec"><div class="line"></div><div class="sectitle">${title}</div></div>
-      <table>
-        <thead><tr><th>${title.includes("Fixed Income") ? "Instrument" : (title.includes("Banks") ? "Bank" : (title.includes("Currency") || title.includes("Rates") ? "Pair" : (title.includes("Commodities") ? "Asset" : "Market / Index")))}</th><th class="r">${hdr1}</th><th class="r">1D %</th><th class="r">MTD %</th><th class="r">YTD %</th></tr></thead>
-        <tbody>
-          ${arr.length ? arr.map(r => `
-            <tr>
-              <td><strong>${r.name ?? ""}</strong></td>
-              <td class="r">${formatPx(r.px_last)}</td>
-              <td class="r" style="color:${pctColor(r.change_1d)}">${r.change_1d ?? "N/A"}</td>
-              <td class="r" style="color:${pctColor(r.mtd)}">${r.mtd ?? "N/A"}</td>
-              <td class="r" style="color:${pctColor(r.ytd)}">${r.ytd ?? "N/A"}</td>
-            </tr>
-          `).join("") : `<tr><td colspan="5" class="empty">No data</td></tr>`}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
-
-function newsCard(item){
-  return `
-    <div class="news-card">
-      <div class="news-body">
-        <div class="news-title">${item.headline ?? ""}</div>
-        <div class="news-source">${item.source ?? ""}</div>
-        <div class="news-sum">${item.summary ?? ""}</div>
-      </div>
-      <div class="news-badge">
-        <div class="news-metric">${item.metric ?? "—"}</div>
-        <div class="news-mlbl">${item.metric_label ?? ""}</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderRecipients(container){
-  if(!sb){
-    container.innerHTML = `<div class="card">Set SUPABASE_URL and SUPABASE_ANON_KEY in docs/index.html first.</div>`;
-    return;
-  }
-
-  const emails = state.recipients.filter(r => r.channel === "email");
-  const whats = state.recipients.filter(r => r.channel === "whatsapp");
-
-  container.innerHTML = `
-    <div class="grid2">
-      <div class="card">
-        <div class="flex" style="margin-bottom:14px"><div style="font-size:13px;font-weight:700;color:#0d2c5e;text-transform:uppercase">WhatsApp Recipients (${whats.filter(x=>x.active).length} active)</div></div>
-        ${recipientTable(whats, "whatsapp")}
-        <div style="background:#f5f8fc;border:1px solid #c5d8ee;border-radius:6px;padding:14px;margin-top:12px">
-          <div style="font-size:11px;font-weight:700;color:#0d2c5e;margin-bottom:10px;text-transform:uppercase">Add WhatsApp Recipient</div>
-          <div class="row">
-            <input class="input" id="wa_name" placeholder="Full name" />
-            <input class="input" id="wa_number" placeholder="Number, example 97455512345" />
-            <select id="wa_tier"><option>HNWI</option><option>VIP</option><option>Staff</option></select>
+        <div class="data-grid">
+          <div class="grid">
+            ${renderTable("GLOBAL INDICES", ["Name", "PX Last", "1D %", "MTD %", "YTD %"], d.global_indices || [])}
+            ${renderTable("SPOT CURRENCY", ["Name", "PX Last", "1D %", "MTD %", "YTD %"], d.spot_currency || [])}
+            ${renderTable("QAR CROSS RATES", ["Name", "PX Last", "1D %", "MTD %", "YTD %"], d.qar_cross_rates || [])}
+            ${renderTable("FIXED INCOME — UST YIELDS", ["Name", "PX Last", "1D %", "MTD %", "YTD %"], d.fixed_income || [])}
           </div>
-          <button class="btn" id="addWaBtn">Add Recipient</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="flex" style="margin-bottom:14px"><div style="font-size:13px;font-weight:700;color:#0d2c5e;text-transform:uppercase">Email Recipients (${emails.filter(x=>x.active).length} active)</div></div>
-        ${recipientTable(emails, "email")}
-        <div style="background:#f5f8fc;border:1px solid #c5d8ee;border-radius:6px;padding:14px;margin-top:12px">
-          <div style="font-size:11px;font-weight:700;color:#0d2c5e;margin-bottom:10px;text-transform:uppercase">Add Email Recipient</div>
-          <div class="row" style="grid-template-columns:1fr 1fr">
-            <input class="input" id="em_name" placeholder="Full name" />
-            <input class="input" id="em_addr" placeholder="Email address" />
+          <div class="grid">
+            ${renderTable("GCC & REGIONAL INDICES", ["Name", "PX Last", "1D %", "MTD %", "YTD %"], d.gcc_indices || [])}
+            ${renderTable("QATARI BANKS", ["Name", "PX Last", "1D %", "MTD %", "YTD %"], d.qatari_banks || [])}
+            ${renderTable("COMMODITIES & ENERGY", ["Name", "PX Last", "1D %", "MTD %", "YTD %"], d.commodities || [])}
           </div>
-          <button class="btn" id="addEmBtn">Add Recipient</button>
         </div>
-      </div>
-    </div>
-  `;
 
-  document.getElementById("addWaBtn").onclick = async () => {
-    const name = document.getElementById("wa_name").value.trim();
-    const phone_number = document.getElementById("wa_number").value.trim();
-    const tier = document.getElementById("wa_tier").value;
-    if(!name || !phone_number) return alert("Name and number are required.");
-    await sb.from("recipients").insert([{name, channel:"whatsapp", phone_number, tier, active:true}]);
-    await loadRecipients();
-    render();
-  };
-
-  document.getElementById("addEmBtn").onclick = async () => {
-    const name = document.getElementById("em_name").value.trim();
-    const email = document.getElementById("em_addr").value.trim();
-    if(!name || !email) return alert("Name and email are required.");
-    await sb.from("recipients").insert([{name, channel:"email", email, tier:"HNWI", active:true}]);
-    await loadRecipients();
-    render();
-  };
-
-  document.querySelectorAll("[data-toggle-id]").forEach(el => {
-    el.onclick = async () => {
-      const id = el.dataset.toggleId;
-      const active = el.dataset.active === "true";
-      await sb.from("recipients").update({active: !active}).eq("id", id);
-      await loadRecipients();
-      render();
-    };
-  });
-
-  document.querySelectorAll("[data-del-id]").forEach(el => {
-    el.onclick = async () => {
-      if(!confirm("Delete this recipient?")) return;
-      await sb.from("recipients").delete().eq("id", el.dataset.delId);
-      await loadRecipients();
-      render();
-    };
-  });
-}
-
-function recipientTable(arr, kind){
-  const isWa = kind === "whatsapp";
-  return `
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>${isWa ? "Number" : "Email Address"}</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${arr.length ? arr.map(r => `
-          <tr>
-            <td><strong>${r.name ?? ""}</strong></td>
-            <td>${isWa ? (r.phone_number ?? "") : (r.email ?? "")}</td>
-            <td><span class="badge ${r.active ? 'ok':'bad'}">${r.active ? 'Active':'Paused'}</span></td>
-            <td>
-              <div style="display:flex;gap:6px">
-                <button class="btn alt" data-toggle-id="${r.id}" data-active="${r.active}">${r.active ? 'Pause':'Resume'}</button>
-                <button class="btn danger" data-del-id="${r.id}">Remove</button>
-              </div>
-            </td>
-          </tr>
-        `).join("") : `<tr><td colspan="4" class="empty">No recipients found</td></tr>`}
-      </tbody>
-    </table>
-  `;
-}
-
-function renderLogs(container){
-  container.innerHTML = `
-    <div class="card">
-      <div class="flex" style="margin-bottom:14px">
-        <div style="font-size:13px;font-weight:700;color:#0d2c5e;text-transform:uppercase">Report Delivery Log</div>
-        <div class="muted">${state.logs.length} records</div>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th><th>Time</th><th>Status</th><th class="r">Email Count</th><th class="r">WhatsApp Count</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${state.logs.length ? state.logs.map(r => `
-            <tr>
-              <td>${r.date ?? (r.report_date || "").slice(0,10)}</td>
-              <td>${r.time ?? formatTime(r.sent_at)}</td>
-              <td><span class="badge ${String(r.status).toLowerCase()==='success' ? 'ok':'bad'}">${r.status ?? "N/A"}</span></td>
-              <td class="r">${r.email_count ?? 0}</td>
-              <td class="r">${r.wa_count ?? 0}</td>
-            </tr>
-          `).join("") : `<tr><td colspan="5" class="empty">No delivery records yet</td></tr>`}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
-
-function formatTime(v){
-  if(!v) return "";
-  try { return new Date(v).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
-  catch { return ""; }
-}
-
-async function loadMarket(){
-  try{
-    const res = await fetch(`../market_data.json?_=${Date.now()}`, {cache: "no-store"});
-    if(!res.ok) throw new Error("market_data.json not found");
-    state.market = await res.json();
-  } catch(e){
-    console.error(e);
-    state.market = null;
-  }
-}
-
-async function loadRecipients(){
-  if(!sb) return;
-  const { data, error } = await sb.from("recipients").select("*").order("created_at", {ascending:false});
-  if(error){ console.error(error); return; }
-  state.recipients = data || [];
-}
-
-async function loadLogs(){
-  if(sb){
-    const { data, error } = await sb.from("send_log").select("*").order("sent_at", {ascending:false}).limit(30);
-    if(!error && data){
-      state.logs = data.map(r => ({
-        ...r,
-        date: r.report_date,
-        time: formatTime(r.sent_at)
-      }));
-      return;
+        ${renderNewsSection("REGIONAL & GLOBAL NEWS", d.global_news || [])}
+        ${renderNewsSection("QATAR NEWS", d.qatar_news || [])}
+      `;
     }
-  }
 
-  try{
-    const res = await fetch(`../send_log.json?_=${Date.now()}`, {cache:"no-store"});
-    if(!res.ok) throw new Error("send_log.json not found");
-    state.logs = await res.json();
-  } catch(e){
-    console.error(e);
-    state.logs = [];
-  }
-}
+    function recipientRows(list, kind) {
+      if (!list.length) {
+        return `<tr><td colspan="4" class="empty">No recipients found</td></tr>`;
+      }
 
-async function init(){
-  await Promise.all([loadMarket(), loadRecipients(), loadLogs()]);
-  render();
-}
+      return list.map(r => `
+        <tr>
+          <td>${escapeHtml(r.name || "")}</td>
+          <td>${escapeHtml(kind === "whatsapp" ? (r.phone_number || "") : (r.email || ""))}</td>
+          <td>${r.active ? '<span class="pill">Active</span>' : '<span class="pill off">Paused</span>'}</td>
+          <td>
+            <div class="actions">
+              <button class="btn small outline" onclick="toggleRecipient('${r.id}', ${!r.active})">${r.active ? "Pause" : "Resume"}</button>
+              <button class="btn small red" onclick="deleteRecipient('${r.id}')">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
 
-init();
-</script>
+    function renderRecipients() {
+      const waActive = waRecipients.filter(r => r.active).length;
+      const emActive = emailRecipients.filter(r => r.active).length;
+
+      recipientsView.innerHTML = `
+        <div class="split">
+          <div class="subcard">
+            <h3>WhatsApp Recipients (${waActive} Active)</h3>
+            <table class="mb16">
+              <thead>
+                <tr>
+                  <th style="text-align:left">Name</th>
+                  <th style="text-align:left">Number</th>
+                  <th style="text-align:left">Status</th>
+                  <th style="text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>${recipientRows(waRecipients, "whatsapp")}</tbody>
+            </table>
+
+            <div class="subcard" style="padding:18px;">
+              <h3 style="margin-top:0;">Add WhatsApp Recipient</h3>
+              <div class="recipient-form">
+                <input id="waName" placeholder="Full name" />
+                <input id="waNumber" placeholder="Number, example +97455512345" />
+                <select id="waTier">
+                  <option value="HNWI">HNWI</option>
+                  <option value="VIP">VIP</option>
+                  <option value="STD">STD</option>
+                </select>
+                <button class="btn" onclick="addWhatsAppRecipient()">Add Recipient</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="subcard">
+            <h3>Email Recipients (${emActive} Active)</h3>
+            <table class="mb16">
+              <thead>
+                <tr>
+                  <th style="text-align:left">Name</th>
+                  <th style="text-align:left">Email Address</th>
+                  <th style="text-align:left">Status</th>
+                  <th style="text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>${recipientRows(emailRecipients, "email")}</tbody>
+            </table>
+
+            <div class="subcard" style="padding:18px;">
+              <h3 style="margin-top:0;">Add Email Recipient</h3>
+              <div class="recipient-form email">
+                <input id="emName" placeholder="Full name" />
+                <input id="emEmail" placeholder="Email address" />
+                <button class="btn" onclick="addEmailRecipient()">Add Recipient</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderLog() {
+      const rows = sendLog.length
+        ? sendLog.map(item => `
+          <div class="log-item">
+            <div class="left">
+              <div class="title">${escapeHtml(item.report_date || item.date || "Unknown date")}</div>
+              <div class="meta">
+                ${escapeHtml(item.status || "unknown")} ·
+                Email: ${escapeHtml(item.email_count ?? 0)} ·
+                WhatsApp: ${escapeHtml(item.wa_count ?? 0)}
+              </div>
+            </div>
+            <div class="actions">
+              ${item.pdf_url ? `<a class="btn small outline" href="${escapeHtml(item.pdf_url)}" target="_blank" rel="noopener">Open PDF</a>` : ""}
+            </div>
+          </div>
+        `).join("")
+        : `<div class="card empty">No report log found</div>`;
+
+      logView.innerHTML = `
+        <div class="card">
+          <div class="panel-title">Report Log</div>
+          <div class="log-list">${rows}</div>
+          <div class="notice">Live from Supabase when available, otherwise fallback from send_log.json.</div>
+        </div>
+      `;
+    }
+
+    function render() {
+      marketView.style.display = activeTab === "market" ? "block" : "none";
+      recipientsView.style.display = activeTab === "recipients" ? "block" : "none";
+      logView.style.display = activeTab === "log" ? "block" : "none";
+
+      if (activeTab === "market") renderMarket();
+      if (activeTab === "recipients") renderRecipients();
+      if (activeTab === "log") renderLog();
+    }
+
+    async function loadMarketData() {
+      try {
+        const res = await fetch(`${BASE_PATH}/market_data.json?ts=${Date.now()}`);
+        if (!res.ok) throw new Error(`market_data.json HTTP ${res.status}`);
+        const data = await res.json();
+        marketData = data;
+      } catch (err) {
+        console.error("Market data load failed:", err);
+        marketData = { error: String(err) };
+      }
+      render();
+    }
+
+    async function loadRecipients() {
+      try {
+        const { data, error } = await sb
+          .from("recipients")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        const rows = data || [];
+        waRecipients = rows.filter(r => r.channel === "whatsapp");
+        emailRecipients = rows.filter(r => r.channel === "email");
+      } catch (err) {
+        console.error("Recipients load failed:", err);
+        waRecipients = [];
+        emailRecipients = [];
+      }
+      render();
+    }
+
+    async function loadSendLog() {
+      try {
+        const { data, error } = await sb
+          .from("send_log")
+          .select("*")
+          .order("sent_at", { ascending: false })
+          .limit(30);
+
+        if (error) throw error;
+
+        sendLog = data || [];
+      } catch (err) {
+        console.error("Supabase send_log load failed, trying JSON fallback:", err);
+        try {
+          const res = await fetch(`${BASE_PATH}/send_log.json?ts=${Date.now()}`);
+          if (!res.ok) throw new Error(`send_log.json HTTP ${res.status}`);
+          sendLog = await res.json();
+        } catch (err2) {
+          console.error("JSON send_log load failed:", err2);
+          sendLog = [];
+        }
+      }
+      render();
+    }
+
+    async function addWhatsAppRecipient() {
+      const name = document.getElementById("waName").value.trim();
+      let phone = document.getElementById("waNumber").value.trim();
+      const tier = document.getElementById("waTier").value;
+
+      if (!name || !phone) {
+        alert("Please enter name and mobile number.");
+        return;
+      }
+
+      if (!phone.startsWith("+")) {
+        phone = "+" + phone.replace(/^\+/, "");
+      }
+
+      const { error } = await sb.from("recipients").insert({
+        name,
+        channel: "whatsapp",
+        phone_number: phone,
+        active: true,
+        tier
+      });
+
+      if (error) {
+        alert("Failed to add WhatsApp recipient: " + error.message);
+        return;
+      }
+
+      document.getElementById("waName").value = "";
+      document.getElementById("waNumber").value = "";
+      document.getElementById("waTier").value = "HNWI";
+      await loadRecipients();
+    }
+
+    async function addEmailRecipient() {
+      const name = document.getElementById("emName").value.trim();
+      const email = document.getElementById("emEmail").value.trim();
+
+      if (!name || !email) {
+        alert("Please enter name and email.");
+        return;
+      }
+
+      const { error } = await sb.from("recipients").insert({
+        name,
+        channel: "email",
+        email,
+        active: true,
+        tier: "HNWI"
+      });
+
+      if (error) {
+        alert("Failed to add email recipient: " + error.message);
+        return;
+      }
+
+      document.getElementById("emName").value = "";
+      document.getElementById("emEmail").value = "";
+      await loadRecipients();
+    }
+
+    window.toggleRecipient = async function(id, active) {
+      const { error } = await sb.from("recipients").update({ active }).eq("id", id);
+      if (error) {
+        alert("Failed to update recipient: " + error.message);
+        return;
+      }
+      await loadRecipients();
+    }
+
+    window.deleteRecipient = async function(id) {
+      if (!confirm("Delete this recipient?")) return;
+      const { error } = await sb.from("recipients").delete().eq("id", id);
+      if (error) {
+        alert("Failed to delete recipient: " + error.message);
+        return;
+      }
+      await loadRecipients();
+    }
+
+    async function init() {
+      if (!checkLogin()) return;
+      render();
+      await Promise.all([
+        loadMarketData(),
+        loadRecipients(),
+        loadSendLog()
+      ]);
+    }
+
+    init();
+  </script>
 </body>
 </html>
