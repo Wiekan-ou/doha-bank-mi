@@ -13,7 +13,7 @@ from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas as pdfcanvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-import os, sys
+import os, sys, json
 from datetime import date as dt
 
 pdfmetrics.registerFont(TTFont('Caladea',        '/usr/share/fonts/truetype/crosextra/Caladea-Regular.ttf'))
@@ -432,5 +432,12 @@ if __name__=='__main__':
              'summary':'Issued on behalf of Ministry of Finance. Split between Jan 2029 and Aug 2030 at 4.5% yield. Total bids reached QR8bn — 2.7x oversubscribed, confirming deep market demand.'},
         ],
     }
-    out=sys.argv[1] if len(sys.argv)>1 else '/mnt/user-data/outputs/DohaBank_MI_Final.pdf'
-    generate(SAMPLE,out)
+    import os
+    data_file = sys.argv[1] if len(sys.argv)>1 else None
+    out = sys.argv[2] if len(sys.argv)>2 else 'report.pdf'
+    if data_file and os.path.exists(data_file) and os.path.getsize(data_file)>2:
+        with open(data_file) as f:
+            data = json.load(f)
+        generate(data, out)
+    else:
+        generate(SAMPLE, out)
