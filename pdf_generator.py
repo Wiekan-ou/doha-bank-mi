@@ -330,7 +330,6 @@ def page2(c, report_date, global_news, qatar_news):
     header_space = (2 * SEC_H) + 1.5 * mm + between_sections
     row_space = avail - header_space
 
-    # 6 global = 3 rows, 4 qatar = 2 rows
     total_rows = 5
     total_internal_gaps = 4 * card_gap
     unit_h = (row_space - total_internal_gaps) / total_rows
