@@ -39,15 +39,6 @@ jobs:
       - name: Generate PDF report
         run: python pdf_generator.py market_data.json report.pdf
 
-      - name: Commit PDF and data to repo
-        run: |
-          git config user.name "Doha Bank MI Bot"
-          git config user.email "mi-bot@dohabank.com"
-          git add -A
-          git status
-          git diff --staged --quiet || git commit -m "Daily report $(date +'%Y-%m-%d')"
-          git push
-
       - name: Send email via Resend
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
@@ -84,7 +75,6 @@ jobs:
               os.environ["SUPABASE_SERVICE_ROLE_KEY"]
           )
 
-          # Pull active recipient counts from Supabase
           email_resp = (
               sb.table("recipients")
               .select("id", count="exact")
@@ -113,7 +103,6 @@ jobs:
               "wa_count": wa_count
           }
 
-          # Write local JSON log for dashboard/backward compatibility
           log = []
           if os.path.exists("send_log.json"):
               with open("send_log.json", "r", encoding="utf-8") as f:
@@ -129,7 +118,6 @@ jobs:
 
           print("Local JSON log updated:", entry)
 
-          # Write log to Supabase
           sb.table("send_log").insert({
               "report_date": now.strftime("%Y-%m-%d"),
               "sent_at": now.isoformat(),
@@ -142,14 +130,30 @@ jobs:
 
           print("Supabase send_log inserted successfully")
           PYEOF
+
       - name: Copy live JSON files to docs for dashboard
         run: |
+          mkdir -p docs
           cp market_data.json docs/market_data.json
-          if [ -f send_log.json ]; then cp send_log.json docs/send_log.json; fi
-      - name: Commit send log
+
+          if [ -f send_log.json ]; then
+            cp send_log.json docs/send_log.json
+          else
+            echo "[]" > docs/send_log.json
+          fi
+
+      - name: Commit ALL generated files (including docs)
         run: |
           git config user.name "Doha Bank MI Bot"
           git config user.email "mi-bot@dohabank.com"
+
+          git add market_data.json
+          git add report.pdf
           git add send_log.json
-          git diff --staged --quiet || git commit -m "Send log $(date +'%Y-%m-%d')"
+          git add docs/market_data.json
+          git add docs/send_log.json
+
+          git status
+
+          git diff --staged --quiet || git commit -m "Daily report $(date +'%Y-%m-%d')"
           git push
