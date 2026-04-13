@@ -8,6 +8,7 @@ import feedparser
 import yfinance as yf
 import anthropic
 
+
 CONFIG = {
     "client_name": "Doha Bank",
     "report_date": datetime.date.today().strftime("%d %B %Y"),
@@ -57,7 +58,7 @@ QAR_CROSS = {
     "EUR/QAR": "EURQAR=X",
     "GBP/QAR": "GBPQAR=X",
     "CHF/QAR": "CHFQAR=X",
-    # CNY/QAR will be derived
+    # CNY/QAR derived later
 }
 
 QATARI_BANKS = {
@@ -126,16 +127,20 @@ def _fmt_pct(current: Optional[float], base: Optional[float]) -> str:
     return f"{pct:+.1f}%"
 
 
-def _history(sym: str, start: datetime.date):
+def _safe_history(sym: str, start: datetime.date):
+    """
+    More stable than yf.download for GitHub Actions.
+    """
     try:
-        df = yf.download(
-            sym,
+        ticker = yf.Ticker(sym)
+        df = ticker.history(
             start=start.strftime("%Y-%m-%d"),
             auto_adjust=True,
-            progress=False,
-            threads=False,
+            actions=False,
         )
-        if df is None or df.empty or "Close" not in df.columns:
+        if df is None or df.empty:
+            return None
+        if "Close" not in df.columns:
             return None
         closes = df["Close"].dropna()
         if closes.empty:
@@ -151,7 +156,7 @@ def fetch_stats(name: str, sym: str, today: datetime.date) -> dict:
     month_start = datetime.date(today.year, today.month, 1)
     history_start = min(year_start, month_start) - datetime.timedelta(days=10)
 
-    closes = _history(sym, history_start)
+    closes = _safe_history(sym, history_start)
     if closes is None or len(closes) == 0:
         return {
             "name": name,
@@ -163,8 +168,12 @@ def fetch_stats(name: str, sym: str, today: datetime.date) -> dict:
             "source": "Yahoo Finance",
         }
 
-    px_last = _to_float(closes.iloc[-1])
-    px_prev = _to_float(closes.iloc[-2]) if len(closes) >= 2 else None
+    try:
+        px_last = _to_float(closes.iloc[-1])
+        px_prev = _to_float(closes.iloc[-2]) if len(closes) >= 2 else None
+    except Exception:
+        px_last = None
+        px_prev = None
 
     month_base = None
     year_base = None
@@ -199,7 +208,12 @@ def fetch_stats(name: str, sym: str, today: datetime.date) -> dict:
 
 
 def fetch_section(ticker_map: dict, today: datetime.date) -> list[dict]:
-    return [fetch_stats(name, sym, today) for name, sym in ticker_map.items()]
+    rows = []
+    for name, sym in ticker_map.items():
+        row = fetch_stats(name, sym, today)
+        print(f"    {name}: {row['px_last']} | {row['change_1d']} | {row['mtd']} | {row['ytd']}")
+        rows.append(row)
+    return rows
 
 
 def _find_row(rows: list[dict], name: str) -> Optional[dict]:
@@ -231,6 +245,7 @@ def add_derived_rows(data: dict) -> None:
                 "ytd": gold_usd.get("ytd", "N/A"),
                 "source": "Derived from Yahoo Finance GC=F and USD/QAR",
             })
+            print(f"    Gold (QAR) derived: {round(g * q, 2)}")
 
     # CNY/QAR = CNY/USD × USD/QAR
     cny_usd = _find_row(spot, "CNY/USD")
@@ -247,6 +262,7 @@ def add_derived_rows(data: dict) -> None:
                 "ytd": cny_usd.get("ytd", "N/A"),
                 "source": "Derived from Yahoo Finance CNY/USD and USD/QAR",
             })
+            print(f"    CNY/QAR derived: {round(c * q, 4)}")
 
     # Remove Gold (USD) from final display
     data["commodities"] = [r for r in comm if r["name"] != "Gold (USD)"]
