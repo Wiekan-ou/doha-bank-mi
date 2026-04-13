@@ -25,6 +25,13 @@ def load_active_numbers() -> list[dict]:
     return resp.data or []
 
 
+def normalize_whatsapp_number(number: str) -> str:
+    number = (number or "").strip()
+    if number and not number.startswith("+"):
+        number = f"+{number}"
+    return number
+
+
 def send():
     recipients = load_active_numbers()
 
@@ -43,7 +50,7 @@ def send():
     fail_count = 0
 
     for recipient in recipients:
-        number = (recipient.get("phone_number") or "").strip()
+        number = normalize_whatsapp_number(recipient.get("phone_number"))
         name = recipient.get("name", "Unknown")
 
         if not number:
