@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-04-14T12:16:18.586684",
+  "generated_at": "2026-04-14T12:33:02.448457",
   "global_indices": [
     {
       "name": "US S&P 500",
@@ -29,7 +29,7 @@
     {
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10593.16,
+      "px_last": 10594.53,
       "change_1d": "+0.1%",
       "mtd": "+2.2%",
       "ytd": "+6.5%",
@@ -47,8 +47,8 @@
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24011.87,
-      "change_1d": "+1.1%",
+      "px_last": 24015.5,
+      "change_1d": "+1.2%",
       "mtd": "+3.1%",
       "ytd": "-2.1%",
       "source": "Yahoo Finance"
@@ -85,10 +85,10 @@
     {
       "name": "Saudi Tadawul",
       "ticker": "^TASI.SR",
-      "px_last": 11481.39,
+      "px_last": 11486.18,
       "change_1d": "+0.5%",
-      "mtd": "+1.8%",
-      "ytd": "+8.8%",
+      "mtd": "+1.9%",
+      "ytd": "+8.9%",
       "source": "Yahoo Finance"
     },
     {
@@ -132,10 +132,10 @@
     {
       "name": "USD Index",
       "ticker": "DX-Y.NYB",
-      "px_last": 98.1,
+      "px_last": 98.07,
       "change_1d": "-0.3%",
       "mtd": "-1.6%",
-      "ytd": "-0.3%",
+      "ytd": "-0.4%",
       "source": "Yahoo Finance"
     },
     {
@@ -143,34 +143,34 @@
       "ticker": "EURUSD=X",
       "px_last": 1.18,
       "change_1d": "+1.1%",
-      "mtd": "+1.9%",
-      "ytd": "+0.4%",
+      "mtd": "+2.0%",
+      "ytd": "+0.5%",
       "source": "Yahoo Finance"
     },
     {
       "name": "GBP/USD",
       "ticker": "GBPUSD=X",
       "px_last": 1.36,
-      "change_1d": "+1.3%",
-      "mtd": "+2.5%",
-      "ytd": "+0.7%",
+      "change_1d": "+1.4%",
+      "mtd": "+2.6%",
+      "ytd": "+0.8%",
       "source": "Yahoo Finance"
     },
     {
       "name": "CHF/USD",
       "ticker": "CHFUSD=X",
-      "px_last": 1.28,
-      "change_1d": "+1.6%",
-      "mtd": "+2.2%",
-      "ytd": "+1.5%",
+      "px_last": 1.26,
+      "change_1d": "-0.2%",
+      "mtd": "+0.6%",
+      "ytd": "-0.1%",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 158.83,
-      "change_1d": "-0.5%",
-      "mtd": "+0.2%",
+      "px_last": 158.75,
+      "change_1d": "-0.6%",
+      "mtd": "+0.1%",
       "ytd": "+1.3%",
       "source": "Yahoo Finance"
     },
@@ -215,7 +215,7 @@
     {
       "name": "CHF/QAR",
       "ticker": "CHFQAR=X",
-      "px_last": 4.66,
+      "px_last": 4.67,
       "change_1d": "N/A",
       "mtd": "+0.0%",
       "ytd": "+0.0%",
@@ -309,28 +309,28 @@
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 98.32,
-      "change_1d": "-1.0%",
-      "mtd": "-2.8%",
-      "ytd": "+61.8%",
+      "px_last": 98.18,
+      "change_1d": "-1.2%",
+      "mtd": "-2.9%",
+      "ytd": "+61.6%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 77.89,
-      "change_1d": "+3.1%",
-      "mtd": "+2.7%",
-      "ytd": "+10.4%",
+      "px_last": 77.35,
+      "change_1d": "+2.4%",
+      "mtd": "+1.9%",
+      "ytd": "+9.6%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Gold (QAR)",
       "ticker": "DERIVED",
-      "px_last": 17465.81,
-      "change_1d": "+1.2%",
-      "mtd": "+0.3%",
-      "ytd": "+11.2%",
+      "px_last": 17419.95,
+      "change_1d": "+0.9%",
+      "mtd": "+0.1%",
+      "ytd": "+10.9%",
       "source": "Derived from Yahoo Finance GC=F and USD/QAR"
     }
   ],
@@ -356,86 +356,86 @@
   ],
   "global_news": [
     {
-      "headline": "Citi Achieves Five-Year High Returns Under Fraser Turnaround",
-      "summary": "Citigroup posts highest quarterly revenue in decade as traders capitalize on market volatility, marking success for CEO Jane Fraser's restructuring efforts.",
+      "headline": "Lucid Names New CEO, Gets $750M Investment",
+      "summary": "Electric vehicle maker Lucid Group appointed new CEO and secured $750 million fresh investment from Saudi PIF and Uber to strengthen operations.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/lucid-names-ceo-as-saudi-pif-uber-commit-another-750-million",
+      "metric": "$750M",
+      "metric_label": "Fresh investment secured"
+    },
+    {
+      "headline": "UK 10-Year Gilt Yields Hit 2008 Highs",
+      "summary": "Britain sold 10-year bonds at highest yield since global financial crisis, attracting record buyer demand amid Middle East war concerns.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/uk-sovereign-sets-bond-demand-record-as-yield-hunters-pile-in",
+      "metric": "2008 High",
+      "metric_label": "Gilt yield level reached"
+    },
+    {
+      "headline": "Dollar Strengthens as Iran War Drives Haven Demand",
+      "summary": "US dollar gains alongside VIX volatility as Iran conflict pushes investors toward safe-haven assets, reversing previous tariff-related trends.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/dollar-and-vix-are-back-in-tandem-as-iran-war-usurps-tariff-bets",
+      "metric": "VIX Correlation",
+      "metric_label": "Dollar-volatility relationship r"
+    },
+    {
+      "headline": "Iran Considers Pausing Hormuz Shipping for Talks",
+      "summary": "Tehran weighs temporary halt to Strait of Hormuz shipments to avoid US blockade confrontation and preserve ongoing peace negotiations.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/iran-weighs-pausing-its-hormuz-shipping-to-avoid-derailing-talks",
+      "metric": "20% Global Oil",
+      "metric_label": "Hormuz shipping share at risk"
+    },
+    {
+      "headline": "Citi Posts Best Returns in Five Years",
+      "summary": "Citigroup achieved highest quarterly revenue in decade as traders capitalized on market volatility, advancing CEO Fraser's turnaround strategy.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-04-14/citi-logs-best-returns-in-five-years-as-fraser-revamp-takes-hold",
-      "metric": "5 years",
+      "metric": "5-Year High",
       "metric_label": "Best returns period"
     },
     {
-      "headline": "EU Pushes \u20ac90 Billion Ukraine Loan After Orban Electoral Loss",
-      "summary": "German Chancellor Merz calls for rapid disbursement of \u20ac90 billion EU loan to Ukraine following Hungarian PM Orban's defeat removing funding roadblock.",
+      "headline": "Iran War Raises African Debt Costs Further",
+      "summary": "Iran conflict increases borrowing costs for African nations still recovering from pandemic-driven debt surge, worsening fiscal pressures.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/merz-says-eu-90-billion-loan-for-kyiv-should-be-disbursed-now",
-      "metric": "\u20ac90B",
-      "metric_label": "EU loan amount"
-    },
-    {
-      "headline": "Iran Considers Hormuz Shipping Pause for Peace Talks",
-      "summary": "Iran weighs temporary halt to Strait of Hormuz shipments to avoid confrontation with US and preserve upcoming peace negotiations.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/iran-weighs-pausing-its-hormuz-shipping-to-avoid-derailing-talks",
-      "metric": "20%",
-      "metric_label": "Global oil transit share"
-    },
-    {
-      "headline": "Nasdaq 100 Eyes Best Winning Streak Since 2021",
-      "summary": "US-Iran peace talk optimism drives Nasdaq 100 toward longest gaining streak in years while pushing oil prices lower globally.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-13/stock-market-today-dow-s-p-live-updates",
-      "metric": "2021",
-      "metric_label": "Last similar streak"
-    },
-    {
-      "headline": "Texas Property Mogul Targets Comptroller Role With Anti-Tax Platform",
-      "summary": "Don Huffines pursues Texas comptroller position promising tax reduction policies, bringing ideological approach to traditionally technical finance role.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/don-huffines-is-on-track-to-win-texas-comptroller-job-with-anti-tax-pitch",
-      "metric": "$200B",
-      "metric_label": "Texas budget oversight"
-    },
-    {
-      "headline": "Bloomberg Horizons Covers Middle East Africa Developments",
-      "summary": "Bloomberg's regional analysis program examines latest economic and political developments across Middle East and African markets.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/videos/2026-04-14/horizons-middle-east-africa-04-14-2026-video",
-      "metric": "Daily",
-      "metric_label": "Program frequency"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/iran-war-lifts-africa-debt-costs-that-have-surged-since-pandemic",
+      "metric": "Rising Spreads",
+      "metric_label": "African sovereign debt costs"
     }
   ],
   "qatar_news": [
     {
-      "headline": "Qatar Business News Sources Experience Technical Disruptions",
-      "summary": "Multiple Qatar business news feeds from Peninsula/Tribune experiencing temporary outages and data retrieval issues affecting market coverage.",
+      "headline": "Qatar Business Sources Experience Technical Disruptions",
+      "summary": "Multiple Qatar business news feeds from Peninsula/Tribune experiencing technical issues with data retrieval and content availability during current reporting cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "4",
-      "metric_label": "News sources affected"
+      "metric_label": "Sources Affected"
     },
     {
-      "headline": "Qatar Corporate News Feed Requires System Refresh",
-      "summary": "Corporate news workflow pending retry on approved source systems to restore normal publication cycle operations.",
+      "headline": "Qatar Corporate News Feed Requires Manual Refresh",
+      "summary": "Corporate news workflow experiencing delays requiring system retry on next automated run cycle for Peninsula/Tribune approved source feeds.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "100%",
-      "metric_label": "Feed retry required"
+      "metric": "1",
+      "metric_label": "Pending Retries"
     },
     {
-      "headline": "Qatar Market Coverage Experiences Data Gap",
-      "summary": "Approved publisher feeds returning insufficient article volume for comprehensive market intelligence report generation this cycle.",
+      "headline": "Qatar Market Coverage Shows Insufficient Data Volume",
+      "summary": "Approved publisher feeds failing to meet minimum content thresholds for comprehensive Qatar market intelligence reporting requirements this cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "0",
-      "metric_label": "Usable articles retrieved"
+      "metric": "Low",
+      "metric_label": "Content Volume"
     },
     {
-      "headline": "Qatar Economy Headlines Stream Shows Incomplete Data",
-      "summary": "Economic news headline distribution limited to approved publisher sources only, causing coverage gaps in current reporting period.",
+      "headline": "Qatar Economy Headlines Face Source Validation Issues",
+      "summary": "Economic reporting section restricted to approved publishers only, creating gaps when primary sources experience technical or content delivery problems.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Limited",
-      "metric_label": "Source availability status"
+      "metric": "Restricted",
+      "metric_label": "Source Access"
     }
   ],
   "kpis": [
@@ -445,14 +445,14 @@
       "sublabel": "US +1.0% \u00b7 UK +0.1%"
     },
     {
-      "value": "$98.32",
+      "value": "$98.18",
       "label": "Brent Crude",
-      "sublabel": "+61.8% Year-to-Date"
+      "sublabel": "+61.6% Year-to-Date"
     },
     {
-      "value": "17,465.81",
+      "value": "17,419.95",
       "label": "Gold (QAR)",
-      "sublabel": "+11.2% YTD \u00b7 Safe-haven demand"
+      "sublabel": "+10.9% YTD \u00b7 Safe-haven demand"
     },
     {
       "value": "N/A",
