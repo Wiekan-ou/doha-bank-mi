@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-04-14T12:33:02.448457",
+  "generated_at": "2026-04-14T13:01:10.748289",
   "global_indices": [
     {
       "name": "US S&P 500",
@@ -29,7 +29,7 @@
     {
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10594.53,
+      "px_last": 10593.66,
       "change_1d": "+0.1%",
       "mtd": "+2.2%",
       "ytd": "+6.5%",
@@ -47,7 +47,7 @@
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24015.5,
+      "px_last": 24024.41,
       "change_1d": "+1.2%",
       "mtd": "+3.1%",
       "ytd": "-2.1%",
@@ -132,8 +132,8 @@
     {
       "name": "USD Index",
       "ticker": "DX-Y.NYB",
-      "px_last": 98.07,
-      "change_1d": "-0.3%",
+      "px_last": 98.01,
+      "change_1d": "-0.4%",
       "mtd": "-1.6%",
       "ytd": "-0.4%",
       "source": "Yahoo Finance"
@@ -142,7 +142,7 @@
       "name": "EUR/USD",
       "ticker": "EURUSD=X",
       "px_last": 1.18,
-      "change_1d": "+1.1%",
+      "change_1d": "+1.2%",
       "mtd": "+2.0%",
       "ytd": "+0.5%",
       "source": "Yahoo Finance"
@@ -159,16 +159,16 @@
     {
       "name": "CHF/USD",
       "ticker": "CHFUSD=X",
-      "px_last": 1.26,
-      "change_1d": "-0.2%",
-      "mtd": "+0.6%",
-      "ytd": "-0.1%",
+      "px_last": 1.28,
+      "change_1d": "+1.7%",
+      "mtd": "+2.3%",
+      "ytd": "+1.6%",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 158.75,
+      "px_last": 158.7,
       "change_1d": "-0.6%",
       "mtd": "+0.1%",
       "ytd": "+1.3%",
@@ -309,28 +309,28 @@
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 98.18,
-      "change_1d": "-1.2%",
-      "mtd": "-2.9%",
-      "ytd": "+61.6%",
+      "px_last": 97.82,
+      "change_1d": "-1.5%",
+      "mtd": "-3.3%",
+      "ytd": "+61.0%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 77.35,
-      "change_1d": "+2.4%",
-      "mtd": "+1.9%",
-      "ytd": "+9.6%",
+      "px_last": 77.65,
+      "change_1d": "+2.8%",
+      "mtd": "+2.4%",
+      "ytd": "+10.1%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Gold (QAR)",
       "ticker": "DERIVED",
-      "px_last": 17419.95,
-      "change_1d": "+0.9%",
-      "mtd": "+0.1%",
-      "ytd": "+10.9%",
+      "px_last": 17443.97,
+      "change_1d": "+1.1%",
+      "mtd": "+0.2%",
+      "ytd": "+11.1%",
       "source": "Derived from Yahoo Finance GC=F and USD/QAR"
     }
   ],
@@ -339,7 +339,7 @@
       "name": "UST 5-Year",
       "ticker": "^FVX",
       "px_last": 3.92,
-      "change_1d": "-0.6%",
+      "change_1d": "-0.0%",
       "mtd": "-1.0%",
       "ytd": "+4.8%",
       "source": "Yahoo Finance"
@@ -348,94 +348,94 @@
       "name": "UST 10-Year",
       "ticker": "^TNX",
       "px_last": 4.3,
-      "change_1d": "-0.5%",
+      "change_1d": "+0.0%",
       "mtd": "-0.5%",
-      "ytd": "+2.6%",
+      "ytd": "+2.7%",
       "source": "Yahoo Finance"
     }
   ],
   "global_news": [
     {
-      "headline": "Lucid Names New CEO, Gets $750M Investment",
-      "summary": "Electric vehicle maker Lucid Group appointed new CEO and secured $750 million fresh investment from Saudi PIF and Uber to strengthen operations.",
+      "headline": "Oil Falls on US-Iran Talk Prospects",
+      "summary": "Oil prices declined as Washington and Tehran may revive diplomatic talks following US blockade implementation at Strait of Hormuz.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/lucid-names-ceo-as-saudi-pif-uber-commit-another-750-million",
-      "metric": "$750M",
-      "metric_label": "Fresh investment secured"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-13/latest-oil-market-news-and-analysis-for-april-14",
+      "metric": "Down",
+      "metric_label": "Oil price movement"
     },
     {
-      "headline": "UK 10-Year Gilt Yields Hit 2008 Highs",
-      "summary": "Britain sold 10-year bonds at highest yield since global financial crisis, attracting record buyer demand amid Middle East war concerns.",
+      "headline": "Sanctioned Tanker U-Turns After Testing Hormuz Blockade",
+      "summary": "China-linked vessel appears to reverse course after sailing through Strait of Hormuz, testing Trump's new naval blockade measures.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/uk-sovereign-sets-bond-demand-record-as-yield-hunters-pile-in",
-      "metric": "2008 High",
-      "metric_label": "Gilt yield level reached"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/ship-testing-us-hormuz-blockade-appears-to-u-turn-after-crossing",
+      "metric": "1st Test",
+      "metric_label": "Blockade enforcement trial"
     },
     {
-      "headline": "Dollar Strengthens as Iran War Drives Haven Demand",
-      "summary": "US dollar gains alongside VIX volatility as Iran conflict pushes investors toward safe-haven assets, reversing previous tariff-related trends.",
+      "headline": "BlackRock Attracts $130 Billion in Q1 Inflows",
+      "summary": "Asset manager's focus on higher-fee products drives strong client cash inflows and earnings that exceeded analyst estimates.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/dollar-and-vix-are-back-in-tandem-as-iran-war-usurps-tariff-bets",
-      "metric": "VIX Correlation",
-      "metric_label": "Dollar-volatility relationship r"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/blackrock-pulls-in-130-billion-of-client-cash-driven-by-etfs",
+      "metric": "$130B",
+      "metric_label": "Q1 net inflows"
     },
     {
-      "headline": "Iran Considers Pausing Hormuz Shipping for Talks",
-      "summary": "Tehran weighs temporary halt to Strait of Hormuz shipments to avoid US blockade confrontation and preserve ongoing peace negotiations.",
+      "headline": "Nasdaq 100 Eyes Best Streak Since 2021",
+      "summary": "Index set for longest winning run in years as US-Iran peace talk optimism reduces oil prices and lifts global markets.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/iran-weighs-pausing-its-hormuz-shipping-to-avoid-derailing-talks",
-      "metric": "20% Global Oil",
-      "metric_label": "Hormuz shipping share at risk"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-13/stock-market-today-dow-s-p-live-updates",
+      "metric": "3+ Years",
+      "metric_label": "Potential best streak duration"
     },
     {
-      "headline": "Citi Posts Best Returns in Five Years",
-      "summary": "Citigroup achieved highest quarterly revenue in decade as traders capitalized on market volatility, advancing CEO Fraser's turnaround strategy.",
+      "headline": "Warsh Fed Chair Hearing Scheduled Next Week",
+      "summary": "Senate Banking Committee to hold confirmation hearing for Trump's Federal Reserve chair nominee Kevin Warsh next week.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/citi-logs-best-returns-in-five-years-as-fraser-revamp-takes-hold",
-      "metric": "5-Year High",
-      "metric_label": "Best returns period"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/warsh-hearing-for-fed-chair-set-for-next-week-scott-says",
+      "metric": "Next Week",
+      "metric_label": "Confirmation hearing timing"
     },
     {
-      "headline": "Iran War Raises African Debt Costs Further",
-      "summary": "Iran conflict increases borrowing costs for African nations still recovering from pandemic-driven debt surge, worsening fiscal pressures.",
+      "headline": "Carlyle Raises $1.5 Billion for Credit Fund",
+      "summary": "Private equity firm completes first fundraising round for new asset-backed finance vehicle as it expands credit business operations.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-14/iran-war-lifts-africa-debt-costs-that-have-surged-since-pandemic",
-      "metric": "Rising Spreads",
-      "metric_label": "African sovereign debt costs"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-14/carlyle-draws-1-5-billion-for-asset-backed-fund-in-first-round",
+      "metric": "$1.5B",
+      "metric_label": "First round fundraising"
     }
   ],
   "qatar_news": [
     {
-      "headline": "Qatar Business Sources Experience Technical Disruptions",
-      "summary": "Multiple Qatar business news feeds from Peninsula/Tribune experiencing technical issues with data retrieval and content availability during current reporting cycle.",
+      "headline": "Qatar Business Source Temporarily Unavailable",
+      "summary": "Primary Qatar business news feed experiencing technical difficulties, preventing normal content delivery for current market intelligence cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "4",
-      "metric_label": "Sources Affected"
+      "metric": "0",
+      "metric_label": "Articles Available"
     },
     {
-      "headline": "Qatar Corporate News Feed Requires Manual Refresh",
-      "summary": "Corporate news workflow experiencing delays requiring system retry on next automated run cycle for Peninsula/Tribune approved source feeds.",
+      "headline": "Qatar Corporate News Feed Refresh Pending",
+      "summary": "Automated workflow system preparing to retry approved Qatar corporate news source during next scheduled content update cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "1",
-      "metric_label": "Pending Retries"
+      "metric": "Next Run",
+      "metric_label": "Retry Status"
     },
     {
-      "headline": "Qatar Market Coverage Shows Insufficient Data Volume",
-      "summary": "Approved publisher feeds failing to meet minimum content thresholds for comprehensive Qatar market intelligence reporting requirements this cycle.",
+      "headline": "Qatar Market Coverage Awaiting Source Update",
+      "summary": "Approved publisher feed failed to generate sufficient content items for comprehensive Qatar market intelligence report compilation.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Low",
-      "metric_label": "Content Volume"
+      "metric": "Insufficient",
+      "metric_label": "Content Items"
     },
     {
-      "headline": "Qatar Economy Headlines Face Source Validation Issues",
-      "summary": "Economic reporting section restricted to approved publishers only, creating gaps when primary sources experience technical or content delivery problems.",
+      "headline": "Qatar Economy Headline Stream Incomplete",
+      "summary": "Economic news section restricted to approved publisher sources only, causing gaps in Qatar economy headline coverage today.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Restricted",
-      "metric_label": "Source Access"
+      "metric": "Approved Only",
+      "metric_label": "Source Policy"
     }
   ],
   "kpis": [
@@ -445,14 +445,14 @@
       "sublabel": "US +1.0% \u00b7 UK +0.1%"
     },
     {
-      "value": "$98.18",
+      "value": "$97.82",
       "label": "Brent Crude",
-      "sublabel": "+61.6% Year-to-Date"
+      "sublabel": "+61.0% Year-to-Date"
     },
     {
-      "value": "17,419.95",
+      "value": "17,443.97",
       "label": "Gold (QAR)",
-      "sublabel": "+10.9% YTD \u00b7 Safe-haven demand"
+      "sublabel": "+11.1% YTD \u00b7 Safe-haven demand"
     },
     {
       "value": "N/A",
@@ -462,7 +462,7 @@
     {
       "value": "4.3%",
       "label": "UST 10Y Yield",
-      "sublabel": "+2.6% YTD \u00b7 Rising yields"
+      "sublabel": "+2.7% YTD \u00b7 Rising yields"
     },
     {
       "value": "4.50%",
