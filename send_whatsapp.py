@@ -2,6 +2,7 @@ import os
 import datetime
 import requests
 import time
+import re
 from supabase_client import get_supabase
 
 MAKE_WEBHOOK_URL = os.environ["MAKE_WEBHOOK_URL"]
@@ -16,13 +17,39 @@ def load_active_numbers() -> list[dict]:
 
     resp = (
         sb.table("recipients")
-        .select("name, phone_number, tier")
+        .select("id, name, phone_number, tier")
         .eq("channel", "whatsapp")
         .eq("active", True)
         .execute()
     )
 
-    return resp.data or []
+    rows = resp.data or []
+    print(f"[INFO] Loaded {len(rows)} active WhatsApp recipients from Supabase")
+    return rows
+
+
+def normalize_number(number: str) -> str:
+    """
+    Keep international format only.
+    Valid examples:
+      +97455512345
+      +96170123456
+      +447700900123
+    """
+    if not number:
+        return ""
+
+    number = number.strip().replace(" ", "")
+
+    # Must start with +
+    if not number.startswith("+"):
+        return ""
+
+    # Must be + followed by digits only, reasonable length
+    if not re.fullmatch(r"\+\d{8,15}", number):
+        return ""
+
+    return number
 
 
 def send():
@@ -43,23 +70,27 @@ def send():
     fail_count = 0
 
     for recipient in recipients:
-        number = (recipient.get("phone_number") or "").strip()
+        recipient_id = recipient.get("id", "")
         name = recipient.get("name", "Unknown")
-
-        if number and not number.startswith("+"):
-            number = f"+{number}"
+        raw_number = recipient.get("phone_number", "")
+        number = normalize_number(raw_number)
 
         if not number:
-            print(f"[WARN] Skipping {name}, no phone number defined")
+            print(f"[WARN] Skipping {name}, invalid phone format: {raw_number}")
+            fail_count += 1
             continue
 
         payload = {
+            "recipient_id": recipient_id,
             "to": number,
             "name": name,
             "report_date": REPORT_DATE,
             "pdf_url": PDF_URL,
             "caption": caption,
         }
+
+        print(f"[INFO] Sending WhatsApp to {name} | {number}")
+        print(f"[DEBUG] Payload: {payload}")
 
         try:
             resp = requests.post(
