@@ -58,18 +58,6 @@ def load_public_pdf_url() -> str:
     return url
 
 
-def validate_pdf_url(url: str) -> bool:
-    try:
-        r = requests.get(url, timeout=20)
-        print(f"[INFO] PDF URL validation status: {r.status_code}")
-        content_type = r.headers.get("content-type", "")
-        print(f"[INFO] PDF URL content-type: {content_type}")
-        return r.status_code == 200 and "pdf" in content_type.lower()
-    except Exception as e:
-        print(f"[ERROR] PDF URL validation failed: {e}")
-        return False
-
-
 def send():
     recipients = load_active_numbers()
 
@@ -79,10 +67,6 @@ def send():
 
     pdf_url = load_public_pdf_url()
     print(f"[INFO] Using public PDF URL: {pdf_url}")
-
-    if not validate_pdf_url(pdf_url):
-        print("[ERROR] Public PDF URL is not reachable as a PDF")
-        raise SystemExit(1)
 
     caption = (
         f"Doha Bank Market Intelligence\n"
