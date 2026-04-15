@@ -140,7 +140,7 @@ jobs:
             echo "[]" > docs/send_log.json
           fi
 
-      - name: Commit generated files to repo
+           - name: Commit generated files to repo
         run: |
           git config user.name "Doha Bank MI Bot"
           git config user.email "mi-bot@dohabank.com"
@@ -151,6 +151,11 @@ jobs:
           git add public_pdf_url.json
           git add docs/market_data.json
           git add docs/send_log.json
+
+          git status
+
+          git diff --staged --quiet || git commit -m "Daily report $(date +'%Y-%m-%d')"
+          git push
 
           git diff --staged --quiet || git commit -m "Daily report $(date +'%Y-%m-%d')"
           git push
