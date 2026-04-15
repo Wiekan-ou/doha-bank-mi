@@ -46,6 +46,18 @@ jobs:
           SUPABASE_PUBLIC_STORAGE_BUCKET: ${{ secrets.SUPABASE_PUBLIC_STORAGE_BUCKET }}
         run: python upload_pdf_to_storage.py
 
+      - name: Export public PDF URL to workflow env
+        run: |
+          python3 - << 'PYEOF'
+          import json
+          with open("public_pdf_url.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
+          url = data["public_url"]
+          print(f"PUBLIC_PDF_URL={url}")
+          with open("${GITHUB_ENV}", "a", encoding="utf-8") as envf:
+              envf.write(f"PUBLIC_PDF_URL={url}\n")
+          PYEOF
+
       - name: Send email via Resend
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
@@ -58,6 +70,7 @@ jobs:
           MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PUBLIC_PDF_URL: ${{ env.PUBLIC_PDF_URL }}
         run: python send_whatsapp.py
 
       - name: Write send log to JSON and Supabase
@@ -124,7 +137,7 @@ jobs:
               "status": "success",
               "email_count": email_count,
               "wa_count": wa_count,
-              "pdf_url": "",
+              "pdf_url": os.environ.get("PUBLIC_PDF_URL", ""),
               "notes": "Workflow completed successfully"
           }).execute()
           PYEOF
