@@ -1,6 +1,5 @@
 import os
 import re
-import json
 import time
 import base64
 import requests
@@ -10,7 +9,7 @@ SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_SERVICE_ROLE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 MAKE_WEBHOOK_URL = os.environ["MAKE_WEBHOOK_URL"]
 RESEND_API_KEY = os.environ["RESEND_API_KEY"]
-FROM_EMAIL = os.environ.get("FROM_EMAIL", "reports@mail.wiekan.com")
+FROM_EMAIL = os.environ.get("FROM_EMAIL", "Market Intelligence <updates@market-sigma.com>")
 MAX_REQUESTS = int(os.environ.get("MAX_REQUESTS", "50"))
 
 sb = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
@@ -59,6 +58,20 @@ def get_report(report_id: str):
     return rows[0]
 
 
+def get_broadcast_file(file_id: str):
+    resp = (
+        sb.table("broadcast_files")
+        .select("*")
+        .eq("id", file_id)
+        .limit(1)
+        .execute()
+    )
+    rows = resp.data or []
+    if not rows:
+        raise ValueError(f"Broadcast file not found: {file_id}")
+    return rows[0]
+
+
 def get_recipient(recipient_id: str):
     resp = (
         sb.table("recipients")
@@ -77,7 +90,7 @@ def mark_request(request_id: str, status: str, notes: str = ""):
     payload = {
         "status": status,
         "processed_at": "now()",
-        "notes": notes[:2000] if notes else None
+        "notes": notes[:2000] if notes else None,
     }
     sb.table("dispatch_requests").update(payload).eq("id", request_id).execute()
 
@@ -85,16 +98,18 @@ def mark_request(request_id: str, status: str, notes: str = ""):
 def insert_dispatch_log(report_id, recipient, channel, destination, action_type, triggered_by):
     resp = (
         sb.table("dispatch_logs")
-        .insert({
-            "report_id": report_id,
-            "recipient_id": recipient.get("id"),
-            "recipient_name": recipient.get("name"),
-            "channel": channel,
-            "destination": destination,
-            "action_type": action_type,
-            "status": "pending",
-            "triggered_by": triggered_by
-        })
+        .insert(
+            {
+                "report_id": report_id,
+                "recipient_id": recipient.get("id"),
+                "recipient_name": recipient.get("name"),
+                "channel": channel,
+                "destination": destination,
+                "action_type": action_type,
+                "status": "pending",
+                "triggered_by": triggered_by,
+            }
+        )
         .execute()
     )
     rows = resp.data or []
@@ -107,7 +122,7 @@ def update_dispatch_log(log_id, status, response_text):
     payload = {
         "status": status,
         "response_text": response_text[:4000] if response_text else None,
-        "sent_at": "now()" if status == "sent" else None
+        "sent_at": "now()" if status == "sent" else None,
     }
     sb.table("dispatch_logs").update(payload).eq("id", log_id).execute()
 
@@ -117,7 +132,30 @@ def ensure_report_approved(report):
         raise ValueError("Report is not approved. Only approved reports can be dispatched.")
 
 
-def send_whatsapp(report, recipient, action_type, triggered_by):
+def build_payload_from_report(report):
+    report_date = str(report.get("report_date"))
+    return {
+        "title": f"Market Intelligence – {report_date}",
+        "caption": (
+            f"Doha Bank Market Intelligence\n"
+            f"{report_date}\n\n"
+            f"Please find attached the approved market intelligence report."
+        ),
+        "file_url": report.get("pdf_url"),
+        "file_name": f"Market-Intelligence-{report_date}.pdf",
+    }
+
+
+def build_payload_from_broadcast(bf):
+    return {
+        "title": bf.get("title") or "Broadcast File",
+        "caption": bf.get("caption") or "Please find attached the requested file.",
+        "file_url": bf.get("file_url"),
+        "file_name": bf.get("file_name") or "attachment",
+    }
+
+
+def send_whatsapp(payload_data, recipient, action_type, triggered_by, report_id=None):
     number = normalize_number(recipient.get("phone_number", ""))
     if not number:
         raise ValueError("Invalid WhatsApp phone number")
@@ -125,17 +163,13 @@ def send_whatsapp(report, recipient, action_type, triggered_by):
     payload = {
         "to": number,
         "name": recipient.get("name", "Unknown"),
-        "report_date": str(report.get("report_date")),
-        "pdf_url": report.get("pdf_url"),
-        "caption": (
-            f"Doha Bank Market Intelligence\n"
-            f"{report.get('report_date')}\n\n"
-            f"Please find attached the approved market intelligence report."
-        ),
+        "report_date": payload_data.get("title", ""),
+        "pdf_url": payload_data.get("file_url"),
+        "caption": payload_data.get("caption"),
     }
 
     log_id = insert_dispatch_log(
-        report["id"],
+        report_id,
         recipient,
         "whatsapp",
         number,
@@ -155,41 +189,45 @@ def send_whatsapp(report, recipient, action_type, triggered_by):
         return False, f"WhatsApp exception: {e}"
 
 
-def send_email(report, recipient, action_type, triggered_by):
+def send_email(payload_data, recipient, action_type, triggered_by, report_id=None):
     email = (recipient.get("email") or "").strip()
     if not valid_email(email):
         raise ValueError("Invalid email address")
 
-    pdf_url = report.get("pdf_url")
-    if not pdf_url:
-        raise ValueError("Report PDF URL missing")
+    file_url = payload_data.get("file_url")
+    file_name = payload_data.get("file_name") or "attachment"
+    title = payload_data.get("title") or "Attachment"
+    caption = payload_data.get("caption") or "Please find attached the requested file."
 
-    pdf_resp = requests.get(pdf_url, timeout=60)
-    if pdf_resp.status_code != 200:
-        raise ValueError(f"Could not fetch PDF for email attachment: {pdf_resp.status_code}")
+    if not file_url:
+        raise ValueError("File URL missing")
 
-    pdf_b64 = base64.b64encode(pdf_resp.content).decode()
+    file_resp = requests.get(file_url, timeout=60)
+    if file_resp.status_code != 200:
+        raise ValueError(f"Could not fetch file for email attachment: {file_resp.status_code}")
+
+    content_type = file_resp.headers.get("content-type", "application/octet-stream")
+    file_b64 = base64.b64encode(file_resp.content).decode()
 
     payload = {
         "from": FROM_EMAIL,
         "to": [email],
-        "subject": f"Market Intelligence – {report.get('report_date')}",
+        "subject": title,
         "html": f"""
             <p>Dear {recipient.get('name') or 'Client'},</p>
-            <p>Please find attached the approved <strong>Doha Bank Market Intelligence Report</strong>
-            for <strong>{report.get('report_date')}</strong>.</p>
+            <p>{caption}</p>
         """,
         "attachments": [
             {
-                "filename": f"Market-Intelligence-{report.get('report_date')}.pdf",
-                "content": pdf_b64,
-                "content_type": "application/pdf",
+                "filename": file_name,
+                "content": file_b64,
+                "content_type": content_type,
             }
         ],
     }
 
     log_id = insert_dispatch_log(
-        report["id"],
+        report_id,
         recipient,
         "email",
         email,
@@ -220,24 +258,37 @@ def send_email(report, recipient, action_type, triggered_by):
 def process_one(req):
     req_id = req["id"]
     report_id = req.get("report_id")
+    broadcast_file_id = req.get("notes") if (req.get("action_type") == "broadcast_send" and req.get("notes")) else None
     recipient_id = req.get("recipient_id")
     channel = (req.get("channel") or "").lower()
     action_type = req.get("action_type") or "single_send"
     triggered_by = req.get("requested_by") or "System"
 
-    if not report_id or not recipient_id or channel not in ("whatsapp", "email"):
+    if not recipient_id or channel not in ("whatsapp", "email"):
         mark_request(req_id, "failed", "Invalid dispatch request payload")
         return False
 
     try:
-        report = get_report(report_id)
         recipient = get_recipient(recipient_id)
-        ensure_report_approved(report)
+
+        if action_type == "broadcast_send":
+            if not broadcast_file_id:
+                raise ValueError("Missing broadcast file id in notes")
+            bf = get_broadcast_file(broadcast_file_id)
+            payload_data = build_payload_from_broadcast(bf)
+            linked_report_id = None
+        else:
+            if not report_id:
+                raise ValueError("Missing report id")
+            report = get_report(report_id)
+            ensure_report_approved(report)
+            payload_data = build_payload_from_report(report)
+            linked_report_id = report_id
 
         if channel == "whatsapp":
-            ok, msg = send_whatsapp(report, recipient, action_type, triggered_by)
+            ok, msg = send_whatsapp(payload_data, recipient, action_type, triggered_by, linked_report_id)
         else:
-            ok, msg = send_email(report, recipient, action_type, triggered_by)
+            ok, msg = send_email(payload_data, recipient, action_type, triggered_by, linked_report_id)
 
         mark_request(req_id, "processed" if ok else "failed", msg)
         return ok
@@ -263,9 +314,6 @@ def main():
         time.sleep(1)
 
     print(f"[INFO] Queue processing finished. Success={success}, Failed={failed}")
-
-    # do not fail whole workflow just because one request failed
-    # failures are logged in Supabase
     return 0
 
 
