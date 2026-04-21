@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-04-21T06:49:26.955538",
+  "generated_at": "2026-04-21T09:14:48.977049",
   "global_indices": [
     {
       "name": "US S&P 500",
@@ -29,10 +29,10 @@
     {
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10609.1,
-      "change_1d": "-0.5%",
-      "mtd": "+2.4%",
-      "ytd": "+6.6%",
+      "px_last": 10628.55,
+      "change_1d": "+0.2%",
+      "mtd": "+2.5%",
+      "ytd": "+6.8%",
       "source": "Yahoo Finance"
     },
     {
@@ -47,28 +47,28 @@
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24417.8,
-      "change_1d": "-1.2%",
-      "mtd": "+4.8%",
-      "ytd": "-0.5%",
+      "px_last": 24583.45,
+      "change_1d": "+0.7%",
+      "mtd": "+5.5%",
+      "ytd": "+0.2%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Hong Kong HSI",
       "ticker": "^HSI",
-      "px_last": 26446.24,
-      "change_1d": "+0.3%",
-      "mtd": "+4.6%",
-      "ytd": "+0.4%",
+      "px_last": 26487.48,
+      "change_1d": "+0.5%",
+      "mtd": "+4.7%",
+      "ytd": "+0.6%",
       "source": "Yahoo Finance"
     },
     {
       "name": "India Sensex",
       "ticker": "^BSESN",
-      "px_last": 79190.67,
-      "change_1d": "+0.9%",
-      "mtd": "+8.3%",
-      "ytd": "-7.0%",
+      "px_last": 79278.49,
+      "change_1d": "+1.0%",
+      "mtd": "+8.4%",
+      "ytd": "-6.9%",
       "source": "Yahoo Finance"
     }
   ],
@@ -85,10 +85,10 @@
     {
       "name": "Saudi Tadawul",
       "ticker": "^TASI.SR",
-      "px_last": 11366.79,
-      "change_1d": "-0.9%",
-      "mtd": "+0.8%",
-      "ytd": "+7.8%",
+      "px_last": 11383.27,
+      "change_1d": "+0.1%",
+      "mtd": "+1.0%",
+      "ytd": "+7.9%",
       "source": "Yahoo Finance"
     },
     {
@@ -132,46 +132,46 @@
     {
       "name": "USD Index",
       "ticker": "DX-Y.NYB",
-      "px_last": 98.14,
-      "change_1d": "+0.1%",
-      "mtd": "-1.5%",
-      "ytd": "-0.3%",
+      "px_last": 98.27,
+      "change_1d": "+0.2%",
+      "mtd": "-1.4%",
+      "ytd": "-0.2%",
       "source": "Yahoo Finance"
     },
     {
       "name": "EUR/USD",
       "ticker": "EURUSD=X",
       "px_last": 1.18,
-      "change_1d": "+0.3%",
-      "mtd": "+1.8%",
-      "ytd": "+0.2%",
+      "change_1d": "+0.2%",
+      "mtd": "+1.6%",
+      "ytd": "+0.1%",
       "source": "Yahoo Finance"
     },
     {
       "name": "GBP/USD",
       "ticker": "GBPUSD=X",
       "px_last": 1.35,
-      "change_1d": "+0.3%",
-      "mtd": "+2.1%",
-      "ytd": "+0.3%",
+      "change_1d": "+0.1%",
+      "mtd": "+2.0%",
+      "ytd": "+0.2%",
       "source": "Yahoo Finance"
     },
     {
       "name": "CHF/USD",
       "ticker": "CHFUSD=X",
       "px_last": 1.28,
-      "change_1d": "+0.6%",
-      "mtd": "+2.4%",
-      "ytd": "+1.7%",
+      "change_1d": "+0.4%",
+      "mtd": "+2.2%",
+      "ytd": "+1.5%",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 158.83,
-      "change_1d": "-0.2%",
-      "mtd": "+0.2%",
-      "ytd": "+1.3%",
+      "px_last": 159.22,
+      "change_1d": "+0.0%",
+      "mtd": "+0.4%",
+      "ytd": "+1.6%",
       "source": "Yahoo Finance"
     },
     {
@@ -179,8 +179,8 @@
       "ticker": "CNYUSD=X",
       "px_last": 0.15,
       "change_1d": "+0.0%",
-      "mtd": "+1.2%",
-      "ytd": "+2.7%",
+      "mtd": "+1.1%",
+      "ytd": "+2.6%",
       "source": "Yahoo Finance"
     }
   ],
@@ -226,8 +226,8 @@
       "ticker": "DERIVED",
       "px_last": 0.546,
       "change_1d": "+0.0%",
-      "mtd": "+1.2%",
-      "ytd": "+2.7%",
+      "mtd": "+1.1%",
+      "ytd": "+2.6%",
       "source": "Derived from Yahoo Finance CNY/USD and USD/QAR"
     }
   ],
@@ -236,63 +236,63 @@
       "name": "Doha",
       "ticker": "BRES.QA",
       "px_last": 2.38,
-      "change_1d": "+0.2%",
+      "change_1d": "+0.3%",
       "mtd": "-0.3%",
-      "ytd": "-2.5%",
+      "ytd": "-2.4%",
       "source": "Yahoo Finance"
     },
     {
       "name": "QNB",
       "ticker": "QNBK.QA",
-      "px_last": 18.44,
-      "change_1d": "+0.5%",
-      "mtd": "+7.8%",
-      "ytd": "-0.0%",
+      "px_last": 18.31,
+      "change_1d": "-0.2%",
+      "mtd": "+7.1%",
+      "ytd": "-0.7%",
       "source": "Yahoo Finance"
     },
     {
       "name": "QIB",
       "ticker": "QIBK.QA",
-      "px_last": 23.18,
-      "change_1d": "+0.7%",
-      "mtd": "+3.1%",
-      "ytd": "-1.1%",
+      "px_last": 22.98,
+      "change_1d": "-0.2%",
+      "mtd": "+2.2%",
+      "ytd": "-1.9%",
       "source": "Yahoo Finance"
     },
     {
       "name": "CBQ",
       "ticker": "CBQK.QA",
-      "px_last": 4.38,
-      "change_1d": "-0.5%",
-      "mtd": "+0.6%",
-      "ytd": "+10.2%",
+      "px_last": 4.35,
+      "change_1d": "-1.1%",
+      "mtd": "+0.0%",
+      "ytd": "+9.5%",
       "source": "Yahoo Finance"
     },
     {
       "name": "QIIB",
       "ticker": "QIIK.QA",
-      "px_last": 11.23,
-      "change_1d": "+0.0%",
-      "mtd": "+1.9%",
-      "ytd": "+1.2%",
+      "px_last": 11.28,
+      "change_1d": "+0.4%",
+      "mtd": "+2.4%",
+      "ytd": "+1.6%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Al Rayan",
       "ticker": "MARK.QA",
       "px_last": 2.22,
-      "change_1d": "+0.0%",
-      "mtd": "+1.6%",
-      "ytd": "+6.2%",
+      "change_1d": "-0.1%",
+      "mtd": "+1.5%",
+      "ytd": "+6.1%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Dukhan",
       "ticker": "DBIS.QA",
-      "px_last": 1.12,
-      "change_1d": "+0.4%",
-      "mtd": "+21.5%",
-      "ytd": "+14.1%",
+      "px_last": 1.14,
+      "change_1d": "+1.4%",
+      "mtd": "+23.2%",
+      "ytd": "+15.7%",
       "source": "Yahoo Finance"
     },
     {
@@ -309,28 +309,28 @@
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 95.48,
-      "change_1d": "+0.0%",
-      "mtd": "-5.6%",
-      "ytd": "+57.2%",
+      "px_last": 90.66,
+      "change_1d": "-5.0%",
+      "mtd": "-10.4%",
+      "ytd": "+49.2%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 78.96,
-      "change_1d": "-1.2%",
-      "mtd": "+4.1%",
-      "ytd": "+11.9%",
+      "px_last": 78.78,
+      "change_1d": "-1.5%",
+      "mtd": "+3.8%",
+      "ytd": "+11.7%",
       "source": "Yahoo Finance"
     },
     {
       "name": "Gold (QAR)",
       "ticker": "DERIVED",
-      "px_last": 17468.36,
-      "change_1d": "-0.2%",
-      "mtd": "+0.3%",
-      "ytd": "+11.2%",
+      "px_last": 17484.38,
+      "change_1d": "-0.1%",
+      "mtd": "+0.4%",
+      "ytd": "+11.3%",
       "source": "Derived from Yahoo Finance GC=F and USD/QAR"
     }
   ],
@@ -356,58 +356,58 @@
   ],
   "global_news": [
     {
-      "headline": "UK Job Cuts Rise on Iran War Concerns",
-      "summary": "UK businesses increased job cuts in March as Iran war creates fresh caution in labor market amid energy shock warnings.",
+      "headline": "UniCredit CEO Will Pause Commerzbank Pursuit Without Control",
+      "summary": "Andrea Orcel says UniCredit will halt its takeover bid for Commerzbank if it fails to gain control of the German lender.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-21/uk-employers-cut-jobs-in-first-month-of-iran-conflict",
-      "metric": "March",
-      "metric_label": "Month of increased job cuts"
+      "url": "https://www.bloomberg.com/news/videos/2026-04-21/orcel-if-we-do-not-reach-control-we-will-take-a-pause-video",
+      "metric": "30%",
+      "metric_label": "Current UniCredit stake in Comme"
     },
     {
-      "headline": "China Bonds Head for Best Month Since October",
-      "summary": "Chinese benchmark bonds set for strongest performance since October driven by abundant market liquidity despite debt supply concerns.",
+      "headline": "Euro Defies Expectations as Second-Best G-10 Performer",
+      "summary": "Euro surprises markets by outperforming most G-10 currencies against dollar despite Middle East war energy shock concerns for Europe.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-21/china-bonds-set-for-best-month-since-october-on-ample-cash",
-      "metric": "6 months",
-      "metric_label": "Best bond performance period"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-21/euro-attracts-bullish-options-buyers-as-currency-goes-off-script",
+      "metric": "#2",
+      "metric_label": "Euro ranking vs USD in G-10 past"
     },
     {
-      "headline": "Indonesia Stocks Fall After MSCI Review Delay",
-      "summary": "Indonesian equities declined as MSCI extended market status review to June and warned of removing tightly-held ownership stocks.",
+      "headline": "ECB Vice President Calls for Prudent Rate Approach",
+      "summary": "Luis de Guindos says European Central Bank should take measured approach to interest rates amid Iran war uncertainty.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-20/msci-to-assess-indonesia-stock-reforms-update-on-status-in-june",
-      "metric": "June",
-      "metric_label": "Extended review deadline"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-21/guindos-says-ecb-needs-to-be-prudent-keep-a-cool-head-on-rates",
+      "metric": "Prudent",
+      "metric_label": "ECB stance on rate policy"
     },
     {
-      "headline": "Brevan Howard Opens Tokyo Office This Summer",
-      "summary": "Global hedge fund Brevan Howard plans Tokyo office launch and trader hiring to capitalize on Japanese market opportunities.",
+      "headline": "Bawag Pauses Dividends to Fund Irish Bank Acquisition",
+      "summary": "Austrian bank will halt investor payouts and use risk transfers to finance \u20ac1.62 billion purchase of Ireland's Permanent TSB.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-21/brevan-howard-plans-tokyo-office-to-hire-traders-in-hub-boost",
-      "metric": "Summer 2026",
-      "metric_label": "Tokyo office opening timeline"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-21/bawag-plans-dividend-cut-srts-to-help-fund-permanent-tsb-deal",
+      "metric": "\u20ac1.62bn",
+      "metric_label": "Permanent TSB acquisition cost"
     },
     {
-      "headline": "AB Foods to Separate Primark Fashion Chain",
-      "summary": "Associated British Foods will spin off budget apparel chain Primark in breakup of major UK conglomerate structure.",
+      "headline": "India Wind Capacity on Track for 2030 Target",
+      "summary": "Suzlon Energy says India will meet 100 gigawatts wind capacity goal by 2030 as installations accelerate for continuous power supply.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-21/ab-foods-to-separate-its-budget-apparel-chain-primark",
-      "metric": "2 divisions",
-      "metric_label": "Post-separation business units"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-21/indian-wind-turbine-giant-says-nation-set-to-meet-2030-target",
+      "metric": "100 GW",
+      "metric_label": "India's 2030 wind capacity targe"
     },
     {
-      "headline": "Bundesbank Calls for Equal Mythos AI Access",
-      "summary": "Bundesbank President Nagel says Anthropic's Mythos model should be shared with organizations for fair assessment of capabilities.",
+      "headline": "UniCredit CEO Details Full Commerzbank Takeover Strategy",
+      "summary": "Andrea Orcel discusses Italian bank's 18-month pursuit of German rival, facing consistent leadership resistance despite being largest investor.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-21/mythos-access-must-be-granted-on-level-playing-field-nagel-says",
-      "metric": "Equal access",
-      "metric_label": "Proposed AI model sharing policy"
+      "url": "https://www.bloomberg.com/news/videos/2026-04-21/in-full-unicredit-s-orcel-on-his-pursuit-of-commerzbank-video",
+      "metric": "18 months",
+      "metric_label": "Duration of takeover pursuit"
     }
   ],
   "qatar_news": [
     {
       "headline": "Qatar Business Source Temporarily Unavailable",
-      "summary": "Peninsula/Tribune news feed experienced technical issues preventing article delivery during current reporting cycle.",
+      "summary": "Primary business news feed from Peninsula/Tribune experiencing technical difficulties, preventing access to latest Qatar corporate updates and market intelligence.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "0",
@@ -415,15 +415,15 @@
     },
     {
       "headline": "Qatar Corporate News Feed Refresh Pending",
-      "summary": "System workflow scheduled to retry approved news source connection on next automated run cycle.",
+      "summary": "Automated workflow system scheduled to retry approved Peninsula/Tribune source connection on next scheduled run cycle for corporate coverage.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "1",
-      "metric_label": "Retry Attempts Scheduled"
+      "metric_label": "Retry Attempts Queued"
     },
     {
       "headline": "Qatar Market Coverage Awaiting Source Update",
-      "summary": "Approved publisher feed failed to provide minimum required articles for comprehensive market intelligence reporting.",
+      "summary": "Approved publisher feed failed to deliver minimum required articles for comprehensive market report generation during current cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "Insufficient",
@@ -431,28 +431,28 @@
     },
     {
       "headline": "Qatar Economy Headlines Stream Incomplete",
-      "summary": "Economic news section restricted to approved publishers only, limiting available content sources for reporting.",
+      "summary": "Economic news section restricted to approved publisher sources only, preventing alternative feed integration for complete coverage.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Approved Only",
-      "metric_label": "Source Restriction Policy"
+      "metric": "Limited",
+      "metric_label": "Source Access Level"
     }
   ],
   "kpis": [
     {
       "value": "Mixed",
       "label": "Global Equities",
-      "sublabel": "US -0.2% \u00b7 UK -0.5%"
+      "sublabel": "US -0.2% \u00b7 UK +0.2%"
     },
     {
-      "value": "$95.48",
+      "value": "$90.66",
       "label": "Brent Crude",
-      "sublabel": "+57.2% Year-to-Date"
+      "sublabel": "+49.2% Year-to-Date"
     },
     {
-      "value": "17,468.36",
+      "value": "17,484.38",
       "label": "Gold (QAR)",
-      "sublabel": "+11.2% YTD \u00b7 Safe-haven demand"
+      "sublabel": "+11.3% YTD \u00b7 Safe-haven demand"
     },
     {
       "value": "N/A",
