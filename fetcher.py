@@ -251,21 +251,24 @@ def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d")
 
 def _safe_qe_from_mubasher() -> Optional[float]:
     """
-    Mubasher fallback for current QE Index value.
+    Mubasher fallback for QE Index.
+    We only accept large comma-formatted numbers like 10,677.64
+    to avoid picking small values like +3.58 or 0.03%.
     """
     urls = [
         "https://english.mubasher.info/markets/QE",
         "https://english.mubasher.info/markets/QE/indices/GNRI",
     ]
+
     headers = {
         "User-Agent": "Mozilla/5.0",
         "Accept-Language": "en-US,en;q=0.9",
     }
 
-    patterns = [
-        r"QE Index\s*([0-9][0-9,]*\.?[0-9]*)",
-        r"QE Index[^0-9]{0,20}([0-9][0-9,]*\.?[0-9]*)",
-        r"GNRI[^0-9]{0,30}([0-9][0-9,]*\.?[0-9]*)",
+    strong_patterns = [
+        r"QE Index\s*([0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?)",
+        r"QE Index[^0-9]{0,40}([0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?)",
+        r"GNRI[^0-9]{0,40}([0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?)",
     ]
 
     for url in urls:
@@ -277,15 +280,33 @@ def _safe_qe_from_mubasher() -> Optional[float]:
             text = r.text or ""
             print(f"[DEBUG][MUBASHER] Response length for {url}: {len(text)}")
 
-            for pattern in patterns:
+            for pattern in strong_patterns:
                 m = re.search(pattern, text, re.IGNORECASE)
                 print(f"[DEBUG][MUBASHER] Pattern tried: {pattern} | matched: {bool(m)}")
                 if m:
                     raw = m.group(1).replace(",", "").strip()
                     value = float(raw)
                     if value > 1000:
-                        print(f"[INFO] Mubasher fallback fetched QE Index: {value}")
+                        print(f"[INFO] Mubasher QE Index extracted: {value}")
                         return value
+
+            # fallback: search snippets around QE Index and then extract first large comma-formatted number
+            anchor = re.search(r"QE Index", text, re.IGNORECASE)
+            if anchor:
+                start = max(0, anchor.start() - 100)
+                end = min(len(text), anchor.end() + 300)
+                snippet = text[start:end]
+                print("[DEBUG][MUBASHER] QE snippet:")
+                print(snippet)
+
+                m2 = re.search(r"([0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?)", snippet)
+                if m2:
+                    raw = m2.group(1).replace(",", "").strip()
+                    value = float(raw)
+                    if value > 1000:
+                        print(f"[INFO] Mubasher QE Index extracted from snippet: {value}")
+                        return value
+
         except Exception as e:
             print(f"[WARN] Mubasher fallback failed for {url}: {e}")
 
@@ -294,9 +315,6 @@ def _safe_qe_from_mubasher() -> Optional[float]:
 
 
 def _safe_qe_from_qse() -> Optional[float]:
-    """
-    Official QSE fallback for current QE Index value.
-    """
     urls = [
         "https://www.qe.com.qa/overview",
         "https://www.qe.com.qa/en/web/guest/overview",
