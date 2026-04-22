@@ -148,9 +148,6 @@ def _extract_close_series(df):
 
 
 def _safe_download(sym: str, start: datetime.date):
-    """
-    Primary fetch method using yf.download.
-    """
     try:
         df = yf.download(
             tickers=sym,
@@ -168,9 +165,6 @@ def _safe_download(sym: str, start: datetime.date):
 
 
 def _safe_ticker_history(sym: str, period: str = "1y"):
-    """
-    Fallback fetch method using Ticker.history.
-    """
     try:
         ticker = yf.Ticker(sym)
         df = ticker.history(
@@ -186,10 +180,6 @@ def _safe_ticker_history(sym: str, period: str = "1y"):
 
 
 def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d"):
-    """
-    Direct fallback to Yahoo chart API when yfinance wrappers fail.
-    Useful for some regional symbols in CI environments.
-    """
     try:
         encoded_sym = quote(sym, safe="")
         url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded_sym}"
@@ -259,13 +249,46 @@ def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d")
         return None
 
 
+def _safe_qe_from_qse() -> Optional[float]:
+    """
+    Official QSE fallback for current QE Index value.
+    The QSE overview page exposes page text like:
+    QE Index: 11,813.62 Value: 79,079.764
+    """
+    urls = [
+        "https://www.qe.com.qa/overview",
+        "https://www.qe.com.qa/en/web/guest/overview",
+    ]
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    patterns = [
+        r"QE Index:\s*([0-9][0-9,]*\.?[0-9]*)",
+        r"QE Index\s*([0-9][0-9,]*\.?[0-9]*)",
+    ]
+
+    for url in urls:
+        try:
+            r = requests.get(url, headers=headers, timeout=20)
+            r.raise_for_status()
+            text = r.text
+
+            for pattern in patterns:
+                m = re.search(pattern, text, re.IGNORECASE)
+                if m:
+                    raw = m.group(1).replace(",", "").strip()
+                    value = float(raw)
+                    if value > 1000:
+                        print(f"[INFO] QSE fallback fetched QE Index from official site: {value}")
+                        return value
+        except Exception as e:
+            print(f"[WARN] QSE fallback failed for {url}: {e}")
+
+    return None
+
+
 def _get_series(sym: str, start: datetime.date):
-    """
-    Try:
-    1. yf.download
-    2. yf.Ticker.history
-    3. direct Yahoo chart API
-    """
     closes = _safe_download(sym, start)
     if closes is not None and len(closes) >= 2:
         return closes
@@ -297,17 +320,26 @@ def _last_value_before_or_on(closes, target_date: datetime.date) -> Optional[flo
 
 
 def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> dict:
-    """
-    Calculate PX Last, 1D, MTD, YTD from daily historical closes.
-    MTD base = last close before first day of current month.
-    YTD base = last close before first day of current year.
-    """
     year_start = datetime.date(today.year, 1, 1)
     month_start = datetime.date(today.year, today.month, 1)
     history_start = year_start - datetime.timedelta(days=20)
 
     closes = _get_series(sym, history_start)
     if closes is None or len(closes) < 2:
+        if name == "Qatar QE Index":
+            qe_value = _safe_qe_from_qse()
+            if qe_value is not None:
+                return {
+                    "name": name,
+                    "ticker": sym,
+                    "px_last": round(qe_value, digits),
+                    "change_1d": "N/A",
+                    "mtd": "N/A",
+                    "ytd": "N/A",
+                    "as_of": today.strftime("%Y-%m-%d"),
+                    "source": "Qatar Exchange official site fallback",
+                }
+
         return {
             "name": name,
             "ticker": sym,
@@ -384,14 +416,6 @@ def _download_close_series(sym: str, today: datetime.date):
 
 
 def add_derived_rows(data: dict, today: datetime.date) -> None:
-    """
-    Derive:
-    - USD/QAR from QAR=X
-    - EUR/QAR = EUR/USD * USD/QAR
-    - GBP/QAR = GBP/USD * USD/QAR
-    - CNY/QAR = USD/QAR / USD/CNY
-    - Gold (QAR) = Gold (USD) * USD/QAR
-    """
     comm = data.get("commodities", [])
     qar_rows = []
 
