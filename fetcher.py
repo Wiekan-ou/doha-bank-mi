@@ -189,9 +189,7 @@ def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d")
             "includePrePost": "false",
             "events": "div,splits",
         }
-        headers = {
-            "User-Agent": "Mozilla/5.0"
-        }
+        headers = {"User-Agent": "Mozilla/5.0"}
 
         r = requests.get(url, params=params, headers=headers, timeout=20)
         r.raise_for_status()
@@ -249,33 +247,49 @@ def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d")
         return None
 
 
-def _safe_qe_from_backup_file() -> Optional[dict]:
-    path = "qe_backup.json"
-    if not os.path.exists(path):
-        print("[WARN][QE_BACKUP] qe_backup.json not found")
+def _safe_qe_from_supabase() -> Optional[dict]:
+    supabase_url = os.environ.get("SUPABASE_URL")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+
+    if not supabase_url or not supabase_key:
+        print("[WARN][SUPABASE_QE] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
         return None
 
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+    url = f"{supabase_url}/rest/v1/qe_index_cache?select=*&status=eq.ok&order=created_at.desc&limit=1"
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+    }
 
-        price = data.get("price")
+    try:
+        r = requests.get(url, headers=headers, timeout=20)
+        r.raise_for_status()
+        rows = r.json()
+
+        if not rows:
+            print("[WARN][SUPABASE_QE] No QE rows found in Supabase")
+            return None
+
+        row = rows[0]
+        price = row.get("price")
+
         if price in (None, "", "N/A"):
-            print("[WARN][QE_BACKUP] qe_backup.json exists but price is empty")
+            print("[WARN][SUPABASE_QE] Latest Supabase QE row has empty price")
             return None
 
         return {
             "name": "Qatar QE Index",
             "ticker": "^GNRI.QA",
             "px_last": round(float(price), 2),
-            "change_1d": data.get("change_1d", "N/A"),
+            "change_1d": row.get("change_1d", "N/A"),
             "mtd": "N/A",
             "ytd": "N/A",
-            "as_of": data.get("as_of"),
-            "source": data.get("source", "QE backup file"),
+            "as_of": row.get("as_of"),
+            "source": row.get("source", "Supabase qe_index_cache"),
         }
+
     except Exception as e:
-        print(f"[WARN][QE_BACKUP] Failed to read qe_backup.json: {e}")
+        print(f"[WARN][SUPABASE_QE] Failed to read QE from Supabase: {e}")
         return None
 
 
@@ -310,7 +324,7 @@ def _last_value_before_or_on(closes, target_date: datetime.date) -> Optional[flo
     return eligible[-1] if eligible else None
 
 
-def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> dict:
+def _fetch_market_row(name: str, sym: str, today: datetime.date, digits: int = 2) -> dict:
     year_start = datetime.date(today.year, 1, 1)
     month_start = datetime.date(today.year, today.month, 1)
     history_start = year_start - datetime.timedelta(days=20)
@@ -318,9 +332,9 @@ def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> d
     closes = _get_series(sym, history_start)
     if closes is None or len(closes) < 2:
         if name == "Qatar QE Index":
-            qe_row = _safe_qe_from_backup_file()
+            qe_row = _safe_qe_from_supabase()
             if qe_row is not None:
-                print("[INFO][QE_BACKUP] Using stored QE backup value")
+                print("[INFO][SUPABASE_QE] Using QE value from Supabase")
                 return qe_row
 
         return {
@@ -358,7 +372,7 @@ def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> d
 def fetch_section(ticker_map: dict, today: datetime.date) -> list[dict]:
     rows = []
     for name, sym in ticker_map.items():
-        row = fetch_stats(name, sym, today)
+        row = _fetch_market_row(name, sym, today)
         print(f"    {name}: {row['px_last']} | {row['change_1d']} | {row['mtd']} | {row['ytd']}")
         rows.append(row)
     return rows
