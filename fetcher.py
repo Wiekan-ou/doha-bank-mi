@@ -7,6 +7,8 @@ from typing import Optional, List
 import feedparser
 import yfinance as yf
 import anthropic
+import requests
+import pandas as pd
 
 
 CONFIG = {
@@ -167,7 +169,6 @@ def _safe_download(sym: str, start: datetime.date):
 def _safe_ticker_history(sym: str, period: str = "1y"):
     """
     Fallback fetch method using Ticker.history.
-    This sometimes works when yf.download fails for regional instruments.
     """
     try:
         ticker = yf.Ticker(sym)
@@ -183,9 +184,76 @@ def _safe_ticker_history(sym: str, period: str = "1y"):
         return None
 
 
+def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d"):
+    """
+    Direct fallback to Yahoo chart API when yfinance wrappers fail.
+    Useful for some regional symbols in CI environments.
+    """
+    try:
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}"
+        params = {
+            "range": range_str,
+            "interval": interval,
+            "includePrePost": "false",
+            "events": "div,splits",
+        }
+        headers = {
+            "User-Agent": "Mozilla/5.0"
+        }
+
+        r = requests.get(url, params=params, headers=headers, timeout=20)
+        r.raise_for_status()
+        payload = r.json()
+
+        result = payload.get("chart", {}).get("result", [])
+        if not result:
+            return None
+
+        result0 = result[0]
+        timestamps = result0.get("timestamp", [])
+        indicators = result0.get("indicators", {})
+
+        adjclose = indicators.get("adjclose", [])
+        quote = indicators.get("quote", [])
+
+        closes = None
+        if adjclose and isinstance(adjclose, list):
+            closes = adjclose[0].get("adjclose")
+        if not closes and quote and isinstance(quote, list):
+            closes = quote[0].get("close")
+
+        if not timestamps or not closes:
+            return None
+
+        pairs = []
+        for ts, px in zip(timestamps, closes):
+            if px is None:
+                continue
+            dt = datetime.datetime.utcfromtimestamp(ts)
+            pairs.append((dt, float(px)))
+
+        if not pairs:
+            return None
+
+        s = pd.Series(
+            data=[p[1] for p in pairs],
+            index=[p[0] for p in pairs],
+            dtype="float64"
+        ).sort_index()
+
+        return s if len(s) >= 2 else None
+
+    except Exception as e:
+        print(f"[WARN] Yahoo chart API failed for {sym}: {e}")
+        return None
+
+
 def _get_series(sym: str, start: datetime.date):
     """
-    Try download first, then Ticker.history fallback.
+    Try:
+    1. yf.download
+    2. yf.Ticker.history
+    3. direct Yahoo chart API
     """
     closes = _safe_download(sym, start)
     if closes is not None and len(closes) >= 2:
@@ -193,6 +261,11 @@ def _get_series(sym: str, start: datetime.date):
 
     print(f"[INFO] Falling back to ticker.history for {sym}")
     closes = _safe_ticker_history(sym, period="1y")
+    if closes is not None and len(closes) >= 2:
+        return closes
+
+    print(f"[INFO] Falling back to Yahoo chart API for {sym}")
+    closes = _safe_yahoo_chart_api(sym, range_str="1y", interval="1d")
     if closes is not None and len(closes) >= 2:
         return closes
 
@@ -213,6 +286,11 @@ def _last_value_before_or_on(closes, target_date: datetime.date) -> Optional[flo
 
 
 def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> dict:
+    """
+    Calculate PX Last, 1D, MTD, YTD from daily historical closes.
+    MTD base = last close before first day of current month.
+    YTD base = last close before first day of current year.
+    """
     year_start = datetime.date(today.year, 1, 1)
     month_start = datetime.date(today.year, today.month, 1)
     history_start = year_start - datetime.timedelta(days=20)
