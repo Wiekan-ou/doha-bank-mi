@@ -2,7 +2,7 @@ import json
 import os
 import re
 import datetime
-from typing import Optional, List, Dict, Any
+from typing import Optional, List
 
 import feedparser
 import yfinance as yf
@@ -26,7 +26,6 @@ CONFIG = {
     }
 }
 
-# Correct Yahoo symbols
 GLOBAL_INDICES = {
     "US S&P 500": "^GSPC",
     "UK FTSE 100": "^FTSE",
@@ -40,7 +39,7 @@ GCC_INDICES = {
     "Qatar QE Index": "^GNRI.QA",
     "Saudi Tadawul": "TASI.SR",
     "Dubai DFM": "^DFMGI",
-    "Abu Dhabi ADX": "ADI.QA",  # fallback may fail, validation will catch
+    "Abu Dhabi ADX": "ADI.QA",
     "Kuwait Boursa": "^BKW",
     "Bahrain": "^BHSE",
 }
@@ -49,8 +48,8 @@ SPOT_CURRENCY = {
     "USD Index": "DX-Y.NYB",
     "EUR/USD": "EURUSD=X",
     "GBP/USD": "GBPUSD=X",
-    "USD/JPY": "JPY=X",   # Yahoo convention, JPY per USD
-    "USD/CNY": "CNY=X",   # Yahoo convention, CNY per USD
+    "USD/JPY": "JPY=X",
+    "USD/CNY": "CNY=X",
 }
 
 QATARI_BANKS = {
@@ -127,11 +126,27 @@ def _clean_text(text: str) -> str:
     return text
 
 
+def _extract_close_series(df):
+    if df is None or df.empty:
+        return None
+
+    if hasattr(df.columns, "nlevels") and df.columns.nlevels > 1:
+        df.columns = df.columns.get_level_values(0)
+
+    col = "Adj Close" if "Adj Close" in df.columns else "Close"
+    if col not in df.columns:
+        return None
+
+    closes = df[col].dropna()
+    if closes.empty:
+        return None
+
+    return closes.sort_index()
+
+
 def _safe_download(sym: str, start: datetime.date):
     """
-    Use yf.download rather than Ticker.history for better consistency.
-    repair=True helps with occasional Yahoo anomalies.
-    auto_adjust=False preserves raw closes.
+    Primary fetch method using yf.download.
     """
     try:
         df = yf.download(
@@ -143,26 +158,45 @@ def _safe_download(sym: str, start: datetime.date):
             progress=False,
             threads=False,
         )
-
-        if df is None or df.empty:
-            return None
-
-        # Flatten accidental MultiIndex
-        if hasattr(df.columns, "nlevels") and df.columns.nlevels > 1:
-            df.columns = df.columns.get_level_values(0)
-
-        col = "Adj Close" if "Adj Close" in df.columns else "Close"
-        if col not in df.columns:
-            return None
-
-        closes = df[col].dropna()
-        if closes.empty:
-            return None
-
-        return closes.sort_index()
+        return _extract_close_series(df)
     except Exception as e:
         print(f"[WARN] download failed for {sym}: {e}")
         return None
+
+
+def _safe_ticker_history(sym: str, period: str = "1y"):
+    """
+    Fallback fetch method using Ticker.history.
+    This sometimes works when yf.download fails for regional instruments.
+    """
+    try:
+        ticker = yf.Ticker(sym)
+        df = ticker.history(
+            period=period,
+            interval="1d",
+            auto_adjust=False,
+            actions=False,
+        )
+        return _extract_close_series(df)
+    except Exception as e:
+        print(f"[WARN] ticker.history failed for {sym}: {e}")
+        return None
+
+
+def _get_series(sym: str, start: datetime.date):
+    """
+    Try download first, then Ticker.history fallback.
+    """
+    closes = _safe_download(sym, start)
+    if closes is not None and len(closes) >= 2:
+        return closes
+
+    print(f"[INFO] Falling back to ticker.history for {sym}")
+    closes = _safe_ticker_history(sym, period="1y")
+    if closes is not None and len(closes) >= 2:
+        return closes
+
+    return None
 
 
 def _last_value_before_or_on(closes, target_date: datetime.date) -> Optional[float]:
@@ -179,16 +213,11 @@ def _last_value_before_or_on(closes, target_date: datetime.date) -> Optional[flo
 
 
 def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> dict:
-    """
-    Calculate PX Last, 1D, MTD, YTD from daily historical closes.
-    MTD base = last close before first day of current month.
-    YTD base = last close before first day of current year.
-    """
     year_start = datetime.date(today.year, 1, 1)
     month_start = datetime.date(today.year, today.month, 1)
     history_start = year_start - datetime.timedelta(days=20)
 
-    closes = _safe_download(sym, history_start)
+    closes = _get_series(sym, history_start)
     if closes is None or len(closes) < 2:
         return {
             "name": name,
@@ -238,15 +267,6 @@ def _find_row(rows: list[dict], name: str) -> Optional[dict]:
     return None
 
 
-def _parse_pct_str(val: str) -> Optional[float]:
-    try:
-        if val in (None, "N/A"):
-            return None
-        return float(str(val).replace("%", "").replace("+", "").strip()) * (-1 if str(val).strip().startswith("-") else 1)
-    except Exception:
-        return None
-
-
 def _build_derived_row(
     name: str,
     px_last: Optional[float],
@@ -271,12 +291,12 @@ def _build_derived_row(
 def _download_close_series(sym: str, today: datetime.date):
     year_start = datetime.date(today.year, 1, 1)
     history_start = year_start - datetime.timedelta(days=20)
-    return _safe_download(sym, history_start)
+    return _get_series(sym, history_start)
 
 
 def add_derived_rows(data: dict, today: datetime.date) -> None:
     """
-    Correctly derive:
+    Derive:
     - USD/QAR from QAR=X
     - EUR/QAR = EUR/USD * USD/QAR
     - GBP/QAR = GBP/USD * USD/QAR
@@ -284,7 +304,6 @@ def add_derived_rows(data: dict, today: datetime.date) -> None:
     - Gold (QAR) = Gold (USD) * USD/QAR
     """
     comm = data.get("commodities", [])
-    spot = data.get("spot_currency", [])
     qar_rows = []
 
     qary = _download_close_series("QAR=X", today)
@@ -311,13 +330,11 @@ def add_derived_rows(data: dict, today: datetime.date) -> None:
     c = get_refs(usdcny)
     au = get_refs(goldusd)
 
-    # USD/QAR
     if q:
         qar_rows.append(_build_derived_row(
             "USD/QAR", q[0], q[1], q[2], q[3], "Derived from Yahoo Finance QAR=X", 4
         ))
 
-    # EUR/QAR
     if q and e:
         qar_rows.append(_build_derived_row(
             "EUR/QAR",
@@ -329,7 +346,6 @@ def add_derived_rows(data: dict, today: datetime.date) -> None:
             4
         ))
 
-    # GBP/QAR
     if q and g:
         qar_rows.append(_build_derived_row(
             "GBP/QAR",
@@ -341,7 +357,6 @@ def add_derived_rows(data: dict, today: datetime.date) -> None:
             4
         ))
 
-    # CNY/QAR
     if q and c and c[0] not in (None, 0) and c[1] not in (None, 0):
         qar_rows.append(_build_derived_row(
             "CNY/QAR",
@@ -355,7 +370,6 @@ def add_derived_rows(data: dict, today: datetime.date) -> None:
 
     data["qar_cross_rates"] = qar_rows
 
-    # Gold (QAR)
     if au and q:
         gold_qar = _build_derived_row(
             "Gold (QAR)",
@@ -368,7 +382,6 @@ def add_derived_rows(data: dict, today: datetime.date) -> None:
         )
         comm.append(gold_qar)
 
-    # Remove raw Gold (USD) from final report if you want only Gold (QAR)
     data["commodities"] = [r for r in comm if r["name"] != "Gold (USD)"]
 
 
@@ -387,8 +400,9 @@ def validate_market_data(data: dict) -> List[str]:
 
     if usdqar and usdqar.get("change_1d") not in (None, "N/A"):
         try:
-            v = float(str(usdqar["change_1d"]).replace("%", "").replace("+", ""))
-            if abs(v) > 0.5:
+            raw = str(usdqar["change_1d"]).replace("%", "").strip()
+            val = float(raw)
+            if abs(val) > 0.5:
                 issues.append(f"USD/QAR daily change suspicious: {usdqar['change_1d']}")
         except Exception:
             issues.append("USD/QAR daily change unparsable")
@@ -478,6 +492,52 @@ def ensure_min_news(items: list[dict], count: int, fallback_source: str) -> list
     return out[:count]
 
 
+def _fallback_summarise_news(raw_items: list[dict], count: int) -> list[dict]:
+    fallback = []
+    for item in raw_items[:count]:
+        source = item.get("source", "Feed")
+        title = item.get("title", "")[:120]
+        summary = item.get("summary", "")[:240]
+
+        blob = f"{title.lower()} {summary.lower()}"
+        metric = source.upper()[:8] if source else "NEWS"
+        metric_label = "Source"
+
+        if "oil" in blob or "gas" in blob or "energy" in blob:
+            metric = "ENERGY"
+            metric_label = "Sector"
+        elif "bank" in blob or "qnb" in blob or "qib" in blob or "cbq" in blob:
+            metric = "BANK"
+            metric_label = "Sector"
+        elif "tax" in blob or "policy" in blob:
+            metric = "POLICY"
+            metric_label = "Theme"
+        elif "qatar" in blob:
+            metric = "QATAR"
+            metric_label = "Domestic"
+
+        fallback.append({
+            "headline": title or "Market update",
+            "summary": summary or "Latest development relevant to markets.",
+            "source": source,
+            "url": item.get("link", ""),
+            "metric": metric,
+            "metric_label": metric_label,
+        })
+
+    while len(fallback) < count:
+        fallback.append({
+            "headline": "Market update",
+            "summary": "Latest development relevant to markets.",
+            "source": "Feed",
+            "url": "",
+            "metric": "NEWS",
+            "metric_label": "Signal",
+        })
+
+    return fallback[:count]
+
+
 def summarise_news(raw_items: list[dict], scope: str, count: int) -> list[dict]:
     if not raw_items:
         return []
@@ -564,52 +624,6 @@ News:
     except Exception as e:
         print(f"[WARN] Claude summarisation failed ({scope}): {e}")
         return _fallback_summarise_news(raw_items, count)
-
-
-def _fallback_summarise_news(raw_items: list[dict], count: int) -> list[dict]:
-    fallback = []
-    for item in raw_items[:count]:
-        source = item.get("source", "Feed")
-        title = item.get("title", "")[:120]
-        summary = item.get("summary", "")[:240]
-
-        blob = f"{title.lower()} {summary.lower()}"
-        metric = source.upper()[:8] if source else "NEWS"
-        metric_label = "Source"
-
-        if "oil" in blob or "gas" in blob or "energy" in blob:
-            metric = "ENERGY"
-            metric_label = "Sector"
-        elif "bank" in blob or "qnb" in blob or "qib" in blob or "cbq" in blob:
-            metric = "BANK"
-            metric_label = "Sector"
-        elif "tax" in blob or "policy" in blob:
-            metric = "POLICY"
-            metric_label = "Theme"
-        elif "qatar" in blob:
-            metric = "QATAR"
-            metric_label = "Domestic"
-
-        fallback.append({
-            "headline": title or "Market update",
-            "summary": summary or "Latest development relevant to markets.",
-            "source": source,
-            "url": item.get("link", ""),
-            "metric": metric,
-            "metric_label": metric_label,
-        })
-
-    while len(fallback) < count:
-        fallback.append({
-            "headline": "Market update",
-            "summary": "Latest development relevant to markets.",
-            "source": "Feed",
-            "url": "",
-            "metric": "NEWS",
-            "metric_label": "Signal",
-        })
-
-    return fallback[:count]
 
 
 def build_kpis(market_data: dict) -> list[dict]:
@@ -705,7 +719,6 @@ def run() -> dict:
         print(f"  · {section}")
         data[section] = fetch_section(tickers, today)
 
-    # Derived FX and gold
     if cfg["sections"].get("qar_cross_rates", True):
         add_derived_rows(data, today)
     else:
@@ -729,13 +742,15 @@ def run() -> dict:
         data["qatar_news"] = []
 
     data["kpis"] = build_kpis(data)
-    data["validation_issues"] = validate_market_data(data)
-    data["report_status"] = "ok" if not data["validation_issues"] else "needs_review"
+
+    validation_issues = validate_market_data(data)
+    data["validation_issues"] = validation_issues
+    data["report_status"] = "ok" if not validation_issues else "needs_review"
 
     print("✓ Fetch complete.")
-    if data["validation_issues"]:
+    if validation_issues:
         print("⚠ Validation issues found:")
-        for issue in data["validation_issues"]:
+        for issue in validation_issues:
             print(f"   - {issue}")
 
     return data
