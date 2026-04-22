@@ -249,11 +249,53 @@ def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d")
         return None
 
 
+def _safe_qe_from_mubasher() -> Optional[float]:
+    """
+    Mubasher fallback for current QE Index value.
+    """
+    urls = [
+        "https://english.mubasher.info/markets/QE",
+        "https://english.mubasher.info/markets/QE/indices/GNRI",
+    ]
+    headers = {
+        "User-Agent": "Mozilla/5.0",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+
+    patterns = [
+        r"QE Index\s*([0-9][0-9,]*\.?[0-9]*)",
+        r"QE Index[^0-9]{0,20}([0-9][0-9,]*\.?[0-9]*)",
+        r"GNRI[^0-9]{0,30}([0-9][0-9,]*\.?[0-9]*)",
+    ]
+
+    for url in urls:
+        try:
+            print(f"[DEBUG][MUBASHER] Requesting URL: {url}")
+            r = requests.get(url, headers=headers, timeout=20)
+            print(f"[DEBUG][MUBASHER] Status code for {url}: {r.status_code}")
+            r.raise_for_status()
+            text = r.text or ""
+            print(f"[DEBUG][MUBASHER] Response length for {url}: {len(text)}")
+
+            for pattern in patterns:
+                m = re.search(pattern, text, re.IGNORECASE)
+                print(f"[DEBUG][MUBASHER] Pattern tried: {pattern} | matched: {bool(m)}")
+                if m:
+                    raw = m.group(1).replace(",", "").strip()
+                    value = float(raw)
+                    if value > 1000:
+                        print(f"[INFO] Mubasher fallback fetched QE Index: {value}")
+                        return value
+        except Exception as e:
+            print(f"[WARN] Mubasher fallback failed for {url}: {e}")
+
+    print("[WARN] Mubasher fallback exhausted all URLs without extracting QE Index")
+    return None
+
+
 def _safe_qe_from_qse() -> Optional[float]:
     """
     Official QSE fallback for current QE Index value.
-    This version includes hard debug logging so we can see exactly
-    what the GitHub runner is receiving from QSE.
     """
     urls = [
         "https://www.qe.com.qa/overview",
@@ -283,41 +325,15 @@ def _safe_qe_from_qse() -> Optional[float]:
             text = r.text or ""
             print(f"[DEBUG][QSE] Response length for {url}: {len(text)}")
 
-            contains_qe = "QE Index" in text
-            print(f"[DEBUG][QSE] Contains literal 'QE Index': {contains_qe}")
-
-            if contains_qe:
-                idx = text.find("QE Index")
-                snippet_start = max(0, idx - 200)
-                snippet_end = min(len(text), idx + 400)
-                snippet = text[snippet_start:snippet_end]
-                print(f"[DEBUG][QSE] Snippet around 'QE Index' from {url}:")
-                print(snippet)
-
-            else:
-                upper_hits = [m.start() for m in re.finditer(r"QE", text[:5000], re.IGNORECASE)]
-                if upper_hits:
-                    pos = upper_hits[0]
-                    snippet_start = max(0, pos - 200)
-                    snippet_end = min(len(text), pos + 400)
-                    snippet = text[snippet_start:snippet_end]
-                    print(f"[DEBUG][QSE] Snippet around first QE-like token from {url}:")
-                    print(snippet)
-                else:
-                    print(f"[DEBUG][QSE] No QE-like token found in first 5000 chars for {url}")
-
             for pattern in patterns:
                 m = re.search(pattern, text, re.IGNORECASE)
                 print(f"[DEBUG][QSE] Pattern tried: {pattern} | matched: {bool(m)}")
                 if m:
                     raw = m.group(1).replace(",", "").strip()
-                    print(f"[DEBUG][QSE] Raw extracted QE value: {raw}")
                     value = float(raw)
                     if value > 1000:
                         print(f"[INFO] QSE fallback fetched QE Index from official site: {value}")
                         return value
-                    print(f"[DEBUG][QSE] Extracted value rejected because <= 1000: {value}")
-
         except Exception as e:
             print(f"[WARN] QSE fallback failed for {url}: {e}")
 
@@ -364,7 +380,10 @@ def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> d
     closes = _get_series(sym, history_start)
     if closes is None or len(closes) < 2:
         if name == "Qatar QE Index":
-            qe_value = _safe_qe_from_qse()
+            qe_value = _safe_qe_from_mubasher()
+            if qe_value is None:
+                qe_value = _safe_qe_from_qse()
+
             if qe_value is not None:
                 return {
                     "name": name,
@@ -374,7 +393,7 @@ def fetch_stats(name: str, sym: str, today: datetime.date, digits: int = 2) -> d
                     "mtd": "N/A",
                     "ytd": "N/A",
                     "as_of": today.strftime("%Y-%m-%d"),
-                    "source": "Qatar Exchange official site fallback",
+                    "source": "QE Index fallback",
                 }
 
         return {
