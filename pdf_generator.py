@@ -34,6 +34,7 @@ MUTED   = colors.HexColor('#5a7a96')
 UP      = colors.HexColor('#1a7a45')
 DOWN    = colors.HexColor('#c0392b')
 SUBT    = colors.HexColor('#9ac4e8')
+WARN    = colors.HexColor('#b45309')
 
 HDR_H = 24 * mm
 FTR_H = 5.5 * mm
@@ -42,22 +43,28 @@ SEC_H = 5.5 * mm
 ROW_H = 4.6 * mm
 GAP   = 2.5 * mm
 
+
 def pct_col(v):
     v = str(v)
     if v.startswith('+'):
         return UP
     if v.startswith('-'):
         return DOWN
+    if v == "N/A":
+        return MUTED
     return MUTED
+
 
 def fr(c, x, y, w, h, col):
     c.setFillColor(col)
     c.rect(x, y, w, h, fill=1, stroke=0)
 
+
 def sr(c, x, y, w, h, col, lw=0.4):
     c.setStrokeColor(col)
     c.setLineWidth(lw)
     c.rect(x, y, w, h, fill=0, stroke=1)
+
 
 def t(c, txt, x, y, font='Carlito', size=8, color=TEXT, align='left', maxw=None):
     txt = '' if txt is None else str(txt)
@@ -73,10 +80,12 @@ def t(c, txt, x, y, font='Carlito', size=8, color=TEXT, align='left', maxw=None)
     else:
         c.drawString(x, y, txt)
 
+
 def hl(c, x1, y, x2, col=RULE, lw=0.35):
     c.setStrokeColor(col)
     c.setLineWidth(lw)
     c.line(x1, y, x2, y)
+
 
 def ml(c, txt, x, y, font, size, color, maxw, lh, maxl=3):
     txt = '' if txt is None else str(txt)
@@ -101,12 +110,18 @@ def ml(c, txt, x, y, font, size, color, maxw, lh, maxl=3):
         c.drawString(x, y - i * lh, ln)
     return y - len(lines[:maxl]) * lh
 
+
 def clean_px(px):
-    if isinstance(px, float):
-        return f"{px:,.2f}"
+    if isinstance(px, (float, int)):
+        if abs(px) >= 1000:
+            return f"{px:,.2f}"
+        if abs(px) >= 10:
+            return f"{px:,.2f}"
+        return f"{px:,.4f}" if abs(px) < 1 else f"{px:,.2f}"
     return str(px)
 
-def draw_header(c, report_date, page=1, total=2):
+
+def draw_header(c, report_date, generated_display_time, page=1, total=2, report_status="ok"):
     fr(c, 0, H - HDR_H, W, HDR_H, BLUE)
     fr(c, 0, H - HDR_H, 56 * mm, HDR_H, NAVY)
 
@@ -133,12 +148,16 @@ def draw_header(c, report_date, page=1, total=2):
       W / 2, H - HDR_H + 7 * mm, 'Carlito-Italic', 6.5, SUBT, 'center')
 
     t(c, f'Page {page} of {total}', W - M, H - HDR_H + 19 * mm, 'Carlito', 6.5, GOLD, 'right')
-    t(c, 'Generated  07:00 AST', W - M, H - HDR_H + 14 * mm, 'Carlito', 6, SUBT, 'right')
+    t(c, f'Generated  {generated_display_time}', W - M, H - HDR_H + 14 * mm, 'Carlito', 6, SUBT, 'right')
     t(c, 'Yahoo Finance  ·  Reuters  ·  Bloomberg', W - M, H - HDR_H + 9.5 * mm, 'Carlito', 5.5, SUBT, 'right')
     t(c, 'The Peninsula  ·  Qatar Tribune', W - M, H - HDR_H + 5.5 * mm, 'Carlito', 5.5, SUBT, 'right')
 
+    if report_status != "ok":
+        t(c, 'Validation status: NEEDS REVIEW', W - M, H - HDR_H + 2.2 * mm, 'Carlito-Bold', 5.5, WARN, 'right')
+
     fr(c, 0, H - HDR_H, W, 1.5 * mm, CYAN)
     return H - HDR_H
+
 
 def draw_footer(c, report_date):
     fr(c, 0, 0, W, FTR_H, BLUE)
@@ -150,7 +169,11 @@ def draw_footer(c, report_date):
     )
     t(c, f'Doha Bank Market Intelligence  ·  {report_date}', W - M, 2 * mm, 'Carlito', 5.5, WHITE, 'right')
 
+
 def draw_kpi(c, y, kpis):
+    if not kpis:
+        return y
+
     cw = UW / len(kpis)
     barcols = [MUTED, UP, GOLD, BLUE, DOWN, CYAN]
     for i, k in enumerate(kpis):
@@ -171,11 +194,13 @@ def draw_kpi(c, y, kpis):
 
     return y - KPI_H - 2 * mm
 
+
 def sec_hdr(c, x, y, title, w):
     fr(c, x, y - SEC_H, w, SEC_H, BLUE)
     fr(c, x, y - SEC_H, 2 * mm, SEC_H, CYAN)
     t(c, f'| {title}', x + 3 * mm, y - 3.6 * mm, 'Caladea-Bold', 7, WHITE)
     return y - SEC_H
+
 
 def draw_table(c, x, y, hdrs, rows, tw, cws):
     fr(c, x, y - ROW_H, tw, ROW_H, TBLHDR)
@@ -208,8 +233,10 @@ def draw_table(c, x, y, hdrs, rows, tw, cws):
     hl(c, x, y, x + tw, RULE_DK, 0.4)
     return y - 1.5 * mm
 
+
 def cw5(w):
     return [w * 0.37, w * 0.18, w * 0.15, w * 0.15, w * 0.15]
+
 
 def draw_news_card(c, x, y, w, h, item):
     metric = str(item.get('metric', '—'))
@@ -254,6 +281,7 @@ def draw_news_card(c, x, y, w, h, item):
     hl(c, tx, hl_bot - 3.2 * mm, tx + tw2, RULE, 0.25)
     ml(c, summ, tx, hl_bot - 5.5 * mm, 'Carlito-Italic', 6, MUTED, tw2, 2.3 * mm, 4)
 
+
 def draw_news_grid(c, x, y, title, items, total_w, rows_count, card_h, card_gap=2 * mm):
     y = sec_hdr(c, x, y, title, total_w)
     y -= 1.5 * mm
@@ -270,6 +298,7 @@ def draw_news_grid(c, x, y, title, items, total_w, rows_count, card_h, card_gap=
 
     return y - rows_count * (card_h + card_gap)
 
+
 def section_rows(data, sec):
     out = []
     for r in data.get(sec, []):
@@ -283,9 +312,17 @@ def section_rows(data, sec):
         ])
     return out
 
-def page1(c, report_date, data):
+
+def page1(c, report_date, generated_display_time, data):
     fr(c, 0, 0, W, H, WHITE)
-    top = draw_header(c, report_date, 1, 2)
+    top = draw_header(
+        c,
+        report_date,
+        generated_display_time,
+        1,
+        2,
+        data.get("report_status", "ok")
+    )
     y = top - 1.5 * mm
 
     y = draw_kpi(c, y, data.get('kpis', []))
@@ -319,9 +356,10 @@ def page1(c, report_date, data):
 
     draw_footer(c, report_date)
 
-def page2(c, report_date, global_news, qatar_news):
+
+def page2(c, report_date, generated_display_time, global_news, qatar_news, report_status="ok"):
     fr(c, 0, 0, W, H, WHITE)
-    top = draw_header(c, report_date, 2, 2)
+    top = draw_header(c, report_date, generated_display_time, 2, 2, report_status)
     y = top - 2 * mm
 
     avail = y - FTR_H - 3 * mm
@@ -358,22 +396,34 @@ def page2(c, report_date, global_news, qatar_news):
 
     draw_footer(c, report_date)
 
+
 def generate(data, output_path):
     report_date = data.get('config', {}).get('report_date', dt.today().strftime('%d %B %Y'))
+    generated_display_time = data.get('generated_display_time', '07:00 AST')
+    report_status = data.get('report_status', 'ok')
+
     c = pdfcanvas.Canvas(output_path, pagesize=landscape(A4))
     c.setTitle(f'Doha Bank Market Intelligence — {report_date}')
     c.setAuthor('Doha Bank — Automated Market Intelligence System')
 
-    page1(c, report_date, data)
+    page1(c, report_date, generated_display_time, data)
     c.showPage()
 
-    page2(c, report_date, data.get('global_news', []), data.get('qatar_news', []))
+    page2(
+        c,
+        report_date,
+        generated_display_time,
+        data.get('global_news', []),
+        data.get('qatar_news', []),
+        report_status
+    )
     c.showPage()
 
     c.save()
     sz = os.path.getsize(output_path)
     print(f'PDF: {output_path}  |  {sz/1024:.0f} KB')
     return output_path
+
 
 if __name__ == '__main__':
     if len(sys.argv) >= 3:
