@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-04-23T21:59:03Z",
+  "generated_at": "2026-04-23T22:04:48Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
@@ -51,11 +51,11 @@
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24155.45,
-      "change_1d": "-0.2%",
-      "mtd": "+6.5%",
-      "ytd": "-1.4%",
-      "as_of": "2026-04-23",
+      "px_last": 24194.9,
+      "change_1d": "-0.3%",
+      "mtd": "+6.7%",
+      "ytd": "-1.2%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
@@ -85,7 +85,7 @@
       "ticker": "DX-Y.NYB",
       "px_last": 98.81,
       "change_1d": "+0.2%",
-      "mtd": "-1.1%",
+      "mtd": "-1.2%",
       "ytd": "+0.5%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
@@ -106,14 +106,14 @@
       "px_last": 1.35,
       "change_1d": "-0.3%",
       "mtd": "+2.2%",
-      "ytd": "+0.0%",
+      "ytd": "-0.0%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 159.64,
+      "px_last": 159.68,
       "change_1d": "+0.2%",
       "mtd": "-0.1%",
       "ytd": "+2.1%",
@@ -353,8 +353,8 @@
     {
       "name": "GBP/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.9022,
-      "change_1d": "-0.4%",
+      "px_last": 4.902,
+      "change_1d": "-0.5%",
       "mtd": "+5.3%",
       "ytd": "+0.0%",
       "as_of": "2026-04-23",
@@ -373,86 +373,86 @@
   ],
   "global_news": [
     {
-      "headline": "IFM Targets Europe Defense Investment as NATO Rearms",
-      "summary": "Australian infrastructure investor IFM Investors eyes defense opportunities in Europe amid the region's historic military expansion shift.",
+      "headline": "Indian Rupee Experiences Volatility Under Central Bank Leadership",
+      "summary": "Indian rupee shows significant fluctuations during RBI Governor Malhotra's tenure, highlighting currency management challenges in emerging markets.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/graphics/2026-india-rupee-moves-timeline-history/",
+      "metric": "High volatility",
+      "metric_label": "Currency stability indicator"
+    },
+    {
+      "headline": "Japan Australia Economic Security Deal Scheduled May",
+      "summary": "Japan and Australia strengthening economic ties with security agreement in early May, building on existing defense cooperation.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-23/japan-australia-to-tighten-ties-with-economic-deal-kyodo-says",
+      "metric": "May 2026",
+      "metric_label": "Agreement timeline"
+    },
+    {
+      "headline": "Australian IFM Eyes European Defense Investment Opportunities",
+      "summary": "IFM Investors targeting European defense sector investments as NATO countries increase military spending and infrastructure development.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-04-23/australia-s-ifm-targets-europe-defense-investment-as-nato-rearms",
-      "metric": "Historic shift",
-      "metric_label": "Military expansion status"
+      "metric": "NATO rearmament",
+      "metric_label": "Investment theme"
     },
     {
-      "headline": "RBC Hires Industrials Bankers in Advisory Push",
-      "summary": "Royal Bank of Canada hired industrials bankers Kinjal Gandhi and Alex Choi as Canada's biggest bank expands investment banking.",
+      "headline": "RBC Expands Investment Banking With Industrial Sector Hires",
+      "summary": "Royal Bank of Canada recruits industrials bankers Gandhi and Choi to strengthen advisory capabilities in key sector.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-04-23/rbc-hires-industrials-bankers-gandhi-choi-in-advisory-push",
-      "metric": "2 hires",
-      "metric_label": "New industrials bankers"
+      "metric": "2 new hires",
+      "metric_label": "Banking expansion"
     },
     {
-      "headline": "Gold Falls as US-Iran Hormuz Tension Drives Inflation",
-      "summary": "Gold declined as escalating Strait of Hormuz tensions pushed oil prices higher, rekindling concerns about persistent inflation.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-22/gold-steadies-as-hormuz-standoff-keeps-inflation-risk-high",
-      "metric": "Oil up",
-      "metric_label": "Hormuz tension impact"
-    },
-    {
-      "headline": "United CEO Eyes Airline Acquisitions Amid Market Challenges",
-      "summary": "Scott Kirby aims to run the best airline in history while facing merger talks, rising fuel costs, and competitive pressures.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/features/2026-04-23/united-ceo-scott-kirby-faces-merger-talk-fuel-prices-turf-wars",
-      "metric": "Fuel spike",
-      "metric_label": "Rising operational costs"
-    },
-    {
-      "headline": "Former ESPN CEO Sees NFL Draft Growth Potential",
-      "summary": "Former ESPN and NFL Network CEO Steve Bornstein says sky is the limit for NFL draft growth potential.",
+      "headline": "Former ESPN CEO Discusses NFL Draft Growth Potential",
+      "summary": "Ex-ESPN and NFL Network CEO Steve Bornstein sees unlimited growth potential for NFL draft and media partnerships.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/videos/2026-04-23/fmr-nfl-network-espn-ceo-on-draft-media-deals-video",
-      "metric": "Sky limit",
-      "metric_label": "NFL draft growth outlook"
+      "metric": "Sky's the limit",
+      "metric_label": "Growth outlook"
     },
     {
-      "headline": "Complaints Surface About Alex Cooper's Podcast Business",
-      "summary": "Call Her Daddy host Alex Cooper faces multiple business challenges, some involving her husband's role in operations.",
+      "headline": "Alex Cooper Podcast Empire Faces Internal Business Challenges",
+      "summary": "Call Her Daddy host Alex Cooper dealing with multiple business issues, including complications involving her husband's involvement.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/videos/2026-04-23/inside-complaints-about-alex-cooper-s-podcast-empire",
-      "metric": "Multiple",
-      "metric_label": "Business challenges faced"
+      "metric": "Multiple issues",
+      "metric_label": "Business challenges"
     }
   ],
   "qatar_news": [
     {
-      "headline": "World Cup to give $20bn boost to Qatar's economy",
-      "summary": "FIFA World Cup expected to inject $20 billion into Qatar's economy through tourism, infrastructure development, and increased business activity across various sectors.",
+      "headline": "Qatar Minister Meets UK PM's Trade Adviser",
+      "summary": "Minister of Commerce and Industry holds discussions with UK Prime Minister's Chief Business, Investment, and Trade Adviser to strengthen bilateral economic ties.",
       "source": "The Peninsula Qatar",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOWUR5N3BnczhGd05wbklDNGRwLU1rbVRucUlaanhMRmhGWW9ZRTZ0VFdueHlrdUxTWGRMNEtDTjAtVmVmbDlCeEdBQWNNVklhSFdBbklZM3R0VngtNmpjeE9YZzh4bTB0Uk1EcVJ1WmJYdnUxQ3A5ZnVTY3lqVVQ3cVgwdGJydnJkdUw5cUtVMVNHTFhfdUhlNGF3bw?oc=5",
-      "metric": "$20bn",
-      "metric_label": "Economic boost from World Cup"
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOcTBmeFJEajR0M2RsSXl3VktKZ1pQeksxcmdDc3BQWkpmT1ljN0VKbzA0NWpfTVdMRVJlRTFBQjcwcm9qajRUYTFSdnROLTdSTm5RTURRdlJIRGhPTG1BZS1Ec2dONlFPOExFVVdsYWNyc1VZWGlKamlaTUZTUm1mV0Y4RUtrczJxX3lmakFTSG9TMUhDZXBxbHhNbU5pUFU2NXJqTjRnSW5aOEFQTnV6NFVIMkZYZnA5N0dFMGtiU1U3SDhXcjNtZ1JxaTJMRDBYZ2hqWU1RU0VhTnVVLVNDcg?oc=5",
+      "metric": "Bilateral",
+      "metric_label": "UK-Qatar trade relationship focu"
     },
     {
-      "headline": "Qatar economy emerges from COVID-19 in position of strength",
-      "summary": "Qatar's economy demonstrates resilience post-pandemic, showing strong recovery indicators and positioning itself favorably for future growth and investment opportunities.",
+      "headline": "Qatar Central Bank Governor Meets UK Advisor",
+      "summary": "Central Bank Governor conducts high-level discussions with UK Prime Minister's Special Advisor on financial and economic cooperation matters.",
       "source": "The Peninsula Qatar",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQM1IxRFZDOG5xZ1FpamlYSG44LWZJWENGLUdYZ01hSmVaSndxckFVN1U0bUZEYmFoclI5anJja2dsNklVQTlPUnVBVHozZEhYZzhqWlVmTlpkRThlZ3hZYzVFYXB4ODFIV2dxVkpDYjlNZ0xxSHhiRjlIZ04xSGdhdUZCajd3eXFlZl8zWURTaWRrUUVlTm44eUd2elRFSkg5Unp2Tmt5eEx1N0R0QjRj?oc=5",
-      "metric": "Strong",
-      "metric_label": "Post-COVID recovery position"
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV85cUxPUE5STVV3dENGelAyYmlRMS1zMWFDUGhUUHVqRlFsMTRtSUp2bUI0YkZMVFlSamRFTHp0T2Z3WkVJNW9kVTgwSnBvVnpoUjhEc2gxdWF5R0VyZmZpLXNROU9zYjdOMlJWYnJJX2NmTm45RnQ5TTNVYllua1pSQkJPc2F6V3BDbGU3Q0JEc1FvR1RrM1RvX1A1MkY1Zl9YZzZxRy1YRzFFVU8?oc=5",
+      "metric": "Central Bank",
+      "metric_label": "High-level financial diplomacy"
     },
     {
-      "headline": "MoCI launches Qatar Business Map portal for efficient service",
-      "summary": "Ministry of Commerce and Industry introduces digital portal to streamline business services and enhance efficiency for companies operating in Qatar.",
-      "source": "Qatar Tribune",
-      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPNXJQdXVuUWc5UGh3MExpV1UxSlFyWHJKVFc5MG4wdmJ2eVF3b3dmVlRkdWVQZzhCSTBhaGU2X09UOTAxWEpkc2VjbUs2Zjd1M2FwbWtwUGRKM3lzcUFwanQ1V0pwVDV3azdra25XUmNQVTByR0NieVpGQmtvakpvYnlpZm41ZnhrS3U2TEFYaDd6aXh0X016LVNZNkF5NmsyYllqOUNLUkljdkdzODk4REp2bmdOcFXSAbwBQVVfeXFMUFFEYXJ0Ml9FREoyT0lMQmFlRmpuR3RSd2R1NnBONGFtTkY0V1BMb1BTdzgzWld5eW9PbUV2QS1nSG9wY0IzYWsxZ3ZJamRVTXpqdkt1R1VaRlRlSEVhazJrOFk0cUZUS0lwSmtnWTVOeGdXQmJBTXR0enVJZFB1TXZNM1NPeHdaTTdRbG1yazRQc0NudVVVdFRhaVJrNmNHZmRvR3BlLVo5azNBZ2tWYWhqSk96WElfRERIZkU?oc=5",
-      "metric": "Digital",
-      "metric_label": "Business service portal launch"
+      "headline": "Dukhan Bank Wins Global Islamic Banking Award",
+      "summary": "Dukhan Bank receives prestigious recognition as 'World's Best Islamic Private Bank', highlighting Qatar's leadership in Islamic financial services.",
+      "source": "The Peninsula Qatar",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV85cUxQcXlxTkRWbFpZaUFzY1k5RmR6ajNpU2J0ZGNwV04xTVZnY3hTR015dHZmN1FNTGdRa0tpU1ZTZFV3SVZCbTcwY1psX09fZG1GSWY0aWs5cFBySGtqN3lVYUg2R0hvUDA5aFNsSDhaRVE1bF92QnV2aUZXNm9zSnlucl9keHQteldZdUNhVkNKQ0tiOHVNcGJ4VkNtcUQyeWExNko0?oc=5",
+      "metric": "World's Best",
+      "metric_label": "Global Islamic private banking a"
     },
     {
-      "headline": "QFC Connect drives collaboration across Qatar's business ecosystem",
-      "summary": "Qatar Financial Centre initiatives promote partnerships and networking among businesses, fostering growth and innovation within Qatar's expanding financial sector.",
+      "headline": "Al Rayan Bank Reports QR361m Q1 Profit",
+      "summary": "Al Rayan Bank announces strong first quarter performance with net profit of QR361 million, demonstrating robust financial health.",
       "source": "The Peninsula Qatar",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQaVVLbG5jZVBpeV9VcjlRZWEtQzIyUTJnbklRZUR6dFpHc2dWWE94WjIzNW5tMzRESmtWMERIUnp0cUx1YU5Ka2RPd0c5YmxTUDBUS2FJaEwyNW9YSVBERmZiT2Z2Y1FYWExoa0RXZ2hCejEzNVQtaDFWSEx5eWhMTlB0SnVwQVNqcmY4SEpra05HSkVOVUtFclpGUnVCOHhyeU5VUWlObTduYmdNOWpzY1NDSUI?oc=5",
-      "metric": "Active",
-      "metric_label": "Business ecosystem collaboration"
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV85cUxOaVkxQTZ3VXUzM3hSaHprYXVzbTZoMkxxWlJDcVRjUmdKYTA5TUo4allOdDZxTDQ0WmIza3ZWbVBjWF92ZkhwRUY0WEZXUjQzaDhWb3FKWXNfc0hFaWxvZTdOZG5JaUJMTnBCSmNZdS1VZlhnTlRlMWFkZko0TnpWLXhBMnIxUFhjWERLVzNPS0x4b09zTzVR?oc=5",
+      "metric": "QR361m",
+      "metric_label": "Q1 2024 net profit"
     }
   ],
   "kpis": [
