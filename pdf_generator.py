@@ -175,7 +175,6 @@ def draw_kpi(c, y, kpis):
         return y
 
     cw = UW / len(kpis)
-    barcols = [MUTED, UP, GOLD, BLUE, DOWN, CYAN]
     for i, k in enumerate(kpis):
         val = str(k.get('value', '—'))
         lbl = k.get('label', '')
@@ -185,7 +184,6 @@ def draw_kpi(c, y, kpis):
         fr(c, cx, y - KPI_H, cw, KPI_H, WHITE)
         sr(c, cx, y - KPI_H, cw, KPI_H, RULE_DK, 0.5)
         fr(c, cx, y - 2 * mm, cw, 2 * mm, NAVY)
-        fr(c, cx, y - KPI_H, cw, 1.2 * mm, barcols[i % len(barcols)])
 
         vcol = UP if val.startswith('+') else DOWN if val.startswith('-') else NAVY
         t(c, val, cx + 3 * mm, y - 6.5 * mm, 'Caladea-Bold', 11, vcol)
