@@ -282,10 +282,17 @@ def _safe_qe_from_supabase() -> Optional[dict]:
         print("[WARN][SUPABASE_QE] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
         return None
 
+    today_str = datetime.date.today().strftime("%Y-%m-%d")
+
     url = (
         f"{supabase_url}/rest/v1/qe_index_cache"
-        f"?select=*&status=eq.ok&order=as_of.desc,created_at.desc&limit=1"
+        f"?select=*"
+        f"&status=eq.ok"
+        f"&as_of=lte.{today_str}"
+        f"&order=as_of.desc,created_at.desc"
+        f"&limit=1"
     )
+
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
@@ -297,7 +304,7 @@ def _safe_qe_from_supabase() -> Optional[dict]:
         rows = r.json()
 
         if not rows:
-            print("[WARN][SUPABASE_QE] No QE rows found in Supabase")
+            print("[WARN][SUPABASE_QE] No valid QE rows found in Supabase")
             return None
 
         row = rows[0]
@@ -359,7 +366,7 @@ def _fetch_market_row(name: str, sym: str, today: datetime.date, digits: int = 2
     if name == "Qatar QE Index":
         qe_row = _safe_qe_from_supabase()
         if qe_row is not None:
-            print("[INFO][SUPABASE_QE] Using QE value from Supabase")
+            print("[INFO][SUPABASE_QE] Using latest QE value from Supabase")
             return qe_row
 
     year_start = datetime.date(today.year, 1, 1)
@@ -472,7 +479,7 @@ def add_derived_rows(data: dict, today: datetime.date) -> None:
         return cur, prev, mtd, ytd
 
     q = get_refs(qary)
-    e = get_refs(eurusd)
+    e = getRefs = get_refs(eurusd)
     g = get_refs(gbpusd)
     c = get_refs(usdcny)
     au = get_refs(goldusd)
@@ -573,13 +580,13 @@ def fetch_news(feed_list: list[dict]) -> list[dict]:
                 if not title:
                     continue
 
-                    items.append({
-                        "source": feed_cfg["source"],
-                        "title": title,
-                        "summary": summary[:500],
-                        "link": link,
-                        "published": published,
-                    })
+                items.append({
+                    "source": feed_cfg["source"],
+                    "title": title,
+                    "summary": summary[:500],
+                    "link": link,
+                    "published": published,
+                })
         except Exception as e:
             print(f"[WARN] RSS {feed_cfg['source']}: {e}")
     return items
