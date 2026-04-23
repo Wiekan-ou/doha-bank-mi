@@ -106,6 +106,25 @@ NEWS_FEEDS = {
     ],
 }
 
+QATAR_NEWS_TARGET_COUNT = 4
+QATAR_NEWS_FALLBACK_QUERIES = [
+    {
+        "source": "Google News / Peninsula / Tribune",
+        "query": '("Qatar business" OR "Qatar economy" OR "Qatar market") (site:thepeninsulaqatar.com OR site:qatar-tribune.com)',
+        "max": 10,
+    },
+    {
+        "source": "Google News / Qatar approved set",
+        "query": '("Qatar business" OR "Qatar economy" OR "Qatar banks" OR "Qatar market") (site:thepeninsulaqatar.com OR site:qatar-tribune.com OR site:gulf-times.com OR site:reuters.com OR site:bloomberg.com)',
+        "max": 10,
+    },
+    {
+        "source": "Google News / Qatar broad",
+        "query": '"Qatar business" OR "Qatar economy" OR "Qatar market" OR "Qatar banks"',
+        "max": 10,
+    },
+]
+
 
 def _to_float(val) -> Optional[float]:
     try:
@@ -647,31 +666,101 @@ def validate_market_data(data: dict) -> List[str]:
     return issues
 
 
+def _fetch_rss_url(url: str, timeout: int = 20):
+    headers = {
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "application/rss+xml, application/xml, text/xml, application/atom+xml, */*",
+    }
+    r = requests.get(url, headers=headers, timeout=timeout)
+    r.raise_for_status()
+    return r.content
+
+
+def _google_news_rss_url(query: str) -> str:
+    encoded = quote(query, safe="")
+    return f"https://news.google.com/rss/search?q={encoded}&hl=en-US&gl=US&ceid=US:en"
+
+
+def _parse_feed_items(feed_cfg: dict) -> list[dict]:
+    source = feed_cfg["source"]
+    url = feed_cfg["url"]
+    max_items = int(feed_cfg.get("max", 10))
+    try:
+        raw = _fetch_rss_url(url)
+        feed = feedparser.parse(raw)
+        print(f"    RSS {source} entries: {len(feed.entries)}")
+        items = []
+        for entry in feed.entries[:max_items]:
+            title = _clean_text(entry.get("title", ""))
+            summary = _clean_text(getattr(entry, "summary", ""))
+            link = entry.get("link", "")
+            published = entry.get("published", "")
+            if not title:
+                continue
+            items.append({
+                "source": source,
+                "title": title,
+                "summary": summary[:500],
+                "link": link,
+                "published": published,
+            })
+        return items
+    except Exception as e:
+        print(f"[WARN] RSS {source}: {e}")
+        return []
+
+
+def _parse_google_news_query(query_cfg: dict) -> list[dict]:
+    source = query_cfg["source"]
+    query = query_cfg["query"]
+    max_items = int(query_cfg.get("max", 10))
+    url = _google_news_rss_url(query)
+    try:
+        raw = _fetch_rss_url(url)
+        feed = feedparser.parse(raw)
+        print(f"    Google News fallback {source} entries: {len(feed.entries)}")
+        items = []
+        for entry in feed.entries[:max_items]:
+            title = _clean_text(entry.get("title", ""))
+            summary = _clean_text(getattr(entry, "summary", ""))
+            link = entry.get("link", "")
+            published = entry.get("published", "")
+            if not title:
+                continue
+            items.append({
+                "source": source,
+                "title": title,
+                "summary": summary[:500],
+                "link": link,
+                "published": published,
+            })
+        return items
+    except Exception as e:
+        print(f"[WARN] Google News fallback {source}: {e}")
+        return []
+
+
 def fetch_news(feed_list: list[dict]) -> list[dict]:
     items = []
     for feed_cfg in feed_list:
-        try:
-            feed = feedparser.parse(feed_cfg["url"])
-            print(f"    RSS {feed_cfg['source']} entries: {len(feed.entries)}")
+        items.extend(_parse_feed_items(feed_cfg))
+    return items
 
-            for entry in feed.entries[: feed_cfg["max"]]:
-                title = _clean_text(entry.get("title", ""))
-                summary = _clean_text(getattr(entry, "summary", ""))
-                link = entry.get("link", "")
-                published = entry.get("published", "")
 
-                if not title:
-                    continue
+def fetch_qatar_news() -> list[dict]:
+    items = dedupe_news(fetch_news(NEWS_FEEDS["qatar"]))
+    print(f"    Qatar primary source items found: {len(items)}")
 
-                items.append({
-                    "source": feed_cfg["source"],
-                    "title": title,
-                    "summary": summary[:500],
-                    "link": link,
-                    "published": published,
-                })
-        except Exception as e:
-            print(f"[WARN] RSS {feed_cfg['source']}: {e}")
+    if len(items) >= QATAR_NEWS_TARGET_COUNT:
+        return items
+
+    for query_cfg in QATAR_NEWS_FALLBACK_QUERIES:
+        items.extend(_parse_google_news_query(query_cfg))
+        items = dedupe_news(items)
+        print(f"    Qatar items after fallback '{query_cfg['source']}': {len(items)}")
+        if len(items) >= QATAR_NEWS_TARGET_COUNT:
+            break
+
     return items
 
 
@@ -976,10 +1065,12 @@ def run() -> dict:
 
     if cfg["sections"].get("qatar_news", True):
         print("  · qatar news")
-        raw_qatar = dedupe_news(fetch_news(NEWS_FEEDS["qatar"]))
-        print(f"    Qatar source items found: {len(raw_qatar)}")
-        raw_qatar = ensure_min_news(raw_qatar, 4, "Peninsula/Tribune")
-        data["qatar_news"] = summarise_news(raw_qatar, "qatar", 4)
+        raw_qatar = fetch_qatar_news()
+        print(f"    Qatar source items usable: {len(raw_qatar)}")
+        if raw_qatar:
+            data["qatar_news"] = summarise_news(raw_qatar, "qatar", min(QATAR_NEWS_TARGET_COUNT, len(raw_qatar)))
+        else:
+            data["qatar_news"] = []
     else:
         data["qatar_news"] = []
 
