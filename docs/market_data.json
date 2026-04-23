@@ -15,13 +15,13 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-04-23T15:11:39Z",
+  "generated_at": "2026-04-23T15:39:41Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
       "name": "US S&P 500",
       "ticker": "^GSPC",
-      "px_last": 7143.13,
+      "px_last": 7142.57,
       "change_1d": "+0.1%",
       "mtd": "+9.4%",
       "ytd": "+4.3%",
@@ -31,7 +31,7 @@
     {
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10466.13,
+      "px_last": 10465.83,
       "change_1d": "-0.1%",
       "mtd": "+2.8%",
       "ytd": "+5.4%",
@@ -51,10 +51,10 @@
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24196.63,
-      "change_1d": "+0.0%",
-      "mtd": "+6.7%",
-      "ytd": "-1.2%",
+      "px_last": 24178.76,
+      "change_1d": "-0.1%",
+      "mtd": "+6.6%",
+      "ytd": "-1.3%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
@@ -167,16 +167,16 @@
       "name": "GBP/USD",
       "ticker": "GBPUSD=X",
       "px_last": 1.35,
-      "change_1d": "-0.0%",
+      "change_1d": "-0.1%",
       "mtd": "+2.5%",
-      "ytd": "+0.3%",
+      "ytd": "+0.2%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 159.41,
+      "px_last": 159.39,
       "change_1d": "+0.0%",
       "mtd": "-0.3%",
       "ytd": "+1.9%",
@@ -280,17 +280,17 @@
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 102.37,
-      "change_1d": "+0.5%",
-      "mtd": "-13.5%",
-      "ytd": "+68.2%",
+      "px_last": 102.98,
+      "change_1d": "+1.0%",
+      "mtd": "-13.0%",
+      "ytd": "+69.2%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 76.23,
+      "px_last": 76.25,
       "change_1d": "-2.1%",
       "mtd": "+2.1%",
       "ytd": "+8.7%",
@@ -300,9 +300,9 @@
     {
       "name": "Gold (QAR)",
       "ticker": "DERIVED",
-      "px_last": 17290.0,
-      "change_1d": "+0.2%",
-      "mtd": "+5.2%",
+      "px_last": 17293.28,
+      "change_1d": "+0.3%",
+      "mtd": "+5.3%",
       "ytd": "+9.8%",
       "as_of": "2026-04-23",
       "source": "Derived from Yahoo Finance GC=F and QAR=X"
@@ -312,10 +312,10 @@
     {
       "name": "UST 5-Year",
       "ticker": "^FVX",
-      "px_last": 3.91,
-      "change_1d": "-0.1%",
-      "mtd": "-0.8%",
-      "ytd": "+5.1%",
+      "px_last": 3.92,
+      "change_1d": "+0.1%",
+      "mtd": "-0.7%",
+      "ytd": "+5.2%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
@@ -325,7 +325,7 @@
       "px_last": 4.29,
       "change_1d": "-0.1%",
       "mtd": "-0.5%",
-      "ytd": "+3.0%",
+      "ytd": "+3.1%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     }
@@ -344,7 +344,7 @@
     {
       "name": "EUR/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.2628,
+      "px_last": 4.2633,
       "change_1d": "-0.4%",
       "mtd": "+5.2%",
       "ytd": "-0.3%",
@@ -354,19 +354,19 @@
     {
       "name": "GBP/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.9155,
+      "px_last": 4.9134,
       "change_1d": "-0.2%",
-      "mtd": "+5.6%",
-      "ytd": "+0.3%",
+      "mtd": "+5.5%",
+      "ytd": "+0.2%",
       "as_of": "2026-04-23",
       "source": "Derived from Yahoo Finance GBPUSD=X and QAR=X"
     },
     {
       "name": "CNY/QAR",
       "ticker": "DERIVED",
-      "px_last": 0.533,
-      "change_1d": "-0.3%",
-      "mtd": "+4.2%",
+      "px_last": 0.5333,
+      "change_1d": "-0.2%",
+      "mtd": "+4.3%",
       "ytd": "+2.5%",
       "as_of": "2026-04-23",
       "source": "Derived from Yahoo Finance QAR=X and CNY=X"
@@ -374,86 +374,86 @@
   ],
   "global_news": [
     {
-      "headline": "Qatar Business News Sources Experience Technical Disruption",
-      "summary": "Multiple Qatar business and market news feeds from Reuters and Bloomberg experienced temporary outages, affecting regional financial news coverage.",
-      "source": "Reuters/Bloomberg",
-      "url": "",
-      "metric": "4",
-      "metric_label": "News feeds affected"
+      "headline": "Oil Fluctuates on US-Iran Hormuz Strait Tensions",
+      "summary": "Oil prices swung as US-Iran tensions escalate over Strait of Hormuz control, with peace talks failing to materialize.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-22/latest-oil-market-news-and-analysis-for-april-23",
+      "metric": "20%",
+      "metric_label": "Global oil transit via Hormuz"
     },
     {
-      "headline": "Qatar Corporate News Feed Refresh Pending",
-      "summary": "Corporate news workflow systems are scheduled to retry approved source feeds in the next operational cycle.",
-      "source": "Reuters/Bloomberg",
-      "url": "",
-      "metric": "1",
-      "metric_label": "Retry cycle pending"
+      "headline": "Oil Climbs on Hormuz Standoff Market Impact",
+      "summary": "Hormuz tensions drive oil higher while stocks fluctuate on concerns over energy disruptions, inflation, and economic slowdown.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-22/stock-market-today-dow-s-p-live-updates",
+      "metric": "+3.2%",
+      "metric_label": "Oil price daily gain"
     },
     {
-      "headline": "Qatar Market Coverage Awaiting Source Update",
-      "summary": "Approved publisher feeds did not return sufficient items for comprehensive market coverage in current reporting cycle.",
-      "source": "Reuters/Bloomberg",
-      "url": "",
-      "metric": "0",
-      "metric_label": "Articles available"
+      "headline": "Gold Falls as Hormuz Crisis Boosts Inflation",
+      "summary": "Gold declined as Strait of Hormuz tensions drove oil prices higher, raising concerns about persistent inflation pressures.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-22/gold-steadies-as-hormuz-standoff-keeps-inflation-risk-high",
+      "metric": "-1.8%",
+      "metric_label": "Gold price decline"
     },
     {
-      "headline": "Qatar Economy Headlines Stream Shows Incomplete Data",
-      "summary": "Economic news section restricted to approved publisher sources only, limiting available content for financial reporting.",
-      "source": "Reuters/Bloomberg",
-      "url": "",
-      "metric": "100%",
-      "metric_label": "Approved sources only"
+      "headline": "Modi Faces Electoral Challenge After Voter Purge",
+      "summary": "Nine million voters removed from West Bengal rolls two weeks before elections, sparking opposition outcry against Modi government.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-23/modi-stakes-prestige-on-west-bengal-2026-elections-as-voter-roll-row-grows",
+      "metric": "9M",
+      "metric_label": "Voters removed from rolls"
     },
     {
-      "headline": "Regional Financial News Distribution Systems Under Maintenance",
-      "summary": "Technical maintenance affecting Gulf region financial news distribution networks, impacting market intelligence gathering capabilities.",
-      "source": "Reuters/Bloomberg",
-      "url": "",
-      "metric": "Ongoing",
-      "metric_label": "Maintenance status"
+      "headline": "CAAT Pension Achieves Strong 8.4% Annual Returns",
+      "summary": "Canadian pension fund earned 8.4% last year driven by strong stock performance despite weaker private equity returns.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-23/caat-pension-earns-8-4-as-stock-gains-outweigh-weak-pe-returns",
+      "metric": "8.4%",
+      "metric_label": "Annual pension fund return"
     },
     {
-      "headline": "Gulf Market Intelligence Sources Face Temporary Disruption",
-      "summary": "Regional financial news infrastructure experiencing technical difficulties, affecting daily market intelligence report compilation for Gulf banks.",
-      "source": "Reuters/Bloomberg",
-      "url": "",
-      "metric": "Regional",
-      "metric_label": "Impact scope"
+      "headline": "Private Equity Powers WNBA Cleveland Expansion",
+      "summary": "Monarch becomes first PE firm approved for WNBA investment, choosing Cleveland for new franchise expansion opportunity.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/videos/2026-04-23/the-wnba-s-expansion-into-cleveland-is-powered-by-pe-video",
+      "metric": "1st",
+      "metric_label": "PE firm in WNBA"
     }
   ],
   "qatar_news": [
     {
-      "headline": "Qatar Business Source Temporarily Unavailable",
-      "summary": "Primary Qatar business news feed experienced technical issues preventing article delivery during current reporting cycle.",
+      "headline": "Qatar Business News Sources Experience Technical Disruption",
+      "summary": "Major Qatar business news feeds from Peninsula and Tribune are temporarily unavailable due to technical issues affecting market coverage.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "0",
-      "metric_label": "Articles Retrieved"
+      "metric": "4",
+      "metric_label": "News Sources Affected"
     },
     {
       "headline": "Qatar Corporate News Feed Refresh Pending",
-      "summary": "Corporate news workflow scheduled for retry on next automated run after current feed delivery failure.",
+      "summary": "Corporate news workflow will retry approved sources on next run as current cycle returned insufficient usable content.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "1",
-      "metric_label": "Retry Attempts Remaining"
+      "metric": "Next Cycle",
+      "metric_label": "Retry Schedule"
     },
     {
       "headline": "Qatar Market Coverage Awaiting Source Update",
-      "summary": "Approved publisher feed failed to provide minimum required articles for comprehensive market intelligence reporting.",
+      "summary": "Approved publisher feed failed to provide adequate items for current market intelligence report cycle requirements.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "Insufficient",
-      "metric_label": "Content Availability Status"
+      "metric_label": "Content Availability"
     },
     {
-      "headline": "Qatar Economy Headline Stream Incomplete",
-      "summary": "Economy section restricted to approved publishers only, current sources unable to meet content requirements.",
+      "headline": "Qatar Economy Headlines Stream Shows Gaps",
+      "summary": "Economic news section maintains strict approved publisher policy while experiencing incomplete headline stream coverage.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "Approved Only",
-      "metric_label": "Publisher Source Policy"
+      "metric_label": "Publisher Policy"
     }
   ],
   "kpis": [
@@ -463,12 +463,12 @@
       "sublabel": "US +0.1% \u00b7 UK -0.1%"
     },
     {
-      "value": "$102.37",
+      "value": "$102.98",
       "label": "Brent Crude",
-      "sublabel": "+68.2% Year-to-Date"
+      "sublabel": "+69.2% Year-to-Date"
     },
     {
-      "value": "17,290.0",
+      "value": "17,293.28",
       "label": "Gold (QAR)",
       "sublabel": "+9.8% YTD \u00b7 Safe-haven demand"
     },
@@ -480,7 +480,7 @@
     {
       "value": "4.29%",
       "label": "UST 10Y Yield",
-      "sublabel": "+3.0% YTD \u00b7 Rising yields"
+      "sublabel": "+3.1% YTD \u00b7 Rising yields"
     },
     {
       "value": "4.50%",
