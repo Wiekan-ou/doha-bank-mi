@@ -2,6 +2,7 @@ import json
 import os
 import re
 import datetime
+from html import unescape
 from typing import Optional, List
 from urllib.parse import quote
 
@@ -247,6 +248,32 @@ def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d")
         return None
 
 
+def _parse_qe_raw_description(raw_description: str) -> Optional[dict]:
+    if not raw_description:
+        return None
+
+    text = unescape(raw_description)
+
+    match = re.search(
+        r"QAR\s*·\s*([\d,]+\.\d+)\s+(-?\d+\.\d+)\s+\((-?\d+\.\d+%)\)",
+        text
+    )
+    if not match:
+        print("[WARN][SUPABASE_QE] Could not parse raw_description")
+        return None
+
+    price = float(match.group(1).replace(",", ""))
+    point_change = float(match.group(2))
+    change_1d = match.group(3)
+    prev_close = round(price - point_change, 2)
+
+    return {
+        "price": round(price, 2),
+        "prev_close": prev_close,
+        "change_1d": change_1d,
+    }
+
+
 def _safe_qe_from_supabase() -> Optional[dict]:
     supabase_url = os.environ.get("SUPABASE_URL")
     supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
@@ -255,7 +282,10 @@ def _safe_qe_from_supabase() -> Optional[dict]:
         print("[WARN][SUPABASE_QE] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
         return None
 
-    url = f"{supabase_url}/rest/v1/qe_index_cache?select=*&status=eq.ok&order=created_at.desc&limit=1"
+    url = (
+        f"{supabase_url}/rest/v1/qe_index_cache"
+        f"?select=*&status=eq.ok&order=as_of.desc,created_at.desc&limit=1"
+    )
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
@@ -271,21 +301,22 @@ def _safe_qe_from_supabase() -> Optional[dict]:
             return None
 
         row = rows[0]
-        price = row.get("price")
+        parsed = _parse_qe_raw_description(row.get("raw_description", ""))
 
-        if price in (None, "", "N/A"):
-            print("[WARN][SUPABASE_QE] Latest Supabase QE row has empty price")
+        if not parsed:
+            print("[WARN][SUPABASE_QE] Latest Supabase QE row could not be parsed")
             return None
 
         return {
             "name": "Qatar QE Index",
             "ticker": "^GNRI.QA",
-            "px_last": round(float(price), 2),
-            "change_1d": row.get("change_1d", "N/A"),
+            "px_last": parsed["price"],
+            "change_1d": parsed["change_1d"],
             "mtd": "N/A",
             "ytd": "N/A",
             "as_of": row.get("as_of"),
             "source": row.get("source", "Supabase qe_index_cache"),
+            "prev_close": parsed["prev_close"],
         }
 
     except Exception as e:
@@ -325,6 +356,12 @@ def _last_value_before_or_on(closes, target_date: datetime.date) -> Optional[flo
 
 
 def _fetch_market_row(name: str, sym: str, today: datetime.date, digits: int = 2) -> dict:
+    if name == "Qatar QE Index":
+        qe_row = _safe_qe_from_supabase()
+        if qe_row is not None:
+            print("[INFO][SUPABASE_QE] Using QE value from Supabase")
+            return qe_row
+
     year_start = datetime.date(today.year, 1, 1)
     month_start = datetime.date(today.year, today.month, 1)
     history_start = year_start - datetime.timedelta(days=20)
@@ -334,7 +371,7 @@ def _fetch_market_row(name: str, sym: str, today: datetime.date, digits: int = 2
         if name == "Qatar QE Index":
             qe_row = _safe_qe_from_supabase()
             if qe_row is not None:
-                print("[INFO][SUPABASE_QE] Using QE value from Supabase")
+                print("[INFO][SUPABASE_QE] Using QE value from Supabase after Yahoo fallback")
                 return qe_row
 
         return {
@@ -536,13 +573,13 @@ def fetch_news(feed_list: list[dict]) -> list[dict]:
                 if not title:
                     continue
 
-                items.append({
-                    "source": feed_cfg["source"],
-                    "title": title,
-                    "summary": summary[:500],
-                    "link": link,
-                    "published": published,
-                })
+                    items.append({
+                        "source": feed_cfg["source"],
+                        "title": title,
+                        "summary": summary[:500],
+                        "link": link,
+                        "published": published,
+                    })
         except Exception as e:
             print(f"[WARN] RSS {feed_cfg['source']}: {e}")
     return items
