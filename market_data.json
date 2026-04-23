@@ -15,26 +15,26 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-04-23T15:39:41Z",
+  "generated_at": "2026-04-23T21:16:21Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
       "name": "US S&P 500",
       "ticker": "^GSPC",
-      "px_last": 7142.57,
-      "change_1d": "+0.1%",
-      "mtd": "+9.4%",
-      "ytd": "+4.3%",
+      "px_last": 7108.4,
+      "change_1d": "-0.4%",
+      "mtd": "+8.9%",
+      "ytd": "+3.8%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10465.83,
-      "change_1d": "-0.1%",
+      "px_last": 10457.01,
+      "change_1d": "-0.2%",
       "mtd": "+2.8%",
-      "ytd": "+5.4%",
+      "ytd": "+5.3%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
@@ -51,94 +51,31 @@
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24178.76,
-      "change_1d": "-0.1%",
-      "mtd": "+6.6%",
-      "ytd": "-1.3%",
+      "px_last": 24155.45,
+      "change_1d": "-0.2%",
+      "mtd": "+6.5%",
+      "ytd": "-1.4%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "Hong Kong HSI",
       "ticker": "^HSI",
-      "px_last": 25915.2,
-      "change_1d": "-0.9%",
-      "mtd": "+4.5%",
-      "ytd": "+1.1%",
-      "as_of": "2026-04-23",
+      "px_last": 26163.24,
+      "change_1d": "-1.2%",
+      "mtd": "+5.5%",
+      "ytd": "+2.1%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "India Sensex",
       "ticker": "^BSESN",
-      "px_last": 77664.0,
-      "change_1d": "-1.1%",
-      "mtd": "+7.9%",
-      "ytd": "-8.9%",
-      "as_of": "2026-04-23",
-      "source": "Yahoo Finance"
-    }
-  ],
-  "gcc_indices": [
-    {
-      "name": "Qatar QE Index",
-      "ticker": "^GNRI.QA",
-      "px_last": 10610.7,
-      "change_1d": "-0.48%",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": "2026-04-23",
-      "source": "yahoo_finance",
-      "prev_close": 10662.33
-    },
-    {
-      "name": "Saudi Tadawul",
-      "ticker": "TASI.SR",
-      "px_last": "N/A",
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": null,
-      "source": "Yahoo Finance"
-    },
-    {
-      "name": "Dubai DFM",
-      "ticker": "^DFMGI",
-      "px_last": "N/A",
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": null,
-      "source": "Yahoo Finance"
-    },
-    {
-      "name": "Abu Dhabi ADX",
-      "ticker": "ADI.QA",
-      "px_last": "N/A",
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": null,
-      "source": "Yahoo Finance"
-    },
-    {
-      "name": "Kuwait Boursa",
-      "ticker": "^BKW",
-      "px_last": "N/A",
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": null,
-      "source": "Yahoo Finance"
-    },
-    {
-      "name": "Bahrain",
-      "ticker": "^BHSE",
-      "px_last": "N/A",
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": null,
+      "px_last": 78516.49,
+      "change_1d": "-1.0%",
+      "mtd": "+9.1%",
+      "ytd": "-7.9%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     }
   ],
@@ -146,10 +83,10 @@
     {
       "name": "USD Index",
       "ticker": "DX-Y.NYB",
-      "px_last": 98.57,
-      "change_1d": "-0.0%",
-      "mtd": "-1.4%",
-      "ytd": "+0.3%",
+      "px_last": 98.81,
+      "change_1d": "+0.2%",
+      "mtd": "-1.2%",
+      "ytd": "+0.5%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
@@ -157,9 +94,9 @@
       "name": "EUR/USD",
       "ticker": "EURUSD=X",
       "px_last": 1.17,
-      "change_1d": "-0.3%",
-      "mtd": "+2.2%",
-      "ytd": "-0.3%",
+      "change_1d": "-0.4%",
+      "mtd": "+2.0%",
+      "ytd": "-0.5%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
@@ -167,19 +104,19 @@
       "name": "GBP/USD",
       "ticker": "GBPUSD=X",
       "px_last": 1.35,
-      "change_1d": "-0.1%",
-      "mtd": "+2.5%",
-      "ytd": "+0.2%",
+      "change_1d": "-0.3%",
+      "mtd": "+2.3%",
+      "ytd": "+0.0%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 159.39,
-      "change_1d": "+0.0%",
-      "mtd": "-0.3%",
-      "ytd": "+1.9%",
+      "px_last": 159.62,
+      "change_1d": "+0.2%",
+      "mtd": "-0.1%",
+      "ytd": "+2.1%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
@@ -198,81 +135,81 @@
     {
       "name": "Doha",
       "ticker": "DHBK.QA",
-      "px_last": 2.76,
-      "change_1d": "-1.5%",
-      "mtd": "-10.3%",
-      "ytd": "+1.2%",
-      "as_of": "2026-04-23",
+      "px_last": 2.8,
+      "change_1d": "-0.7%",
+      "mtd": "-9.0%",
+      "ytd": "+2.7%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "QNB",
       "ticker": "QNBK.QA",
-      "px_last": 17.8,
-      "change_1d": "-1.3%",
-      "mtd": "+4.5%",
-      "ytd": "-2.8%",
-      "as_of": "2026-04-23",
+      "px_last": 18.03,
+      "change_1d": "-1.5%",
+      "mtd": "+5.8%",
+      "ytd": "-1.6%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "QIB",
       "ticker": "QIBK.QA",
-      "px_last": 22.86,
-      "change_1d": "-0.2%",
-      "mtd": "+0.9%",
-      "ytd": "-2.4%",
-      "as_of": "2026-04-23",
+      "px_last": 22.9,
+      "change_1d": "+0.0%",
+      "mtd": "+1.1%",
+      "ytd": "-2.2%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "CBQ",
       "ticker": "CBQK.QA",
       "px_last": 4.39,
-      "change_1d": "+0.0%",
+      "change_1d": "+0.7%",
       "mtd": "+2.8%",
       "ytd": "+11.6%",
-      "as_of": "2026-04-23",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "QIIB",
       "ticker": "QIIK.QA",
       "px_last": 11.3,
-      "change_1d": "+0.0%",
+      "change_1d": "+0.5%",
       "mtd": "+1.6%",
       "ytd": "+1.5%",
-      "as_of": "2026-04-23",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "Al Rayan",
       "ticker": "MARK.QA",
-      "px_last": 2.19,
-      "change_1d": "-1.1%",
-      "mtd": "+0.3%",
-      "ytd": "+4.8%",
-      "as_of": "2026-04-23",
+      "px_last": 2.21,
+      "change_1d": "-0.1%",
+      "mtd": "+1.4%",
+      "ytd": "+6.0%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "Dukhan",
       "ticker": "DUBK.QA",
-      "px_last": 3.49,
-      "change_1d": "+0.4%",
-      "mtd": "+3.1%",
-      "ytd": "+2.1%",
-      "as_of": "2026-04-23",
+      "px_last": 3.48,
+      "change_1d": "-0.6%",
+      "mtd": "+2.7%",
+      "ytd": "+1.7%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     },
     {
       "name": "Ahli",
       "ticker": "ABQK.QA",
-      "px_last": 3.72,
-      "change_1d": "-1.0%",
-      "mtd": "-2.1%",
-      "ytd": "+5.8%",
-      "as_of": "2026-04-23",
+      "px_last": 3.76,
+      "change_1d": "+1.0%",
+      "mtd": "-1.1%",
+      "ytd": "+6.9%",
+      "as_of": "2026-04-22",
       "source": "Yahoo Finance"
     }
   ],
@@ -280,30 +217,30 @@
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 102.98,
-      "change_1d": "+1.0%",
-      "mtd": "-13.0%",
-      "ytd": "+69.2%",
+      "px_last": 106.47,
+      "change_1d": "+4.5%",
+      "mtd": "-10.0%",
+      "ytd": "+75.0%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 76.25,
-      "change_1d": "-2.1%",
-      "mtd": "+2.1%",
-      "ytd": "+8.7%",
+      "px_last": 75.46,
+      "change_1d": "-3.1%",
+      "mtd": "+1.0%",
+      "ytd": "+7.6%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "Gold (QAR)",
       "ticker": "DERIVED",
-      "px_last": 17293.28,
-      "change_1d": "+0.3%",
-      "mtd": "+5.3%",
-      "ytd": "+9.8%",
+      "px_last": 17139.3,
+      "change_1d": "-0.6%",
+      "mtd": "+4.3%",
+      "ytd": "+8.9%",
       "as_of": "2026-04-23",
       "source": "Derived from Yahoo Finance GC=F and QAR=X"
     }
@@ -312,22 +249,84 @@
     {
       "name": "UST 5-Year",
       "ticker": "^FVX",
-      "px_last": 3.92,
-      "change_1d": "+0.1%",
-      "mtd": "-0.7%",
-      "ytd": "+5.2%",
+      "px_last": 3.95,
+      "change_1d": "+0.9%",
+      "mtd": "+0.2%",
+      "ytd": "+6.2%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
     },
     {
       "name": "UST 10-Year",
       "ticker": "^TNX",
-      "px_last": 4.29,
-      "change_1d": "-0.1%",
-      "mtd": "-0.5%",
-      "ytd": "+3.1%",
+      "px_last": 4.32,
+      "change_1d": "+0.7%",
+      "mtd": "+0.3%",
+      "ytd": "+3.8%",
       "as_of": "2026-04-23",
       "source": "Yahoo Finance"
+    }
+  ],
+  "gcc_indices": [
+    {
+      "name": "Qatar QE Index",
+      "ticker": "QE",
+      "px_last": 10662.42,
+      "change_1d": "-0.1%",
+      "mtd": "+3.8%",
+      "ytd": "-1.1%",
+      "as_of": "2026-04-23",
+      "source": "yahoo_finance"
+    },
+    {
+      "name": "Saudi Tadawul",
+      "ticker": "TASI",
+      "px_last": 11109.59,
+      "change_1d": "-1.6%",
+      "mtd": "-1.6%",
+      "ytd": "+7.2%",
+      "as_of": "2026-04-23",
+      "source": "yahoo_finance"
+    },
+    {
+      "name": "Dubai DFM",
+      "ticker": "DFMGI",
+      "px_last": 5814.04,
+      "change_1d": "+0.0%",
+      "mtd": "+4.9%",
+      "ytd": "-5.2%",
+      "as_of": "2026-04-23",
+      "source": "yahoo_finance"
+    },
+    {
+      "name": "Abu Dhabi ADX",
+      "ticker": "FADGI",
+      "px_last": 9746.7,
+      "change_1d": "-0.4%",
+      "mtd": "+1.0%",
+      "ytd": "-2.5%",
+      "as_of": "2026-04-23",
+      "source": "yahoo_finance"
+    },
+    {
+      "name": "Kuwait Boursa",
+      "ticker": "BKA",
+      "px_last": 8879.0,
+      "change_1d": "+0.1%",
+      "mtd": "+4.7%",
+      "ytd": "+0.3%",
+      "as_of": "2026-04-23",
+      "source": "yahoo_finance"
+    },
+    {
+      "name": "Bahrain",
+      "ticker": "BHBX",
+      "px_last": 1932.98,
+      "change_1d": "+0.1%",
+      "mtd": "+0.1%",
+      "ytd": "-6.5%",
+      "as_of": "2026-04-23",
+      "source": "mubasher"
     }
   ],
   "qar_cross_rates": [
@@ -344,20 +343,20 @@
     {
       "name": "EUR/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.2633,
-      "change_1d": "-0.4%",
-      "mtd": "+5.2%",
-      "ytd": "-0.3%",
+      "px_last": 4.2558,
+      "change_1d": "-0.6%",
+      "mtd": "+5.1%",
+      "ytd": "-0.5%",
       "as_of": "2026-04-23",
       "source": "Derived from Yahoo Finance EURUSD=X and QAR=X"
     },
     {
       "name": "GBP/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.9134,
-      "change_1d": "-0.2%",
-      "mtd": "+5.5%",
-      "ytd": "+0.2%",
+      "px_last": 4.9034,
+      "change_1d": "-0.4%",
+      "mtd": "+5.3%",
+      "ytd": "+0.0%",
       "as_of": "2026-04-23",
       "source": "Derived from Yahoo Finance GBPUSD=X and QAR=X"
     },
@@ -374,113 +373,113 @@
   ],
   "global_news": [
     {
-      "headline": "Oil Fluctuates on US-Iran Hormuz Strait Tensions",
-      "summary": "Oil prices swung as US-Iran tensions escalate over Strait of Hormuz control, with peace talks failing to materialize.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-22/latest-oil-market-news-and-analysis-for-april-23",
-      "metric": "20%",
-      "metric_label": "Global oil transit via Hormuz"
-    },
-    {
-      "headline": "Oil Climbs on Hormuz Standoff Market Impact",
-      "summary": "Hormuz tensions drive oil higher while stocks fluctuate on concerns over energy disruptions, inflation, and economic slowdown.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-22/stock-market-today-dow-s-p-live-updates",
-      "metric": "+3.2%",
-      "metric_label": "Oil price daily gain"
-    },
-    {
-      "headline": "Gold Falls as Hormuz Crisis Boosts Inflation",
-      "summary": "Gold declined as Strait of Hormuz tensions drove oil prices higher, raising concerns about persistent inflation pressures.",
+      "headline": "Gold Falls as Hormuz Standoff Drives Oil Higher",
+      "summary": "Gold declined as escalating US-Iran tensions over Strait of Hormuz drove oil prices higher, rekindling inflation concerns and market volatility.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-04-22/gold-steadies-as-hormuz-standoff-keeps-inflation-risk-high",
-      "metric": "-1.8%",
-      "metric_label": "Gold price decline"
+      "metric": "Oil \u2191 Gold \u2193",
+      "metric_label": "Commodities divergence on geopol"
     },
     {
-      "headline": "Modi Faces Electoral Challenge After Voter Purge",
-      "summary": "Nine million voters removed from West Bengal rolls two weeks before elections, sparking opposition outcry against Modi government.",
+      "headline": "Stocks Fall as Iran Tensions Rally Oil Prices",
+      "summary": "Markets rattled by Middle East conflict escalation fears, with stocks declining as oil surged on Strait of Hormuz closure concerns.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-23/modi-stakes-prestige-on-west-bengal-2026-elections-as-voter-roll-row-grows",
-      "metric": "9M",
-      "metric_label": "Voters removed from rolls"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-22/stock-market-today-dow-s-p-live-updates",
+      "metric": "Stocks \u2193",
+      "metric_label": "Market reaction to geopolitical "
     },
     {
-      "headline": "CAAT Pension Achieves Strong 8.4% Annual Returns",
-      "summary": "Canadian pension fund earned 8.4% last year driven by strong stock performance despite weaker private equity returns.",
+      "headline": "United CEO Eyes Airline Acquisition Amid Industry Challenges",
+      "summary": "Scott Kirby pursues expansion strategy to build 'best airline in history' while facing merger discussions, rising fuel costs, competitive pressures.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-23/caat-pension-earns-8-4-as-stock-gains-outweigh-weak-pe-returns",
-      "metric": "8.4%",
-      "metric_label": "Annual pension fund return"
+      "url": "https://www.bloomberg.com/news/features/2026-04-23/united-ceo-scott-kirby-faces-merger-talk-fuel-prices-turf-wars",
+      "metric": "M&A Activity",
+      "metric_label": "Airline sector consolidation tre"
     },
     {
-      "headline": "Private Equity Powers WNBA Cleveland Expansion",
-      "summary": "Monarch becomes first PE firm approved for WNBA investment, choosing Cleveland for new franchise expansion opportunity.",
+      "headline": "US Government Taps Law Firm for Spirit Rescue",
+      "summary": "Government engages Kirkland & Ellis to advise on potential rescue deal for struggling Spirit Aviation Holdings amid airline industry distress.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/videos/2026-04-23/the-wnba-s-expansion-into-cleveland-is-powered-by-pe-video",
-      "metric": "1st",
-      "metric_label": "PE firm in WNBA"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-23/us-taps-kirkland-ellis-for-advice-on-spirit-airlines-rescue",
+      "metric": "Gov Intervention",
+      "metric_label": "Airline bailout consideration"
+    },
+    {
+      "headline": "Avis Stock Collapse Drags Down Transport Index",
+      "summary": "Transportation sector suffers worst two-day performance since spring tariff selloff, triggered by major decline in Avis rental car stock.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-23/avis-stock-collapse-sparks-plunge-in-dow-transports-it-lifted",
+      "metric": "2-Day Worst",
+      "metric_label": "Dow Transports performance decli"
+    },
+    {
+      "headline": "Podcast Empire Faces Internal Business Challenges",
+      "summary": "Call Her Daddy host Alex Cooper's media business encounters multiple operational difficulties, including issues involving her husband's involvement.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/videos/2026-04-23/inside-complaints-about-alex-cooper-s-podcast-empire",
+      "metric": "Media Sector",
+      "metric_label": "Digital content business pressur"
     }
   ],
   "qatar_news": [
     {
-      "headline": "Qatar Business News Sources Experience Technical Disruption",
-      "summary": "Major Qatar business news feeds from Peninsula and Tribune are temporarily unavailable due to technical issues affecting market coverage.",
+      "headline": "Qatar Business Source Temporarily Unavailable",
+      "summary": "Primary Qatar business news source experiencing technical difficulties, preventing access to current market updates and corporate developments.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "4",
-      "metric_label": "News Sources Affected"
+      "metric": "0",
+      "metric_label": "Articles Retrieved"
     },
     {
       "headline": "Qatar Corporate News Feed Refresh Pending",
-      "summary": "Corporate news workflow will retry approved sources on next run as current cycle returned insufficient usable content.",
+      "summary": "Corporate news workflow experiencing delays, with system scheduled to retry approved source connections on next automated cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Next Cycle",
-      "metric_label": "Retry Schedule"
+      "metric": "1",
+      "metric_label": "Retry Attempts Scheduled"
     },
     {
       "headline": "Qatar Market Coverage Awaiting Source Update",
-      "summary": "Approved publisher feed failed to provide adequate items for current market intelligence report cycle requirements.",
+      "summary": "Insufficient market data retrieved from approved publisher feeds during current reporting cycle, affecting comprehensive coverage quality.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Insufficient",
-      "metric_label": "Content Availability"
+      "metric": "0",
+      "metric_label": "Sufficient Items Retrieved"
     },
     {
-      "headline": "Qatar Economy Headlines Stream Shows Gaps",
-      "summary": "Economic news section maintains strict approved publisher policy while experiencing incomplete headline stream coverage.",
+      "headline": "Qatar Economy Headlines Stream Incomplete",
+      "summary": "Economic news section limited to approved publisher sources only, currently experiencing reduced content availability and coverage gaps.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Approved Only",
-      "metric_label": "Publisher Policy"
+      "metric": "100%",
+      "metric_label": "Source Approval Compliance"
     }
   ],
   "kpis": [
     {
       "value": "Mixed",
       "label": "Global Equities",
-      "sublabel": "US +0.1% \u00b7 UK -0.1%"
+      "sublabel": "US -0.4% \u00b7 UK -0.2%"
     },
     {
-      "value": "$102.98",
+      "value": "$106.47",
       "label": "Brent Crude",
-      "sublabel": "+69.2% Year-to-Date"
+      "sublabel": "+75.0% Year-to-Date"
     },
     {
-      "value": "17,293.28",
+      "value": "17,139.3",
       "label": "Gold (QAR)",
-      "sublabel": "+9.8% YTD \u00b7 Safe-haven demand"
+      "sublabel": "+8.9% YTD \u00b7 Safe-haven demand"
     },
     {
-      "value": "10,610.7",
+      "value": "10,662.42",
       "label": "QSE Index",
-      "sublabel": "-0.48% today \u00b7 N/A YTD"
+      "sublabel": "-0.1% today \u00b7 -1.1% YTD"
     },
     {
-      "value": "4.29%",
+      "value": "4.32%",
       "label": "UST 10Y Yield",
-      "sublabel": "+3.1% YTD \u00b7 Rising yields"
+      "sublabel": "+3.8% YTD \u00b7 Rising yields"
     },
     {
       "value": "4.50%",
