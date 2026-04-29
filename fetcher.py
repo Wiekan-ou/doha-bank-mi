@@ -2,8 +2,6 @@ import json
 import os
 import re
 import datetime
-from html import unescape
-from email.utils import parsedate_to_datetime
 from typing import Optional, List
 from urllib.parse import quote
 
@@ -31,6 +29,9 @@ CONFIG = {
     }
 }
 
+USD_QAR_SUSPICIOUS_MOVE_THRESHOLD = 10.0
+
+
 GLOBAL_INDICES = {
     "US S&P 500": "^GSPC",
     "UK FTSE 100": "^FTSE",
@@ -40,15 +41,14 @@ GLOBAL_INDICES = {
     "India Sensex": "^BSESN",
 }
 
-# GCC is now sourced from Supabase gcc_indices_history, not Yahoo directly.
-GCC_INDEX_CONFIG = [
-    {"code": "QE", "name": "Qatar QE Index"},
-    {"code": "TASI", "name": "Saudi Tadawul"},
-    {"code": "DFMGI", "name": "Dubai DFM"},
-    {"code": "FADGI", "name": "Abu Dhabi ADX"},
-    {"code": "BKA", "name": "Kuwait Boursa"},
-    {"code": "BHBX", "name": "Bahrain"},
-]
+GCC_INDICES = {
+    "Qatar QE Index": "^GNRI.QA",
+    "Saudi Tadawul": "TASI.SR",
+    "Dubai DFM": "^DFMGI",
+    "Abu Dhabi ADX": "ADI.QA",
+    "Kuwait Boursa": "^BKW",
+    "Bahrain": "^BHSE",
+}
 
 SPOT_CURRENCY = {
     "USD Index": "DX-Y.NYB",
@@ -107,35 +107,6 @@ NEWS_FEEDS = {
     ],
 }
 
-QATAR_NEWS_TARGET_COUNT = 4
-QATAR_NEWS_MAX_AGE_HOURS = 24
-QATAR_NEWS_REQUIRED_KEYWORDS = [
-    "business", "economy", "economic", "investment", "investor", "investors",
-    "bank", "banking", "finance", "financial", "market", "markets", "stocks",
-    "trade", "trading", "company", "companies", "ipo", "bond", "bonds",
-    "sukuk", "merger", "acquisition", "real estate", "energy", "gas", "lng"
-]
-QATAR_NEWS_EXCLUDE_KEYWORDS = [
-    "world cup", "sports", "football", "fifa", "match", "cup", "covid-19", "covid"
-]
-QATAR_NEWS_FALLBACK_QUERIES = [
-    {
-        "source": "Google News / Qatar business approved",
-        "query": 'Qatar (business OR economy OR investment OR bank OR banking OR finance OR market) when:1d (site:thepeninsulaqatar.com OR site:qatar-tribune.com)',
-        "max": 12,
-    },
-    {
-        "source": "Google News / Qatar business reputable",
-        "query": 'Qatar (business OR economy OR investment OR bank OR banking OR finance OR market) when:1d (site:thepeninsulaqatar.com OR site:qatar-tribune.com OR site:gulf-times.com OR site:reuters.com OR site:bloomberg.com)',
-        "max": 12,
-    },
-    {
-        "source": "Google News / Qatar investment broad",
-        "query": 'Qatar (business OR economy OR investment OR bank OR banking OR finance OR market) when:1d',
-        "max": 12,
-    },
-]
-
 
 def _to_float(val) -> Optional[float]:
     try:
@@ -151,12 +122,6 @@ def _fmt_pct_number(current: Optional[float], base: Optional[float], digits: int
         return "N/A"
     pct = ((current - base) / base) * 100
     return f"{pct:+.{digits}f}%"
-
-
-def _fmt_pct_value(val: Optional[float], digits: int = 1) -> str:
-    if val is None:
-        return "N/A"
-    return f"{val:+.{digits}f}%"
 
 
 def _clean_text(text: str) -> str:
@@ -285,6 +250,52 @@ def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d")
         return None
 
 
+def _safe_qe_from_supabase() -> Optional[dict]:
+    supabase_url = os.environ.get("SUPABASE_URL")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+
+    if not supabase_url or not supabase_key:
+        print("[WARN][SUPABASE_QE] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
+        return None
+
+    url = f"{supabase_url}/rest/v1/qe_index_cache?select=*&status=eq.ok&order=created_at.desc&limit=1"
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+    }
+
+    try:
+        r = requests.get(url, headers=headers, timeout=20)
+        r.raise_for_status()
+        rows = r.json()
+
+        if not rows:
+            print("[WARN][SUPABASE_QE] No QE rows found in Supabase")
+            return None
+
+        row = rows[0]
+        price = row.get("price")
+
+        if price in (None, "", "N/A"):
+            print("[WARN][SUPABASE_QE] Latest Supabase QE row has empty price")
+            return None
+
+        return {
+            "name": "Qatar QE Index",
+            "ticker": "^GNRI.QA",
+            "px_last": round(float(price), 2),
+            "change_1d": row.get("change_1d", "N/A"),
+            "mtd": "N/A",
+            "ytd": "N/A",
+            "as_of": row.get("as_of"),
+            "source": row.get("source", "Supabase qe_index_cache"),
+        }
+
+    except Exception as e:
+        print(f"[WARN][SUPABASE_QE] Failed to read QE from Supabase: {e}")
+        return None
+
+
 def _get_series(sym: str, start: datetime.date):
     closes = _safe_download(sym, start)
     if closes is not None and len(closes) >= 2:
@@ -323,6 +334,12 @@ def _fetch_market_row(name: str, sym: str, today: datetime.date, digits: int = 2
 
     closes = _get_series(sym, history_start)
     if closes is None or len(closes) < 2:
+        if name == "Qatar QE Index":
+            qe_row = _safe_qe_from_supabase()
+            if qe_row is not None:
+                print("[INFO][SUPABASE_QE] Using QE value from Supabase")
+                return qe_row
+
         return {
             "name": name,
             "ticker": sym,
@@ -353,177 +370,6 @@ def _fetch_market_row(name: str, sym: str, today: datetime.date, digits: int = 2
         "as_of": as_of_str,
         "source": "Yahoo Finance",
     }
-
-
-# ------------------------------
-# GCC indices from Supabase
-# ------------------------------
-
-def _supabase_headers() -> dict:
-    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-    return {
-        "apikey": supabase_key,
-        "Authorization": f"Bearer {supabase_key}",
-        "Accept": "application/json",
-    }
-
-
-def _supabase_base_url() -> Optional[str]:
-    return os.environ.get("SUPABASE_URL")
-
-
-def _safe_gcc_history_from_supabase(instrument_code: str, today: datetime.date) -> list[dict]:
-    supabase_url = _supabase_base_url()
-    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-    if not supabase_url or not supabase_key:
-        print("[WARN][SUPABASE_GCC] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
-        return []
-
-    today_str = today.strftime("%Y-%m-%d")
-    url = (
-        f"{supabase_url}/rest/v1/gcc_indices_history"
-        f"?select=*"
-        f"&instrument_code=eq.{quote(instrument_code, safe='')}"
-        f"&status=eq.ok"
-        f"&as_of_date=lte.{today_str}"
-        f"&order=as_of_date.asc,created_at.asc"
-    )
-
-    try:
-        r = requests.get(url, headers=_supabase_headers(), timeout=20)
-        r.raise_for_status()
-        rows = r.json()
-        return rows if isinstance(rows, list) else []
-    except Exception as e:
-        print(f"[WARN][SUPABASE_GCC] Failed reading {instrument_code}: {e}")
-        return []
-
-
-def _dedupe_history_rows(rows: list[dict]) -> list[dict]:
-    # Keep the latest created row per as_of_date.
-    by_date: dict[str, dict] = {}
-    for row in rows:
-        d = row.get("as_of_date")
-        if not d or not row.get("instrument_code"):
-            continue
-        existing = by_date.get(d)
-        if existing is None or str(row.get("created_at", "")) > str(existing.get("created_at", "")):
-            by_date[d] = row
-    return [by_date[d] for d in sorted(by_date.keys())]
-
-
-def _row_px(row: Optional[dict]) -> Optional[float]:
-    if not row:
-        return None
-    return _to_float(row.get("px_last"))
-
-
-def _find_latest_row(rows: list[dict]) -> Optional[dict]:
-    return rows[-1] if rows else None
-
-
-def _find_previous_row(rows: list[dict], latest_date: str) -> Optional[dict]:
-    prev = [r for r in rows if r.get("as_of_date") and r.get("as_of_date") < latest_date]
-    return prev[-1] if prev else None
-
-
-def _find_month_reference(rows: list[dict], latest_date: datetime.date) -> Optional[dict]:
-    month_rows = []
-    for r in rows:
-        try:
-            d = datetime.date.fromisoformat(r["as_of_date"])
-        except Exception:
-            continue
-        if d.year == latest_date.year and d.month == latest_date.month and d <= latest_date:
-            month_rows.append(r)
-    if month_rows:
-        return month_rows[0]
-
-    before_month = []
-    month_start = datetime.date(latest_date.year, latest_date.month, 1)
-    for r in rows:
-        try:
-            d = datetime.date.fromisoformat(r["as_of_date"])
-        except Exception:
-            continue
-        if d < month_start:
-            before_month.append(r)
-    return before_month[-1] if before_month else None
-
-
-def _find_year_reference(rows: list[dict], latest_date: datetime.date) -> Optional[dict]:
-    year_rows = []
-    for r in rows:
-        try:
-            d = datetime.date.fromisoformat(r["as_of_date"])
-        except Exception:
-            continue
-        if d.year == latest_date.year and d <= latest_date:
-            year_rows.append(r)
-    return year_rows[0] if year_rows else None
-
-
-def _calc_pct_from_two_values(current: Optional[float], base: Optional[float]) -> Optional[float]:
-    if current is None or base in (None, 0):
-        return None
-    return ((current - base) / base) * 100
-
-
-def _build_gcc_row(name: str, instrument_code: str, today: datetime.date) -> dict:
-    rows = _dedupe_history_rows(_safe_gcc_history_from_supabase(instrument_code, today))
-    latest = _find_latest_row(rows)
-    if not latest:
-        return {
-            "name": name,
-            "ticker": instrument_code,
-            "px_last": "N/A",
-            "change_1d": "N/A",
-            "mtd": "N/A",
-            "ytd": "N/A",
-            "as_of": None,
-            "source": "Supabase gcc_indices_history",
-        }
-
-    latest_date = datetime.date.fromisoformat(latest["as_of_date"])
-    latest_px = _row_px(latest)
-
-    prev_row = _find_previous_row(rows, latest["as_of_date"])
-    prev_px = _row_px(prev_row)
-    if prev_px is None:
-        prev_px = _to_float(latest.get("previous_close"))
-
-    month_ref = _find_month_reference(rows, latest_date)
-    month_px = _row_px(month_ref)
-
-    year_ref = _find_year_reference(rows, latest_date)
-    year_px = _row_px(year_ref)
-
-    change_1d_pct = _calc_pct_from_two_values(latest_px, prev_px)
-    if change_1d_pct is None:
-        change_1d_pct = _to_float(latest.get("change_1d_pct"))
-
-    mtd_pct = _calc_pct_from_two_values(latest_px, month_px)
-    ytd_pct = _calc_pct_from_two_values(latest_px, year_px)
-
-    return {
-        "name": name,
-        "ticker": instrument_code,
-        "px_last": round(latest_px, 2) if latest_px is not None else "N/A",
-        "change_1d": _fmt_pct_value(change_1d_pct, 1),
-        "mtd": _fmt_pct_value(mtd_pct, 1),
-        "ytd": _fmt_pct_value(ytd_pct, 1),
-        "as_of": latest.get("as_of_date"),
-        "source": latest.get("source") or "Supabase gcc_indices_history",
-    }
-
-
-def fetch_gcc_indices(today: datetime.date) -> list[dict]:
-    rows = []
-    for item in GCC_INDEX_CONFIG:
-        row = _build_gcc_row(item["name"], item["code"], today)
-        print(f"    {item['name']}: {row['px_last']} | {row['change_1d']} | {row['mtd']} | {row['ytd']}")
-        rows.append(row)
-    return rows
 
 
 def fetch_section(ticker_map: dict, today: datetime.date) -> list[dict]:
@@ -669,7 +515,7 @@ def validate_market_data(data: dict) -> List[str]:
         try:
             raw = str(usdqar["change_1d"]).replace("%", "").strip()
             val = float(raw)
-            if abs(val) > 0.5:
+            if abs(val) > USD_QAR_SUSPICIOUS_MOVE_THRESHOLD:
                 issues.append(f"USD/QAR daily change suspicious: {usdqar['change_1d']}")
         except Exception:
             issues.append("USD/QAR daily change unparsable")
@@ -677,154 +523,32 @@ def validate_market_data(data: dict) -> List[str]:
     return issues
 
 
-
-def _parse_published_dt(item: dict) -> Optional[datetime.datetime]:
-    raw = item.get("published", "")
-    if not raw:
-        return None
-    try:
-        dt = parsedate_to_datetime(raw)
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=datetime.timezone.utc)
-        return dt.astimezone(datetime.timezone.utc)
-    except Exception:
-        try:
-            dt = datetime.datetime.fromisoformat(raw.replace("Z", "+00:00"))
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=datetime.timezone.utc)
-            return dt.astimezone(datetime.timezone.utc)
-        except Exception:
-            return None
-
-
-def _is_recent_item(item: dict, now_utc: datetime.datetime, max_age_hours: int) -> bool:
-    dt = _parse_published_dt(item)
-    if dt is None:
-        return False
-    age = now_utc - dt
-    return datetime.timedelta(0) <= age <= datetime.timedelta(hours=max_age_hours)
-
-
-def _is_qatar_business_item(item: dict) -> bool:
-    blob = f"{item.get('title', '')} {item.get('summary', '')}".lower()
-    if "qatar" not in blob:
-        return False
-    if any(x in blob for x in QATAR_NEWS_EXCLUDE_KEYWORDS):
-        return False
-    return any(k in blob for k in QATAR_NEWS_REQUIRED_KEYWORDS)
-
-
-def _filter_recent_qatar_business_news(items: list[dict]) -> list[dict]:
-    now_utc = datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc)
-    out = []
-    for item in items:
-        if not _is_recent_item(item, now_utc, QATAR_NEWS_MAX_AGE_HOURS):
-            continue
-        if not _is_qatar_business_item(item):
-            continue
-        out.append(item)
-    out.sort(key=lambda x: _parse_published_dt(x) or datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc), reverse=True)
-    return out
-
-
-def _fetch_rss_url(url: str, timeout: int = 20):
-    headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/rss+xml, application/xml, text/xml, application/atom+xml, */*",
-    }
-    r = requests.get(url, headers=headers, timeout=timeout)
-    r.raise_for_status()
-    return r.content
-
-
-def _google_news_rss_url(query: str) -> str:
-    encoded = quote(query, safe="")
-    return f"https://news.google.com/rss/search?q={encoded}&hl=en-US&gl=US&ceid=US:en"
-
-
-def _parse_feed_items(feed_cfg: dict) -> list[dict]:
-    source = feed_cfg["source"]
-    url = feed_cfg["url"]
-    max_items = int(feed_cfg.get("max", 10))
-    try:
-        raw = _fetch_rss_url(url)
-        feed = feedparser.parse(raw)
-        print(f"    RSS {source} entries: {len(feed.entries)}")
-        items = []
-        for entry in feed.entries[:max_items]:
-            title = _clean_text(entry.get("title", ""))
-            summary = _clean_text(getattr(entry, "summary", ""))
-            link = entry.get("link", "")
-            published = entry.get("published", "")
-            if not title:
-                continue
-            items.append({
-                "source": source,
-                "title": title,
-                "summary": summary[:500],
-                "link": link,
-                "published": published,
-            })
-        return items
-    except Exception as e:
-        print(f"[WARN] RSS {source}: {e}")
-        return []
-
-
-def _parse_google_news_query(query_cfg: dict) -> list[dict]:
-    source = query_cfg["source"]
-    query = query_cfg["query"]
-    max_items = int(query_cfg.get("max", 10))
-    url = _google_news_rss_url(query)
-    try:
-        raw = _fetch_rss_url(url)
-        feed = feedparser.parse(raw)
-        print(f"    Google News fallback {source} entries: {len(feed.entries)}")
-        items = []
-        for entry in feed.entries[:max_items]:
-            title = _clean_text(entry.get("title", ""))
-            summary = _clean_text(getattr(entry, "summary", ""))
-            link = entry.get("link", "")
-            published = entry.get("published", "")
-            if not title:
-                continue
-            items.append({
-                "source": source,
-                "title": title,
-                "summary": summary[:500],
-                "link": link,
-                "published": published,
-            })
-        return items
-    except Exception as e:
-        print(f"[WARN] Google News fallback {source}: {e}")
-        return []
-
-
 def fetch_news(feed_list: list[dict]) -> list[dict]:
     items = []
     for feed_cfg in feed_list:
-        items.extend(_parse_feed_items(feed_cfg))
+        try:
+            feed = feedparser.parse(feed_cfg["url"])
+            print(f"    RSS {feed_cfg['source']} entries: {len(feed.entries)}")
+
+            for entry in feed.entries[: feed_cfg["max"]]:
+                title = _clean_text(entry.get("title", ""))
+                summary = _clean_text(getattr(entry, "summary", ""))
+                link = entry.get("link", "")
+                published = entry.get("published", "")
+
+                if not title:
+                    continue
+
+                items.append({
+                    "source": feed_cfg["source"],
+                    "title": title,
+                    "summary": summary[:500],
+                    "link": link,
+                    "published": published,
+                })
+        except Exception as e:
+            print(f"[WARN] RSS {feed_cfg['source']}: {e}")
     return items
-
-
-def fetch_qatar_news() -> list[dict]:
-    items = dedupe_news(fetch_news(NEWS_FEEDS["qatar"]))
-    items = _filter_recent_qatar_business_news(items)
-    print(f"    Qatar primary recent business items found: {len(items)}")
-
-    if len(items) >= QATAR_NEWS_TARGET_COUNT:
-        return items[:QATAR_NEWS_TARGET_COUNT]
-
-    for query_cfg in QATAR_NEWS_FALLBACK_QUERIES:
-        items.extend(_parse_google_news_query(query_cfg))
-        items = dedupe_news(items)
-        items = _filter_recent_qatar_business_news(items)
-        print(f"    Qatar recent business items after fallback '{query_cfg['source']}': {len(items)}")
-        if len(items) >= QATAR_NEWS_TARGET_COUNT:
-            break
-
-    return items[:QATAR_NEWS_TARGET_COUNT]
 
 
 def dedupe_news(items: list[dict]) -> list[dict]:
@@ -1093,6 +817,7 @@ def run() -> dict:
 
     section_map = {
         "global_indices": GLOBAL_INDICES,
+        "gcc_indices": GCC_INDICES,
         "spot_currency": SPOT_CURRENCY,
         "qatari_banks": QATARI_BANKS,
         "commodities": COMMODITIES,
@@ -1106,12 +831,6 @@ def run() -> dict:
             continue
         print(f"  · {section}")
         data[section] = fetch_section(tickers, today)
-
-    if cfg["sections"].get("gcc_indices", True):
-        print("  · gcc_indices")
-        data["gcc_indices"] = fetch_gcc_indices(today)
-    else:
-        data["gcc_indices"] = []
 
     if cfg["sections"].get("qar_cross_rates", True):
         add_derived_rows(data, today)
@@ -1128,12 +847,10 @@ def run() -> dict:
 
     if cfg["sections"].get("qatar_news", True):
         print("  · qatar news")
-        raw_qatar = fetch_qatar_news()
-        print(f"    Qatar recent business items usable: {len(raw_qatar)}")
-        if raw_qatar:
-            data["qatar_news"] = summarise_news(raw_qatar, "qatar", min(QATAR_NEWS_TARGET_COUNT, len(raw_qatar)))
-        else:
-            data["qatar_news"] = []
+        raw_qatar = dedupe_news(fetch_news(NEWS_FEEDS["qatar"]))
+        print(f"    Qatar source items found: {len(raw_qatar)}")
+        raw_qatar = ensure_min_news(raw_qatar, 4, "Peninsula/Tribune")
+        data["qatar_news"] = summarise_news(raw_qatar, "qatar", 4)
     else:
         data["qatar_news"] = []
 
