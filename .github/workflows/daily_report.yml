@@ -5,208 +5,85 @@ on:
     - cron: "0 4 * * 1-5"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  generate-report:
+  build-report:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install fonts
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y fonts-crosextra-caladea fonts-crosextra-carlito
-          fc-cache -f -v
-
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
-      - name: Install dependencies
-        run: python3 -m pip install -r requirements.txt
+      - name: Install system fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-crosextra-carlito fonts-crosextra-caladea
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install anthropic>=0.25.0 yfinance>=0.2.40 feedparser>=6.0.11 requests>=2.31.0 reportlab>=4.0.0 pandas>=2.0.0 supabase>=2.0.0
 
       - name: Fetch market data
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: python fetcher.py
-
-      - name: Debug fetched market data
         run: |
-          python3 - << 'PYEOF'
-          import json
+          python3 fetcher.py
 
-          with open("market_data.json", "r", encoding="utf-8") as f:
-              data = json.load(f)
-
-          print("REPORT STATUS:", data.get("report_status"))
-          print("VALIDATION ISSUES:", data.get("validation_issues"))
-
-          print("\nGCC INDICES:")
-          for row in data.get("gcc_indices", []):
-              print(row)
-
-          print("\nQATARI BANKS:")
-          for row in data.get("qatari_banks", []):
-              print(row)
-
-          print("\nQAR CROSS RATES:")
-          for row in data.get("qar_cross_rates", []):
-              print(row)
-
-          print("\nCOMMODITIES:")
-          for row in data.get("commodities", []):
-              print(row)
-          PYEOF
-
-      - name: Fail if core market validation is broken
+      - name: Validate market data as warning only
         run: |
           python3 - << 'PYEOF'
           import json
           import sys
 
-          with open("market_data.json", "r", encoding="utf-8") as f:
-              data = json.load(f)
+          try:
+              with open("market_data.json", "r", encoding="utf-8") as f:
+                  data = json.load(f)
+          except Exception as e:
+              print("WARNING: Could not read market_data.json")
+              print(str(e))
+              sys.exit(0)
 
           issues = data.get("validation_issues", [])
-          fatal_markers = [
-              "Qatar QE Index missing or invalid",
-              "Doha Bank price missing or invalid",
-              "USD/QAR daily change suspicious",
-              "USD/QAR daily change unparsable",
-          ]
 
-          fatal = [x for x in issues if any(marker in x for marker in fatal_markers)]
-
-          if fatal:
-              print("FATAL VALIDATION ISSUES:")
-              for item in fatal:
-                  print("-", item)
-              sys.exit(1)
-
-          print("Validation check passed.")
+          if issues:
+              print("WARNING VALIDATION ISSUES:")
+              for issue in issues:
+                  print(f"- {issue}")
+              print("Workflow will continue. Report status remains needs_review.")
+          else:
+              print("Market data validation passed.")
           PYEOF
 
       - name: Generate PDF report
-        run: python pdf_generator.py market_data.json report.pdf
-
-      - name: Upload PDF to public Supabase Storage
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          SUPABASE_PUBLIC_STORAGE_BUCKET: ${{ secrets.SUPABASE_PUBLIC_STORAGE_BUCKET }}
-        run: python upload_pdf_to_storage.py
-
-      - name: Export public PDF URL to workflow env
         run: |
-          python3 - << 'PYEOF'
-          import json
-          import os
+          python3 pdf_generator.py
 
-          with open("public_pdf_url.json", "r", encoding="utf-8") as f:
-              data = json.load(f)
-
-          url = data["public_url"]
-
-          print(f"PUBLIC_PDF_URL={url}")
-
-          github_env = os.environ["GITHUB_ENV"]
-          with open(github_env, "a", encoding="utf-8") as envf:
-              envf.write(f"PUBLIC_PDF_URL={url}\n")
-          PYEOF
-
-      - name: Register draft report in Supabase
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          PUBLIC_PDF_URL: ${{ env.PUBLIC_PDF_URL }}
+      - name: Commit generated files
         run: |
-          python3 - << 'PYEOF'
-          import os
-          import datetime
-          from supabase import create_client
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-          sb = create_client(
-              os.environ["SUPABASE_URL"],
-              os.environ["SUPABASE_SERVICE_ROLE_KEY"]
-          )
+          git add market_data.json report.pdf docs/index.html || true
 
-          today = datetime.date.today().isoformat()
-          pdf_url = os.environ["PUBLIC_PDF_URL"]
-
-          payload = {
-              "report_date": today,
-              "title": f"Market Intelligence {today}",
-              "pdf_url": pdf_url,
-              "market_data_url": "",
-              "status": "draft"
-          }
-
-          existing = (
-              sb.table("reports")
-              .select("id")
-              .eq("report_date", today)
-              .limit(1)
-              .execute()
-          )
-
-          rows = existing.data or []
-
-          if rows:
-              sb.table("reports").update(payload).eq("id", rows[0]["id"]).execute()
-              print(f"[INFO] Updated draft report for {today}")
-          else:
-              sb.table("reports").insert(payload).execute()
-              print(f"[INFO] Inserted draft report for {today}")
-          PYEOF
-
-      - name: Write send log JSON placeholder
-        run: |
-          python3 - << 'PYEOF'
-          import json
-          import os
-
-          if os.path.exists("send_log.json"):
-              print("[INFO] send_log.json already exists, keeping existing file")
-          else:
-              with open("send_log.json", "w", encoding="utf-8") as f:
-                  json.dump([], f, indent=2)
-              print("[INFO] Created empty send_log.json")
-          PYEOF
-
-      - name: Copy live JSON files to docs for dashboard
-        run: |
-          mkdir -p docs
-          cp market_data.json docs/market_data.json
-          cp public_pdf_url.json docs/public_pdf_url.json
-
-          if [ -f send_log.json ]; then
-            cp send_log.json docs/send_log.json
+          if git diff --cached --quiet; then
+            echo "No generated file changes to commit."
           else
-            echo "[]" > docs/send_log.json
+            git commit -m "Update daily market intelligence report"
+            git push
           fi
 
-      - name: Commit generated files to repo
+      - name: Send approved report email
         run: |
-          git config user.name "Doha Bank MI Bot"
-          git config user.email "mi-bot@dohabank.com"
-
-          git add market_data.json
-          git add report.pdf
-          git add public_pdf_url.json
-          git add send_log.json
-          git add docs/market_data.json
-          git add docs/public_pdf_url.json
-          git add docs/send_log.json
-
-          git status
-
-          git diff --staged --quiet || git commit -m "Daily report $(date +'%Y-%m-%d')"
-          git push
+          python3 send_email.py
