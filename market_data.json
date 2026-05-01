@@ -15,26 +15,26 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-05-01T10:01:35Z",
+  "generated_at": "2026-05-01T14:31:19Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
       "name": "US S&P 500",
       "ticker": "^GSPC",
-      "px_last": 7209.01,
-      "change_1d": "+1.0%",
-      "mtd": "+0.0%",
-      "ytd": "+5.3%",
-      "as_of": "2026-04-30",
+      "px_last": 7261.32,
+      "change_1d": "+0.7%",
+      "mtd": "+0.7%",
+      "ytd": "+6.1%",
+      "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
     {
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10323.93,
-      "change_1d": "-0.5%",
-      "mtd": "-0.5%",
-      "ytd": "+4.0%",
+      "px_last": 10362.34,
+      "change_1d": "-0.2%",
+      "mtd": "-0.2%",
+      "ytd": "+4.3%",
       "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
@@ -145,20 +145,20 @@
     {
       "name": "USD Index",
       "ticker": "DX-Y.NYB",
-      "px_last": 98.08,
-      "change_1d": "+0.0%",
-      "mtd": "+0.0%",
-      "ytd": "-0.2%",
+      "px_last": 97.73,
+      "change_1d": "-0.4%",
+      "mtd": "-0.4%",
+      "ytd": "-0.6%",
       "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
     {
       "name": "EUR/USD",
       "ticker": "EURUSD=X",
-      "px_last": 1.17,
-      "change_1d": "+0.5%",
-      "mtd": "+0.5%",
-      "ytd": "-0.1%",
+      "px_last": 1.18,
+      "change_1d": "+0.8%",
+      "mtd": "+0.8%",
+      "ytd": "+0.3%",
       "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
@@ -166,19 +166,19 @@
       "name": "GBP/USD",
       "ticker": "GBPUSD=X",
       "px_last": 1.36,
-      "change_1d": "+0.8%",
-      "mtd": "+0.8%",
-      "ytd": "+0.9%",
+      "change_1d": "+1.2%",
+      "mtd": "+1.2%",
+      "ytd": "+1.3%",
       "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 156.61,
-      "change_1d": "-2.2%",
-      "mtd": "-2.2%",
-      "ytd": "+0.1%",
+      "px_last": 156.49,
+      "change_1d": "-2.3%",
+      "mtd": "-2.3%",
+      "ytd": "+0.0%",
       "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
@@ -279,30 +279,30 @@
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 111.37,
-      "change_1d": "-2.3%",
-      "mtd": "-2.3%",
-      "ytd": "+83.0%",
+      "px_last": 107.07,
+      "change_1d": "-6.1%",
+      "mtd": "-6.1%",
+      "ytd": "+76.0%",
       "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 73.76,
-      "change_1d": "+0.3%",
-      "mtd": "+0.3%",
-      "ytd": "+5.2%",
+      "px_last": 77.31,
+      "change_1d": "+5.1%",
+      "mtd": "+5.1%",
+      "ytd": "+10.2%",
       "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
     {
       "name": "Gold (QAR)",
       "ticker": "DERIVED",
-      "px_last": 16668.65,
-      "change_1d": "-0.8%",
-      "mtd": "-0.8%",
-      "ytd": "+5.9%",
+      "px_last": 16987.15,
+      "change_1d": "+1.1%",
+      "mtd": "+1.1%",
+      "ytd": "+7.9%",
       "as_of": "2026-05-01",
       "source": "Derived from Yahoo Finance GC=F and QAR=X"
     }
@@ -311,21 +311,21 @@
     {
       "name": "UST 5-Year",
       "ticker": "^FVX",
-      "px_last": 4.02,
-      "change_1d": "-1.0%",
-      "mtd": "+0.0%",
-      "ytd": "+8.1%",
-      "as_of": "2026-04-30",
+      "px_last": 3.98,
+      "change_1d": "-0.9%",
+      "mtd": "-0.9%",
+      "ytd": "+7.1%",
+      "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     },
     {
       "name": "UST 10-Year",
       "ticker": "^TNX",
-      "px_last": 4.39,
-      "change_1d": "-0.6%",
-      "mtd": "+0.0%",
-      "ytd": "+5.5%",
-      "as_of": "2026-04-30",
+      "px_last": 4.35,
+      "change_1d": "-0.9%",
+      "mtd": "-0.9%",
+      "ytd": "+4.5%",
+      "as_of": "2026-05-01",
       "source": "Yahoo Finance"
     }
   ],
@@ -343,20 +343,20 @@
     {
       "name": "EUR/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.2728,
-      "change_1d": "+0.4%",
-      "mtd": "+0.4%",
-      "ytd": "-0.1%",
+      "px_last": 4.2889,
+      "change_1d": "+0.8%",
+      "mtd": "+0.8%",
+      "ytd": "+0.3%",
       "as_of": "2026-05-01",
       "source": "Derived from Yahoo Finance EURUSD=X and QAR=X"
     },
     {
       "name": "GBP/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.9483,
-      "change_1d": "+0.8%",
-      "mtd": "+0.8%",
-      "ytd": "+1.0%",
+      "px_last": 4.9671,
+      "change_1d": "+1.1%",
+      "mtd": "+1.1%",
+      "ytd": "+1.3%",
       "as_of": "2026-05-01",
       "source": "Derived from Yahoo Finance GBPUSD=X and QAR=X"
     },
@@ -373,58 +373,58 @@
   ],
   "global_news": [
     {
-      "headline": "Japan Spends $34.5 Billion Supporting Weakening Yen",
-      "summary": "Japan conducted first currency intervention since July 2024, spending approximately $34.5 billion to strengthen the yen against continued weakness.",
+      "headline": "Exxon, Chevron Beat Profit Estimates on War-Driven Rally",
+      "summary": "Major oil companies posted stronger-than-expected Q1 earnings as higher oil and gas prices from Iran war offset production outages.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-01/japan-likely-spent-34-5-billion-in-fx-intervention-to-boost-yen",
-      "metric": "$34.5B",
-      "metric_label": "Intervention Amount"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-01/chevron-blows-away-estimates-on-war-driven-surge-in-oil-prices",
+      "metric": "Beat estimates",
+      "metric_label": "Q1 earnings performance"
     },
     {
-      "headline": "Oil Gains Weekly on Iran Blockade Continuation",
-      "summary": "Oil posted second consecutive weekly gain as Trump confirms persistence of Iranian naval blockade, considering additional military options.",
+      "headline": "US Manufacturing Prices Hit Four-Year High",
+      "summary": "ISM's manufacturing input prices gauge climbed to 84.6, marking fourth consecutive month of increases amid supply chain pressures.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-30/latest-oil-market-news-and-analysis-for-may-1",
-      "metric": "2nd Week",
-      "metric_label": "Consecutive Gains"
+      "url": "https://www.bloomberg.com/news/videos/2026-05-01/us-manufacturing-steady-prices-paid-hits-four-year-high-video",
+      "metric": "84.6",
+      "metric_label": "ISM prices paid index"
     },
     {
-      "headline": "Gold Falls as Iran Tensions Reduce Rate Cut Expectations",
-      "summary": "Gold declined as US-Iran standoff diminished global central bank rate cut expectations, reducing precious metals appeal.",
+      "headline": "US Natural Gas Futures Fall with Oil Drop",
+      "summary": "Natural gas futures declined after oil price drops triggered outflows from energy baskets, with Cameron LNG terminal issues weighing.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-30/gold-steadies-after-advancing-on-japan-s-yen-intervention",
-      "metric": "Lower",
-      "metric_label": "Gold Price Direction"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-01/us-natural-gas-futures-extend-gains-on-lower-production-lng-dip",
+      "metric": "Declined",
+      "metric_label": "Natural gas futures direction"
     },
     {
-      "headline": "India's Heat Wave Strains Power Grid Systems",
-      "summary": "Above-normal temperatures expose India's fragile electricity infrastructure amid existing energy shortages before monsoon season arrives in June.",
+      "headline": "Ares Misses Estimates Despite Record $30B Fundraising",
+      "summary": "Private equity firm reported disappointing Q1 earnings amid dealmaking slump, despite wealthy clients driving record fundraising period.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-01/india-s-heat-exposes-a-fragile-grid-as-energy-crunch-deepens",
-      "metric": "June",
-      "metric_label": "Monsoon Expected"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-01/ares-earnings-miss-estimates-despite-record-fundraising-haul",
+      "metric": "$30B",
+      "metric_label": "Record quarterly fundraising"
     },
     {
-      "headline": "UK Family Office Accelerates Private Equity Exits",
-      "summary": "Billionaire's family office increases private equity divestments while larger buyout firms face challenging transaction environment.",
+      "headline": "Stocks Climb on US-Iran Peace Hopes",
+      "summary": "Markets extended record-breaking rally toward longest weekly gain since 2024 as investors anticipate potential Iran war resolution deal.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-01/uk-billionaire-s-family-office-targets-more-private-equity-exits",
-      "metric": "Increasing",
-      "metric_label": "Exit Activity"
+      "url": "https://www.bloomberg.com/news/articles/2026-04-30/stock-market-today-dow-s-p-live-updates",
+      "metric": "Weekly rally",
+      "metric_label": "Longest streak since 2024"
     },
     {
-      "headline": "AI Trading Bots Show Mixed Market Performance",
-      "summary": "Artificial intelligence trading agents enter day trading with inconsistent results, highlighting challenges in automated investment strategies.",
+      "headline": "Miami Real Estate Sees Unprecedented Growth Boom",
+      "summary": "Billionaire developer Jorge Perez describes Miami's current expansion as biggest ever, driven by capital influx and global hub emergence.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-01/ai-tools-for-stock-trading-put-up-mixed-results",
-      "metric": "Mixed",
-      "metric_label": "AI Performance"
+      "url": "https://www.bloomberg.com/news/videos/2026-05-01/miami-s-biggest-boom-ever-says-billionaire-perez-video",
+      "metric": "Biggest ever",
+      "metric_label": "Miami real estate boom scale"
     }
   ],
   "qatar_news": [
     {
       "headline": "Qatar Business Source Temporarily Unavailable",
-      "summary": "Primary Qatar business news feed experiencing technical difficulties, no articles retrieved in current cycle.",
+      "summary": "Primary Qatar business news feed experienced technical difficulties, returning no usable articles during current reporting cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "0",
@@ -432,44 +432,44 @@
     },
     {
       "headline": "Qatar Corporate News Feed Refresh Pending",
-      "summary": "Corporate news workflow scheduled for retry on next automated run cycle from approved source.",
+      "summary": "Corporate news workflow scheduled for retry on next automated run cycle from approved source publishers.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "1",
-      "metric_label": "Retry Attempts Remaining"
+      "metric_label": "Retry Attempts Scheduled"
     },
     {
       "headline": "Qatar Market Coverage Awaiting Source Update",
-      "summary": "Approved publisher feed returned insufficient content items for comprehensive market intelligence report generation.",
+      "summary": "Approved publisher feed failed to deliver minimum required items for comprehensive market intelligence report generation.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Insufficient",
-      "metric_label": "Content Volume Status"
+      "metric": "0",
+      "metric_label": "Minimum Items Met"
     },
     {
-      "headline": "Qatar Economy Headlines Stream Incomplete",
-      "summary": "Economy section restricted to approved publisher sources only, current stream showing gaps in coverage.",
+      "headline": "Qatar Economy Headline Stream Incomplete",
+      "summary": "Economy section restricted to approved publisher sources only, current feed incomplete for reporting standards.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Approved Only",
-      "metric_label": "Source Restriction Level"
+      "metric": "100%",
+      "metric_label": "Source Approval Rate"
     }
   ],
   "kpis": [
     {
       "value": "Mixed",
       "label": "Global Equities",
-      "sublabel": "US +1.0% \u00b7 UK -0.5%"
+      "sublabel": "US +0.7% \u00b7 UK -0.2%"
     },
     {
-      "value": "$111.37",
+      "value": "$107.07",
       "label": "Brent Crude",
-      "sublabel": "+83.0% Year-to-Date"
+      "sublabel": "+76.0% Year-to-Date"
     },
     {
-      "value": "16,668.65",
+      "value": "16,987.15",
       "label": "Gold (QAR)",
-      "sublabel": "+5.9% YTD \u00b7 Safe-haven demand"
+      "sublabel": "+7.9% YTD \u00b7 Safe-haven demand"
     },
     {
       "value": "N/A",
@@ -477,9 +477,9 @@
       "sublabel": "N/A today \u00b7 N/A YTD"
     },
     {
-      "value": "4.39%",
+      "value": "4.35%",
       "label": "UST 10Y Yield",
-      "sublabel": "+5.5% YTD \u00b7 Rising yields"
+      "sublabel": "+4.5% YTD \u00b7 Rising yields"
     },
     {
       "value": "4.50%",
