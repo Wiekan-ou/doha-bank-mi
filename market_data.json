@@ -15,17 +15,17 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-05-04T11:21:11Z",
+  "generated_at": "2026-05-04T14:38:46Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
       "name": "US S&P 500",
       "ticker": "^GSPC",
-      "px_last": 7230.12,
-      "change_1d": "+0.3%",
-      "mtd": "+0.3%",
-      "ytd": "+5.6%",
-      "as_of": "2026-05-01",
+      "px_last": 7242.58,
+      "change_1d": "+0.2%",
+      "mtd": "+0.5%",
+      "ytd": "+5.8%",
+      "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
     {
@@ -51,10 +51,10 @@
     {
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24252.36,
-      "change_1d": "-0.2%",
-      "mtd": "-0.2%",
-      "ytd": "-1.0%",
+      "px_last": 24208.66,
+      "change_1d": "-0.3%",
+      "mtd": "-0.3%",
+      "ytd": "-1.2%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
@@ -145,10 +145,10 @@
     {
       "name": "USD Index",
       "ticker": "DX-Y.NYB",
-      "px_last": 98.37,
-      "change_1d": "+0.2%",
-      "mtd": "+0.3%",
-      "ytd": "+0.1%",
+      "px_last": 98.28,
+      "change_1d": "+0.1%",
+      "mtd": "+0.2%",
+      "ytd": "-0.0%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
@@ -156,29 +156,29 @@
       "name": "EUR/USD",
       "ticker": "EURUSD=X",
       "px_last": 1.17,
-      "change_1d": "-0.2%",
-      "mtd": "+0.2%",
-      "ytd": "-0.4%",
+      "change_1d": "-0.1%",
+      "mtd": "+0.3%",
+      "ytd": "-0.3%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
     {
       "name": "GBP/USD",
       "ticker": "GBPUSD=X",
-      "px_last": 1.35,
-      "change_1d": "-0.4%",
-      "mtd": "+0.4%",
-      "ytd": "+0.6%",
+      "px_last": 1.36,
+      "change_1d": "-0.3%",
+      "mtd": "+0.6%",
+      "ytd": "+0.7%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
     {
       "name": "USD/JPY",
       "ticker": "JPY=X",
-      "px_last": 157.13,
-      "change_1d": "+0.1%",
-      "mtd": "-1.9%",
-      "ytd": "+0.5%",
+      "px_last": 156.97,
+      "change_1d": "-0.0%",
+      "mtd": "-2.0%",
+      "ytd": "+0.4%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
@@ -186,8 +186,8 @@
       "name": "USD/CNY",
       "ticker": "CNY=X",
       "px_last": 6.83,
-      "change_1d": "-0.0%",
-      "mtd": "-0.2%",
+      "change_1d": "+0.0%",
+      "mtd": "-0.1%",
       "ytd": "-2.4%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
@@ -279,30 +279,30 @@
     {
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 111.71,
-      "change_1d": "+3.3%",
-      "mtd": "-2.0%",
-      "ytd": "+83.6%",
+      "px_last": 110.83,
+      "change_1d": "+2.5%",
+      "mtd": "-2.8%",
+      "ytd": "+82.1%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
     {
       "name": "Silver",
       "ticker": "SI=F",
-      "px_last": 74.0,
-      "change_1d": "-2.6%",
-      "mtd": "+0.6%",
-      "ytd": "+5.5%",
+      "px_last": 74.79,
+      "change_1d": "-1.5%",
+      "mtd": "+1.7%",
+      "ytd": "+6.6%",
       "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
     {
       "name": "Gold (QAR)",
       "ticker": "DERIVED",
-      "px_last": 16661.37,
-      "change_1d": "+1.9%",
-      "mtd": "-0.8%",
-      "ytd": "+5.8%",
+      "px_last": 16689.4,
+      "change_1d": "+2.1%",
+      "mtd": "-0.7%",
+      "ytd": "+6.0%",
       "as_of": "2026-05-04",
       "source": "Derived from Yahoo Finance GC=F and QAR=X"
     }
@@ -311,21 +311,21 @@
     {
       "name": "UST 5-Year",
       "ticker": "^FVX",
-      "px_last": 4.02,
-      "change_1d": "-0.0%",
-      "mtd": "-0.0%",
-      "ytd": "+8.0%",
-      "as_of": "2026-05-01",
+      "px_last": 4.05,
+      "change_1d": "+0.8%",
+      "mtd": "+0.8%",
+      "ytd": "+8.9%",
+      "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     },
     {
       "name": "UST 10-Year",
       "ticker": "^TNX",
-      "px_last": 4.38,
-      "change_1d": "-0.3%",
-      "mtd": "-0.3%",
-      "ytd": "+5.2%",
-      "as_of": "2026-05-01",
+      "px_last": 4.41,
+      "change_1d": "+0.8%",
+      "mtd": "+0.5%",
+      "ytd": "+6.0%",
+      "as_of": "2026-05-04",
       "source": "Yahoo Finance"
     }
   ],
@@ -343,27 +343,27 @@
     {
       "name": "EUR/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.2603,
-      "change_1d": "+2.9%",
-      "mtd": "+0.1%",
-      "ytd": "-0.4%",
+      "px_last": 4.2653,
+      "change_1d": "+3.0%",
+      "mtd": "+0.3%",
+      "ytd": "-0.2%",
       "as_of": "2026-05-04",
       "source": "Derived from Yahoo Finance EURUSD=X and QAR=X"
     },
     {
       "name": "GBP/QAR",
       "ticker": "DERIVED",
-      "px_last": 4.9297,
-      "change_1d": "+2.7%",
-      "mtd": "+0.4%",
-      "ytd": "+0.6%",
+      "px_last": 4.9388,
+      "change_1d": "+2.9%",
+      "mtd": "+0.6%",
+      "ytd": "+0.8%",
       "as_of": "2026-05-04",
       "source": "Derived from Yahoo Finance GBPUSD=X and QAR=X"
     },
     {
       "name": "CNY/QAR",
       "ticker": "DERIVED",
-      "px_last": 0.5332,
+      "px_last": 0.533,
       "change_1d": "+3.1%",
       "mtd": "+0.1%",
       "ytd": "+2.5%",
@@ -373,58 +373,58 @@
   ],
   "global_news": [
     {
-      "headline": "US Denies Iranian Naval Strike Reports",
-      "summary": "US officials denied Iranian media reports claiming American naval vessel was hit by missiles. Oil prices and stocks pared earlier moves following the denial.",
+      "headline": "UAE Seeks Currency Swap Deal With US Federal Reserve",
+      "summary": "UAE signals currency swap talks with US are about joining elite group with Fed liquidity access, not financing needs.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-04/trump-announces-humanitarian-plan-to-get-ships-through-hormuz",
-      "metric": "Oil prices retre",
-      "metric_label": "Market reaction to denied strike"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-04/uae-signals-swap-talks-with-us-are-about-joining-elite-group",
+      "metric": "Fed liquidity ac",
+      "metric_label": "Elite central bank status"
     },
     {
-      "headline": "Stocks Whipsaw Amid Middle East Tensions",
-      "summary": "US futures and crude oil showed volatile trading as Middle East tensions escalated, overshadowing strong megacap tech earnings performance.",
+      "headline": "Oil Climbs on Middle East Hormuz Strait Risks",
+      "summary": "Stock rally wavers as oil rises on Middle East tensions threatening ceasefire, raising energy costs and inflation risks.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-05-03/us-futures-gain-oil-falls-on-signs-of-iran-talks-markets-wrap",
-      "metric": "Crude oil spiked",
-      "metric_label": "Commodity response to tensions"
+      "metric": "Oil price surge",
+      "metric_label": "Geopolitical risk premium"
     },
     {
-      "headline": "European Stocks Fall on US-Iran Tensions",
-      "summary": "European equities declined as escalating US-Iran rhetoric over Strait of Hormuz pushed oil prices higher, affecting regional markets.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-04/european-stocks-fall-as-carmakers-drop-on-trump-tariff-threat",
-      "metric": "Stocks tumbled",
-      "metric_label": "European market decline"
-    },
-    {
-      "headline": "Dubai Property Market Remains Resilient",
-      "summary": "Emaar CEO Mohamed Alabbar says Dubai property market stays strong despite regional tensions, citing stable buyer confidence and collections.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/videos/2026-05-04/alabbar-dubai-property-market-resilient-video",
-      "metric": "Strong collectio",
-      "metric_label": "Dubai property performance"
-    },
-    {
-      "headline": "US Futures Volatile on Iran Reports",
-      "summary": "US stock futures experienced volatile trading on Iranian missile reports, but recovered after US officials denied ship strike claims.",
+      "headline": "US Stocks Fluctuate Near Records Amid Mideast Tensions",
+      "summary": "S&P 500 wavers near record high as investors monitor Middle East developments and prepare for earnings season.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-05-04/us-stock-futures-dip-on-reports-of-increasing-mideast-tension",
-      "metric": "Futures whipsawe",
-      "metric_label": "Market volatility level"
+      "metric": "Record high vici",
+      "metric_label": "S&P 500 proximity to peak"
     },
     {
-      "headline": "Modi Eyes Landmark West Bengal Victory",
-      "summary": "Prime Minister Modi's party set for first-ever election win in West Bengal, expanding nationwide support and strengthening political position.",
+      "headline": "Defense Supplier CSG Plunges After Short-Seller Attack Report",
+      "summary": "CSG NV falls most since January listing after short-seller report questions the defense supplier's business model.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-04/modi-eyes-milestone-win-as-key-indian-states-begin-vote-counts",
-      "metric": "First-ever win",
-      "metric_label": "Electoral breakthrough"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-04/defense-firm-csg-plunges-by-record-after-short-seller-report",
+      "metric": "Record daily dec",
+      "metric_label": "Stock performance since listing"
+    },
+    {
+      "headline": "EU Cuts Power Market Price Floor to -\u20ac600",
+      "summary": "European power markets lower hourly price limit to -\u20ac600/MWh following intense volatility period reaching existing floor multiple times.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-05-04/eu-power-markets-lowers-hourly-price-floor-to-600-euros",
+      "metric": "-\u20ac600/MWh",
+      "metric_label": "New hourly price floor"
+    },
+    {
+      "headline": "Apollo Executive Discusses Private Credit Investment Volatility Trends",
+      "summary": "Apollo's John Zito says higher volatility regime ahead, but credit remains safer investment option compared to alternatives.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/videos/2026-05-04/apollo-s-zito-on-fears-facing-private-credit-investors-video",
+      "metric": "Higher volatilit",
+      "metric_label": "Market outlook assessment"
     }
   ],
   "qatar_news": [
     {
       "headline": "Qatar Business Source Temporarily Unavailable",
-      "summary": "Peninsula/Tribune news feed experienced technical difficulties during this reporting cycle, preventing access to business content.",
+      "summary": "Primary Qatar business news feed experiencing technical difficulties, preventing access to current market and corporate updates.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "0",
@@ -432,23 +432,23 @@
     },
     {
       "headline": "Qatar Corporate News Feed Refresh Pending",
-      "summary": "System workflow scheduled to retry approved news source connection in next automated run cycle.",
+      "summary": "Corporate news workflow system scheduled to retry approved source connection in next automated cycle.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "1",
-      "metric_label": "Retry Attempts Scheduled"
+      "metric_label": "Retry Attempts Remaining"
     },
     {
       "headline": "Qatar Market Coverage Awaiting Source Update",
-      "summary": "Approved publisher feed failed to provide sufficient content items for comprehensive market intelligence reporting.",
+      "summary": "Approved publisher feed failed to deliver minimum required articles for comprehensive market intelligence reporting.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "0",
-      "metric_label": "Sufficient Items Retrieved"
+      "metric_label": "Minimum Articles Required"
     },
     {
-      "headline": "Qatar Economy Headlines Stream Incomplete",
-      "summary": "Economic news section restricted to approved publisher sources only, limiting alternative content access.",
+      "headline": "Qatar Economy Headline Stream Incomplete",
+      "summary": "Economy section restricted to approved publisher sources only, current feed unable to meet editorial standards.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "100%",
@@ -459,17 +459,17 @@
     {
       "value": "Mixed",
       "label": "Global Equities",
-      "sublabel": "US +0.3% \u00b7 UK -0.1%"
+      "sublabel": "US +0.2% \u00b7 UK -0.1%"
     },
     {
-      "value": "$111.71",
+      "value": "$110.83",
       "label": "Brent Crude",
-      "sublabel": "+83.6% Year-to-Date"
+      "sublabel": "+82.1% Year-to-Date"
     },
     {
-      "value": "16,661.37",
+      "value": "16,689.4",
       "label": "Gold (QAR)",
-      "sublabel": "+5.8% YTD \u00b7 Safe-haven demand"
+      "sublabel": "+6.0% YTD \u00b7 Safe-haven demand"
     },
     {
       "value": "N/A",
@@ -477,9 +477,9 @@
       "sublabel": "N/A today \u00b7 N/A YTD"
     },
     {
-      "value": "4.38%",
+      "value": "4.41%",
       "label": "UST 10Y Yield",
-      "sublabel": "+5.2% YTD \u00b7 Rising yields"
+      "sublabel": "+6.0% YTD \u00b7 Rising yields"
     },
     {
       "value": "4.50%",
