@@ -2,14 +2,11 @@ import json
 import os
 import re
 import datetime
-from typing import Optional, List
-from urllib.parse import quote
+from typing import Optional, List, Dict, Any
 
 import feedparser
-import yfinance as yf
 import anthropic
 import requests
-import pandas as pd
 
 
 CONFIG = {
@@ -29,56 +26,269 @@ CONFIG = {
     }
 }
 
+
+SUPABASE_TABLE = "market_indices_history"
+EXPECTED_INSTRUMENT_COUNT = 34
+STALE_DATA_WARNING_DAYS = 3
 USD_QAR_SUSPICIOUS_MOVE_THRESHOLD = 10.0
 
 
-GLOBAL_INDICES = {
-    "US S&P 500": "^GSPC",
-    "UK FTSE 100": "^FTSE",
-    "Japan Nikkei": "^N225",
-    "Germany DAX": "^GDAXI",
-    "Hong Kong HSI": "^HSI",
-    "India Sensex": "^BSESN",
+REPORT_SECTION_TO_OUTPUT_KEY = {
+    "GLOBAL INDICES": "global_indices",
+    "GCC & REGIONAL INDICES": "gcc_indices",
+    "SPOT CURRENCY": "spot_currency",
+    "QAR CROSS RATES": "qar_cross_rates",
+    "FIXED INCOME — UST YIELDS": "fixed_income",
+    "FIXED INCOME - UST YIELDS": "fixed_income",
+    "QATARI BANKS": "qatari_banks",
+    "COMMODITIES & ENERGY": "commodities",
 }
 
-GCC_INDICES = {
-    "Qatar QE Index": "^GNRI.QA",
-    "Saudi Tadawul": "TASI.SR",
-    "Dubai DFM": "^DFMGI",
-    "Abu Dhabi ADX": "ADI.QA",
-    "Kuwait Boursa": "^BKW",
-    "Bahrain": "^BHSE",
-}
 
-SPOT_CURRENCY = {
-    "USD Index": "DX-Y.NYB",
-    "EUR/USD": "EURUSD=X",
-    "GBP/USD": "GBPUSD=X",
-    "USD/JPY": "JPY=X",
-    "USD/CNY": "CNY=X",
-}
+EXPECTED_INSTRUMENTS = [
+    {
+        "code": "SPX",
+        "name": "US S&P 500",
+        "symbol": "^GSPC",
+        "report_section": "GLOBAL INDICES",
+        "display_order": 1,
+    },
+    {
+        "code": "FTSE100",
+        "name": "UK FTSE 100",
+        "symbol": "^FTSE",
+        "report_section": "GLOBAL INDICES",
+        "display_order": 2,
+    },
+    {
+        "code": "NIKKEI225",
+        "name": "Japan Nikkei",
+        "symbol": "^N225",
+        "report_section": "GLOBAL INDICES",
+        "display_order": 3,
+    },
+    {
+        "code": "DAX",
+        "name": "Germany DAX",
+        "symbol": "^GDAXI",
+        "report_section": "GLOBAL INDICES",
+        "display_order": 4,
+    },
+    {
+        "code": "HSI",
+        "name": "Hong Kong HSI",
+        "symbol": "^HSI",
+        "report_section": "GLOBAL INDICES",
+        "display_order": 5,
+    },
+    {
+        "code": "SENSEX",
+        "name": "India Sensex",
+        "symbol": "^BSESN",
+        "report_section": "GLOBAL INDICES",
+        "display_order": 6,
+    },
+    {
+        "code": "QE",
+        "name": "Qatar QE Index",
+        "symbol": "^GNRI.QA",
+        "report_section": "GCC & REGIONAL INDICES",
+        "display_order": 1,
+    },
+    {
+        "code": "TASI",
+        "name": "Saudi Tadawul",
+        "symbol": "^TASI.SR",
+        "report_section": "GCC & REGIONAL INDICES",
+        "display_order": 2,
+    },
+    {
+        "code": "DFMGI",
+        "name": "Dubai DFM",
+        "symbol": "DFMGI",
+        "report_section": "GCC & REGIONAL INDICES",
+        "display_order": 3,
+    },
+    {
+        "code": "FADGI",
+        "name": "Abu Dhabi ADX",
+        "symbol": "FADGI",
+        "report_section": "GCC & REGIONAL INDICES",
+        "display_order": 4,
+    },
+    {
+        "code": "BKA",
+        "name": "Kuwait Boursa",
+        "symbol": "BKA",
+        "report_section": "GCC & REGIONAL INDICES",
+        "display_order": 5,
+    },
+    {
+        "code": "BHSEASI",
+        "name": "Bahrain",
+        "symbol": "BHSEASI",
+        "report_section": "GCC & REGIONAL INDICES",
+        "display_order": 6,
+    },
+    {
+        "code": "DXY",
+        "name": "USD Index",
+        "symbol": "DXY",
+        "report_section": "SPOT CURRENCY",
+        "display_order": 1,
+    },
+    {
+        "code": "EURUSD",
+        "name": "EUR/USD",
+        "symbol": "EURUSD",
+        "report_section": "SPOT CURRENCY",
+        "display_order": 2,
+    },
+    {
+        "code": "GBPUSD",
+        "name": "GBP/USD",
+        "symbol": "GBPUSD",
+        "report_section": "SPOT CURRENCY",
+        "display_order": 3,
+    },
+    {
+        "code": "USDJPY",
+        "name": "USD/JPY",
+        "symbol": "USDJPY",
+        "report_section": "SPOT CURRENCY",
+        "display_order": 4,
+    },
+    {
+        "code": "USDCNY",
+        "name": "USD/CNY",
+        "symbol": "USDCNY",
+        "report_section": "SPOT CURRENCY",
+        "display_order": 5,
+    },
+    {
+        "code": "USDQAR",
+        "name": "USD/QAR",
+        "symbol": "USDQAR",
+        "report_section": "QAR CROSS RATES",
+        "display_order": 1,
+    },
+    {
+        "code": "EURQAR",
+        "name": "EUR/QAR",
+        "symbol": "EURQAR",
+        "report_section": "QAR CROSS RATES",
+        "display_order": 2,
+    },
+    {
+        "code": "GBPQAR",
+        "name": "GBP/QAR",
+        "symbol": "GBPQAR",
+        "report_section": "QAR CROSS RATES",
+        "display_order": 3,
+    },
+    {
+        "code": "CNYQAR",
+        "name": "CNY/QAR",
+        "symbol": "CNYQAR",
+        "report_section": "QAR CROSS RATES",
+        "display_order": 4,
+    },
+    {
+        "code": "UST5Y",
+        "name": "UST 5-Year",
+        "symbol": "US5Y",
+        "report_section": "FIXED INCOME — UST YIELDS",
+        "display_order": 1,
+    },
+    {
+        "code": "UST10Y",
+        "name": "UST 10-Year",
+        "symbol": "US10Y",
+        "report_section": "FIXED INCOME — UST YIELDS",
+        "display_order": 2,
+    },
+    {
+        "code": "DHBK",
+        "name": "Doha",
+        "symbol": "DHBK.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 1,
+    },
+    {
+        "code": "QNBK",
+        "name": "QNB",
+        "symbol": "QNBK.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 2,
+    },
+    {
+        "code": "QIBK",
+        "name": "QIB",
+        "symbol": "QIBK.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 3,
+    },
+    {
+        "code": "CBQK",
+        "name": "CBQ",
+        "symbol": "CBQK.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 4,
+    },
+    {
+        "code": "QIIB",
+        "name": "QIIB",
+        "symbol": "QIIB.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 5,
+    },
+    {
+        "code": "MARK",
+        "name": "Al Rayan",
+        "symbol": "MARK.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 6,
+    },
+    {
+        "code": "DUBK",
+        "name": "Dukhan",
+        "symbol": "DUBK.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 7,
+    },
+    {
+        "code": "ABQK",
+        "name": "Ahli",
+        "symbol": "ABQK.QA",
+        "report_section": "QATARI BANKS",
+        "display_order": 8,
+    },
+    {
+        "code": "BRENT",
+        "name": "Brent Crude",
+        "symbol": "BZ=F",
+        "report_section": "COMMODITIES & ENERGY",
+        "display_order": 1,
+    },
+    {
+        "code": "SILVER",
+        "name": "Silver",
+        "symbol": "XAGUSD",
+        "report_section": "COMMODITIES & ENERGY",
+        "display_order": 2,
+    },
+    {
+        "code": "GOLDQAR",
+        "name": "Gold (QAR)",
+        "symbol": "XAUQAR",
+        "report_section": "COMMODITIES & ENERGY",
+        "display_order": 3,
+    },
+]
 
-QATARI_BANKS = {
-    "Doha": "DHBK.QA",
-    "QNB": "QNBK.QA",
-    "QIB": "QIBK.QA",
-    "CBQ": "CBQK.QA",
-    "QIIB": "QIIK.QA",
-    "Al Rayan": "MARK.QA",
-    "Dukhan": "DUBK.QA",
-    "Ahli": "ABQK.QA",
-}
 
-COMMODITIES = {
-    "Brent Crude": "BZ=F",
-    "Gold (USD)": "GC=F",
-    "Silver": "SI=F",
-}
+EXPECTED_BY_CODE = {item["code"]: item for item in EXPECTED_INSTRUMENTS}
 
-FIXED_INCOME = {
-    "UST 5-Year": "^FVX",
-    "UST 10-Year": "^TNX",
-}
 
 NEWS_FEEDS = {
     "global": [
@@ -108,20 +318,69 @@ NEWS_FEEDS = {
 }
 
 
-def _to_float(val) -> Optional[float]:
+def _to_float(value: Any) -> Optional[float]:
     try:
-        if val is None:
+        if value is None:
             return None
-        return float(val)
+        if isinstance(value, str):
+            cleaned = value.replace(",", "").replace("%", "").strip()
+            if cleaned.lower() in ("", "n/a", "na", "null", "none"):
+                return None
+            return float(cleaned)
+        return float(value)
     except Exception:
         return None
 
 
-def _fmt_pct_number(current: Optional[float], base: Optional[float], digits: int = 1) -> str:
+def _to_int(value: Any, default: int = 999) -> int:
+    try:
+        if value is None:
+            return default
+        return int(value)
+    except Exception:
+        return default
+
+
+def _parse_date(value: Any) -> Optional[datetime.date]:
+    if value is None:
+        return None
+    if isinstance(value, datetime.date) and not isinstance(value, datetime.datetime):
+        return value
+    if isinstance(value, datetime.datetime):
+        return value.date()
+    try:
+        return datetime.datetime.strptime(str(value)[:10], "%Y-%m-%d").date()
+    except Exception:
+        return None
+
+
+def _format_price(value: Optional[float], digits: int = 2):
+    if value is None:
+        return "N/A"
+    try:
+        rounded = round(float(value), digits)
+        return rounded
+    except Exception:
+        return "N/A"
+
+
+def _fmt_pct_from_value(value: Optional[float], digits: int = 2) -> str:
+    if value is None:
+        return "N/A"
+    try:
+        return f"{float(value):+.{digits}f}%"
+    except Exception:
+        return "N/A"
+
+
+def _fmt_pct_number(current: Optional[float], base: Optional[float], digits: int = 2) -> str:
     if current is None or base in (None, 0):
         return "N/A"
-    pct = ((current - base) / base) * 100
-    return f"{pct:+.{digits}f}%"
+    try:
+        pct = ((current - base) / base) * 100
+        return f"{pct:+.{digits}f}%"
+    except Exception:
+        return "N/A"
 
 
 def _clean_text(text: str) -> str:
@@ -132,384 +391,351 @@ def _clean_text(text: str) -> str:
     return text
 
 
-def _extract_close_series(df):
-    if df is None or df.empty:
-        return None
-
-    if hasattr(df.columns, "nlevels") and df.columns.nlevels > 1:
-        df.columns = df.columns.get_level_values(0)
-
-    col = "Adj Close" if "Adj Close" in df.columns else "Close"
-    if col not in df.columns:
-        return None
-
-    closes = df[col].dropna()
-    if closes.empty:
-        return None
-
-    return closes.sort_index()
-
-
-def _safe_download(sym: str, start: datetime.date):
-    try:
-        df = yf.download(
-            tickers=sym,
-            start=start.strftime("%Y-%m-%d"),
-            interval="1d",
-            auto_adjust=False,
-            repair=True,
-            progress=False,
-            threads=False,
-        )
-        return _extract_close_series(df)
-    except Exception as e:
-        print(f"[WARN] download failed for {sym}: {e}")
-        return None
-
-
-def _safe_ticker_history(sym: str, period: str = "1y"):
-    try:
-        ticker = yf.Ticker(sym)
-        df = ticker.history(
-            period=period,
-            interval="1d",
-            auto_adjust=False,
-            actions=False,
-        )
-        return _extract_close_series(df)
-    except Exception as e:
-        print(f"[WARN] ticker.history failed for {sym}: {e}")
-        return None
-
-
-def _safe_yahoo_chart_api(sym: str, range_str: str = "1y", interval: str = "1d"):
-    try:
-        encoded_sym = quote(sym, safe="")
-        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded_sym}"
-        params = {
-            "range": range_str,
-            "interval": interval,
-            "includePrePost": "false",
-            "events": "div,splits",
-        }
-        headers = {"User-Agent": "Mozilla/5.0"}
-
-        r = requests.get(url, params=params, headers=headers, timeout=20)
-        r.raise_for_status()
-        payload = r.json()
-
-        result = payload.get("chart", {}).get("result", [])
-        error_obj = payload.get("chart", {}).get("error")
-
-        if error_obj:
-            print(f"[WARN] Yahoo chart API returned error for {sym}: {error_obj}")
-            return None
-
-        if not result:
-            print(f"[WARN] Yahoo chart API returned no result for {sym}")
-            return None
-
-        result0 = result[0]
-        timestamps = result0.get("timestamp", [])
-        indicators = result0.get("indicators", {})
-
-        adjclose = indicators.get("adjclose", [])
-        quote_block = indicators.get("quote", [])
-
-        closes = None
-        if adjclose and isinstance(adjclose, list):
-            closes = adjclose[0].get("adjclose")
-        if not closes and quote_block and isinstance(quote_block, list):
-            closes = quote_block[0].get("close")
-
-        if not timestamps or not closes:
-            print(f"[WARN] Yahoo chart API missing timestamps/closes for {sym}")
-            return None
-
-        pairs = []
-        for ts, px in zip(timestamps, closes):
-            if px is None:
-                continue
-            dt = datetime.datetime.utcfromtimestamp(ts)
-            pairs.append((dt, float(px)))
-
-        if not pairs:
-            print(f"[WARN] Yahoo chart API no usable points for {sym}")
-            return None
-
-        s = pd.Series(
-            data=[p[1] for p in pairs],
-            index=[p[0] for p in pairs],
-            dtype="float64"
-        ).sort_index()
-
-        return s if len(s) >= 2 else None
-
-    except Exception as e:
-        print(f"[WARN] Yahoo chart API failed for {sym}: {e}")
-        return None
-
-
-def _safe_qe_from_supabase() -> Optional[dict]:
-    supabase_url = os.environ.get("SUPABASE_URL")
+def _supabase_headers() -> Dict[str, str]:
     supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-
-    if not supabase_url or not supabase_key:
-        print("[WARN][SUPABASE_QE] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
-        return None
-
-    url = f"{supabase_url}/rest/v1/qe_index_cache?select=*&status=eq.ok&order=created_at.desc&limit=1"
-    headers = {
-        "apikey": supabase_key,
-        "Authorization": f"Bearer {supabase_key}",
-    }
-
-    try:
-        r = requests.get(url, headers=headers, timeout=20)
-        r.raise_for_status()
-        rows = r.json()
-
-        if not rows:
-            print("[WARN][SUPABASE_QE] No QE rows found in Supabase")
-            return None
-
-        row = rows[0]
-        price = row.get("price")
-
-        if price in (None, "", "N/A"):
-            print("[WARN][SUPABASE_QE] Latest Supabase QE row has empty price")
-            return None
-
-        return {
-            "name": "Qatar QE Index",
-            "ticker": "^GNRI.QA",
-            "px_last": round(float(price), 2),
-            "change_1d": row.get("change_1d", "N/A"),
-            "mtd": "N/A",
-            "ytd": "N/A",
-            "as_of": row.get("as_of"),
-            "source": row.get("source", "Supabase qe_index_cache"),
-        }
-
-    except Exception as e:
-        print(f"[WARN][SUPABASE_QE] Failed to read QE from Supabase: {e}")
-        return None
-
-
-def _get_series(sym: str, start: datetime.date):
-    closes = _safe_download(sym, start)
-    if closes is not None and len(closes) >= 2:
-        return closes
-
-    print(f"[INFO] Falling back to ticker.history for {sym}")
-    closes = _safe_ticker_history(sym, period="1y")
-    if closes is not None and len(closes) >= 2:
-        return closes
-
-    print(f"[INFO] Falling back to Yahoo chart API for {sym}")
-    closes = _safe_yahoo_chart_api(sym, range_str="1y", interval="1d")
-    if closes is not None and len(closes) >= 2:
-        return closes
-
-    return None
-
-
-def _last_value_before_or_on(closes, target_date: datetime.date) -> Optional[float]:
-    eligible = []
-    for dt_idx, px in closes.items():
-        try:
-            d = dt_idx.date() if hasattr(dt_idx, "date") else datetime.datetime.strptime(str(dt_idx)[:10], "%Y-%m-%d").date()
-        except Exception:
-            continue
-        if d <= target_date:
-            eligible.append(_to_float(px))
-    eligible = [x for x in eligible if x is not None]
-    return eligible[-1] if eligible else None
-
-
-def _fetch_market_row(name: str, sym: str, today: datetime.date, digits: int = 2) -> dict:
-    year_start = datetime.date(today.year, 1, 1)
-    month_start = datetime.date(today.year, today.month, 1)
-    history_start = year_start - datetime.timedelta(days=20)
-
-    closes = _get_series(sym, history_start)
-    if closes is None or len(closes) < 2:
-        if name == "Qatar QE Index":
-            qe_row = _safe_qe_from_supabase()
-            if qe_row is not None:
-                print("[INFO][SUPABASE_QE] Using QE value from Supabase")
-                return qe_row
-
-        return {
-            "name": name,
-            "ticker": sym,
-            "px_last": "N/A",
-            "change_1d": "N/A",
-            "mtd": "N/A",
-            "ytd": "N/A",
-            "as_of": None,
-            "source": "Yahoo Finance",
-        }
-
-    px_last = _to_float(closes.iloc[-1])
-    px_prev = _to_float(closes.iloc[-2]) if len(closes) >= 2 else None
-
-    month_base = _last_value_before_or_on(closes, month_start - datetime.timedelta(days=1))
-    year_base = _last_value_before_or_on(closes, year_start - datetime.timedelta(days=1))
-
-    as_of = closes.index[-1]
-    as_of_str = as_of.strftime("%Y-%m-%d") if hasattr(as_of, "strftime") else str(as_of)[:10]
+    if not supabase_key:
+        raise RuntimeError("Missing SUPABASE_SERVICE_ROLE_KEY environment variable")
 
     return {
-        "name": name,
-        "ticker": sym,
-        "px_last": round(px_last, digits) if px_last is not None else "N/A",
-        "change_1d": _fmt_pct_number(px_last, px_prev, 1),
-        "mtd": _fmt_pct_number(px_last, month_base, 1),
-        "ytd": _fmt_pct_number(px_last, year_base, 1),
-        "as_of": as_of_str,
-        "source": "Yahoo Finance",
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Content-Type": "application/json",
     }
 
 
-def fetch_section(ticker_map: dict, today: datetime.date) -> list[dict]:
-    rows = []
-    for name, sym in ticker_map.items():
-        row = _fetch_market_row(name, sym, today)
-        print(f"    {name}: {row['px_last']} | {row['change_1d']} | {row['mtd']} | {row['ytd']}")
-        rows.append(row)
-    return rows
+def _supabase_base_url() -> str:
+    supabase_url = os.environ.get("SUPABASE_URL")
+    if not supabase_url:
+        raise RuntimeError("Missing SUPABASE_URL environment variable")
+    return supabase_url.rstrip("/")
 
 
-def _find_row(rows: list[dict], name: str) -> Optional[dict]:
+def _supabase_get(path: str, params: Optional[Dict[str, str]] = None) -> Any:
+    url = f"{_supabase_base_url()}/rest/v1/{path}"
+    response = requests.get(
+        url,
+        headers=_supabase_headers(),
+        params=params or {},
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def _get_latest_available_date(today: datetime.date) -> Optional[datetime.date]:
+    params = {
+        "select": "as_of_date",
+        "order": "as_of_date.desc",
+        "limit": "1",
+    }
+
+    rows = _supabase_get(SUPABASE_TABLE, params=params)
+
+    if not rows:
+        return None
+
+    return _parse_date(rows[0].get("as_of_date"))
+
+
+def _get_rows_for_date(as_of_date: datetime.date) -> List[Dict[str, Any]]:
+    params = {
+        "select": "*",
+        "as_of_date": f"eq.{as_of_date.isoformat()}",
+        "order": "report_section.asc,display_order.asc,instrument_code.asc",
+    }
+
+    rows = _supabase_get(SUPABASE_TABLE, params=params)
+    return rows or []
+
+
+def _get_history_rows_for_calculations(as_of_date: datetime.date) -> List[Dict[str, Any]]:
+    year_start = datetime.date(as_of_date.year, 1, 1)
+    history_start = year_start - datetime.timedelta(days=10)
+
+    params = {
+        "select": "instrument_code,px_last,change_1d_pct,as_of_date",
+        "as_of_date": f"gte.{history_start.isoformat()}",
+        "order": "instrument_code.asc,as_of_date.asc",
+    }
+
+    rows = _supabase_get(SUPABASE_TABLE, params=params)
+    return rows or []
+
+
+def _group_history_by_code(rows: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+    grouped: Dict[str, List[Dict[str, Any]]] = {}
+
     for row in rows:
-        if row["name"] == name:
+        code = row.get("instrument_code")
+        if not code:
+            continue
+        grouped.setdefault(code, []).append(row)
+
+    for code in grouped:
+        grouped[code].sort(key=lambda r: str(r.get("as_of_date", "")))
+
+    return grouped
+
+
+def _last_px_before_or_on(
+    history: List[Dict[str, Any]],
+    target_date: datetime.date,
+) -> Optional[float]:
+    found = None
+
+    for row in history:
+        row_date = _parse_date(row.get("as_of_date"))
+        if row_date is None:
+            continue
+        if row_date <= target_date:
+            px = _to_float(row.get("px_last"))
+            if px is not None:
+                found = px
+
+    return found
+
+
+def _previous_px_before_date(
+    history: List[Dict[str, Any]],
+    target_date: datetime.date,
+) -> Optional[float]:
+    found = None
+
+    for row in history:
+        row_date = _parse_date(row.get("as_of_date"))
+        if row_date is None:
+            continue
+        if row_date < target_date:
+            px = _to_float(row.get("px_last"))
+            if px is not None:
+                found = px
+
+    return found
+
+
+def _digits_for_code(code: str) -> int:
+    if code in {
+        "USDQAR",
+        "EURQAR",
+        "GBPQAR",
+        "CNYQAR",
+        "EURUSD",
+        "GBPUSD",
+        "USDCNY",
+        "USDJPY",
+    }:
+        return 4
+
+    if code in {"DHBK", "CBQK", "MARK", "DUBK", "ABQK", "QIIB"}:
+        return 3
+
+    if code in {"UST5Y", "UST10Y"}:
+        return 4
+
+    if code in {"GOLDQAR", "BRENT", "SILVER"}:
+        return 2
+
+    return 2
+
+
+def _normalise_market_row(
+    row: Dict[str, Any],
+    history_by_code: Dict[str, List[Dict[str, Any]]],
+    effective_date: datetime.date,
+) -> Dict[str, Any]:
+    code = row.get("instrument_code") or ""
+    expected = EXPECTED_BY_CODE.get(code, {})
+
+    px_last = _to_float(row.get("px_last"))
+    change_1d_pct = _to_float(row.get("change_1d_pct"))
+
+    history = history_by_code.get(code, [])
+    prev_px = _previous_px_before_date(history, effective_date)
+
+    month_start = datetime.date(effective_date.year, effective_date.month, 1)
+    year_start = datetime.date(effective_date.year, 1, 1)
+
+    month_base = _last_px_before_or_on(history, month_start - datetime.timedelta(days=1))
+    year_base = _last_px_before_or_on(history, year_start - datetime.timedelta(days=1))
+
+    if change_1d_pct is None and prev_px not in (None, 0):
+        change_1d = _fmt_pct_number(px_last, prev_px, 2)
+    else:
+        change_1d = _fmt_pct_from_value(change_1d_pct, 2)
+
+    mtd = _fmt_pct_number(px_last, month_base, 2)
+    ytd = _fmt_pct_number(px_last, year_base, 2)
+
+    report_section = row.get("report_section") or expected.get("report_section") or "UNKNOWN"
+
+    return {
+        "code": code,
+        "name": row.get("instrument_name") or expected.get("name") or code,
+        "ticker": row.get("symbol") or expected.get("symbol") or code,
+        "px_last": _format_price(px_last, _digits_for_code(code)),
+        "change_1d": change_1d,
+        "mtd": mtd,
+        "ytd": ytd,
+        "as_of": str(row.get("as_of_date") or effective_date.isoformat()),
+        "source": row.get("source") or "Supabase",
+        "status": row.get("status") or "valid",
+        "report_section": report_section,
+        "display_order": _to_int(row.get("display_order"), expected.get("display_order", 999)),
+    }
+
+
+def fetch_market_data_from_supabase(today: datetime.date) -> tuple[Dict[str, List[Dict[str, Any]]], List[str], Optional[datetime.date]]:
+    issues: List[str] = []
+
+    latest_date = _get_latest_available_date(today)
+    if latest_date is None:
+        raise RuntimeError(f"No rows found in Supabase table {SUPABASE_TABLE}")
+
+    effective_date = latest_date
+
+    if effective_date != today:
+        delta_days = (today - effective_date).days
+        issues.append(f"Using latest available Supabase market date {effective_date.isoformat()}, not today {today.isoformat()}")
+
+        if delta_days > STALE_DATA_WARNING_DAYS:
+            issues.append(f"Supabase market data is stale by {delta_days} days")
+
+    rows = _get_rows_for_date(effective_date)
+    history_rows = _get_history_rows_for_calculations(effective_date)
+    history_by_code = _group_history_by_code(history_rows)
+
+    expected_codes = {item["code"] for item in EXPECTED_INSTRUMENTS}
+    actual_codes = {row.get("instrument_code") for row in rows if row.get("instrument_code")}
+
+    missing_codes = sorted(expected_codes - actual_codes)
+    extra_codes = sorted(actual_codes - expected_codes)
+
+    if missing_codes:
+        issues.append(f"Missing instruments from Supabase: {', '.join(missing_codes)}")
+
+    if extra_codes:
+        issues.append(f"Unexpected instruments in Supabase: {', '.join(extra_codes)}")
+
+    if len(actual_codes) != EXPECTED_INSTRUMENT_COUNT:
+        issues.append(f"Expected {EXPECTED_INSTRUMENT_COUNT} instruments, found {len(actual_codes)}")
+
+    output = {
+        "global_indices": [],
+        "gcc_indices": [],
+        "spot_currency": [],
+        "qar_cross_rates": [],
+        "fixed_income": [],
+        "qatari_banks": [],
+        "commodities": [],
+    }
+
+    normalised_rows = [
+        _normalise_market_row(row, history_by_code, effective_date)
+        for row in rows
+        if row.get("instrument_code") in expected_codes
+    ]
+
+    for row in normalised_rows:
+        section_name = row.get("report_section", "")
+        output_key = REPORT_SECTION_TO_OUTPUT_KEY.get(section_name)
+
+        if not output_key:
+            issues.append(f"Unknown report section for {row.get('code')}: {section_name}")
+            continue
+
+        clean_row = {
+            "code": row["code"],
+            "name": row["name"],
+            "ticker": row["ticker"],
+            "px_last": row["px_last"],
+            "change_1d": row["change_1d"],
+            "mtd": row["mtd"],
+            "ytd": row["ytd"],
+            "as_of": row["as_of"],
+            "source": row["source"],
+            "status": row["status"],
+        }
+
+        output[output_key].append((row["display_order"], clean_row))
+
+    for key in output:
+        output[key] = [
+            row for _, row in sorted(output[key], key=lambda item: item[0])
+        ]
+
+    return output, issues, effective_date
+
+
+def _find_row(rows: List[Dict[str, Any]], name: str) -> Optional[Dict[str, Any]]:
+    for row in rows:
+        if row.get("name") == name:
             return row
     return None
 
 
-def _build_derived_row(
-    name: str,
-    px_last: Optional[float],
-    prev_px: Optional[float],
-    month_base: Optional[float],
-    year_base: Optional[float],
-    source: str,
-    digits: int = 2,
-) -> dict:
-    return {
-        "name": name,
-        "ticker": "DERIVED",
-        "px_last": round(px_last, digits) if px_last is not None else "N/A",
-        "change_1d": _fmt_pct_number(px_last, prev_px, 1),
-        "mtd": _fmt_pct_number(px_last, month_base, 1),
-        "ytd": _fmt_pct_number(px_last, year_base, 1),
-        "as_of": datetime.date.today().strftime("%Y-%m-%d"),
-        "source": source,
-    }
-
-
-def _download_close_series(sym: str, today: datetime.date):
-    year_start = datetime.date(today.year, 1, 1)
-    history_start = year_start - datetime.timedelta(days=20)
-    return _get_series(sym, history_start)
-
-
-def add_derived_rows(data: dict, today: datetime.date) -> None:
-    comm = data.get("commodities", [])
-    qar_rows = []
-
-    qary = _download_close_series("QAR=X", today)
-    eurusd = _download_close_series("EURUSD=X", today)
-    gbpusd = _download_close_series("GBPUSD=X", today)
-    usdcny = _download_close_series("CNY=X", today)
-    goldusd = _download_close_series("GC=F", today)
-
-    year_start = datetime.date(today.year, 1, 1)
-    month_start = datetime.date(today.year, today.month, 1)
-
-    def get_refs(series):
-        if series is None or len(series) < 2:
-            return None
-        cur = _to_float(series.iloc[-1])
-        prev = _to_float(series.iloc[-2])
-        mtd = _last_value_before_or_on(series, month_start - datetime.timedelta(days=1))
-        ytd = _last_value_before_or_on(series, year_start - datetime.timedelta(days=1))
-        return cur, prev, mtd, ytd
-
-    q = get_refs(qary)
-    e = get_refs(eurusd)
-    g = get_refs(gbpusd)
-    c = get_refs(usdcny)
-    au = get_refs(goldusd)
-
-    if q:
-        qar_rows.append(_build_derived_row(
-            "USD/QAR", q[0], q[1], q[2], q[3], "Derived from Yahoo Finance QAR=X", 4
-        ))
-
-    if q and e:
-        qar_rows.append(_build_derived_row(
-            "EUR/QAR",
-            e[0] * q[0],
-            e[1] * q[1],
-            e[2] * q[2] if e[2] is not None and q[2] is not None else None,
-            e[3] * q[3] if e[3] is not None and q[3] is not None else None,
-            "Derived from Yahoo Finance EURUSD=X and QAR=X",
-            4
-        ))
-
-    if q and g:
-        qar_rows.append(_build_derived_row(
-            "GBP/QAR",
-            g[0] * q[0],
-            g[1] * q[1],
-            g[2] * q[2] if g[2] is not None and q[2] is not None else None,
-            g[3] * q[3] if g[3] is not None and q[3] is not None else None,
-            "Derived from Yahoo Finance GBPUSD=X and QAR=X",
-            4
-        ))
-
-    if q and c and c[0] not in (None, 0) and c[1] not in (None, 0):
-        qar_rows.append(_build_derived_row(
-            "CNY/QAR",
-            q[0] / c[0],
-            q[1] / c[1],
-            (q[2] / c[2]) if q[2] not in (None, 0) and c[2] not in (None, 0) else None,
-            (q[3] / c[3]) if q[3] not in (None, 0) and c[3] not in (None, 0) else None,
-            "Derived from Yahoo Finance QAR=X and CNY=X",
-            4
-        ))
-
-    data["qar_cross_rates"] = qar_rows
-
-    if au and q:
-        gold_qar = _build_derived_row(
-            "Gold (QAR)",
-            au[0] * q[0],
-            au[1] * q[1],
-            (au[2] * q[2]) if au[2] is not None and q[2] is not None else None,
-            (au[3] * q[3]) if au[3] is not None and q[3] is not None else None,
-            "Derived from Yahoo Finance GC=F and QAR=X",
-            2
-        )
-        comm.append(gold_qar)
-
-    data["commodities"] = [r for r in comm if r["name"] != "Gold (USD)"]
-
-
-def validate_market_data(data: dict) -> List[str]:
+def validate_market_data(data: Dict[str, Any]) -> List[str]:
     issues: List[str] = []
+
+    for issue in data.get("_supabase_issues", []):
+        issues.append(issue)
+
+    total_market_rows = sum(
+        len(data.get(section, []))
+        for section in [
+            "global_indices",
+            "gcc_indices",
+            "spot_currency",
+            "qar_cross_rates",
+            "fixed_income",
+            "qatari_banks",
+            "commodities",
+        ]
+    )
+
+    if total_market_rows != EXPECTED_INSTRUMENT_COUNT:
+        issues.append(f"Market row count mismatch: expected {EXPECTED_INSTRUMENT_COUNT}, found {total_market_rows}")
 
     qe = _find_row(data.get("gcc_indices", []), "Qatar QE Index")
     doha = _find_row(data.get("qatari_banks", []), "Doha")
     usdqar = _find_row(data.get("qar_cross_rates", []), "USD/QAR")
+    spx = _find_row(data.get("global_indices", []), "US S&P 500")
+    fadgi = _find_row(data.get("gcc_indices", []), "Abu Dhabi ADX")
+    gbpusd = _find_row(data.get("spot_currency", []), "GBP/USD")
+    usdjpy = _find_row(data.get("spot_currency", []), "USD/JPY")
+    bka = _find_row(data.get("gcc_indices", []), "Kuwait Boursa")
+    goldqar = _find_row(data.get("commodities", []), "Gold (QAR)")
 
-    if not qe or qe.get("px_last") == "N/A":
-        issues.append("Qatar QE Index missing or invalid")
+    required_rows = [
+        ("Qatar QE Index", qe),
+        ("Doha Bank price", doha),
+        ("US S&P 500", spx),
+        ("Abu Dhabi ADX", fadgi),
+        ("GBP/USD", gbpusd),
+        ("USD/JPY", usdjpy),
+        ("Kuwait Boursa", bka),
+        ("Gold QAR", goldqar),
+    ]
 
-    if not doha or doha.get("px_last") == "N/A":
-        issues.append("Doha Bank price missing or invalid")
+    for label, row in required_rows:
+        if not row or row.get("px_last") in (None, "N/A", ""):
+            issues.append(f"{label} missing or invalid")
+
+    def numeric_px(row: Optional[Dict[str, Any]]) -> Optional[float]:
+        if not row:
+            return None
+        return _to_float(row.get("px_last"))
+
+    if numeric_px(usdjpy) is not None and numeric_px(usdjpy) < 100:
+        issues.append(f"USD/JPY suspicious value: {usdjpy.get('px_last')}")
+
+    if numeric_px(gbpusd) is not None and numeric_px(gbpusd) < 1:
+        issues.append(f"GBP/USD suspicious value: {gbpusd.get('px_last')}")
+
+    if numeric_px(bka) is not None and numeric_px(bka) < 1000:
+        issues.append(f"Kuwait Boursa suspicious value: {bka.get('px_last')}")
+
+    if numeric_px(goldqar) is not None and numeric_px(goldqar) < 10000:
+        issues.append(f"Gold QAR suspicious value: {goldqar.get('px_last')}")
 
     if usdqar and usdqar.get("change_1d") not in (None, "N/A"):
         try:
@@ -523,8 +749,9 @@ def validate_market_data(data: dict) -> List[str]:
     return issues
 
 
-def fetch_news(feed_list: list[dict]) -> list[dict]:
+def fetch_news(feed_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     items = []
+
     for feed_cfg in feed_list:
         try:
             feed = feedparser.parse(feed_cfg["url"])
@@ -546,51 +773,57 @@ def fetch_news(feed_list: list[dict]) -> list[dict]:
                     "link": link,
                     "published": published,
                 })
+
         except Exception as e:
             print(f"[WARN] RSS {feed_cfg['source']}: {e}")
+
     return items
 
 
-def dedupe_news(items: list[dict]) -> list[dict]:
+def dedupe_news(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     seen = set()
     out = []
+
     for item in items:
         key = re.sub(r"[^a-z0-9]+", "", item.get("title", "").lower())[:120]
+
         if not key or key in seen:
             continue
+
         seen.add(key)
         out.append(item)
+
     return out
 
 
-def ensure_min_news(items: list[dict], count: int, fallback_source: str) -> list[dict]:
+def ensure_min_news(items: List[Dict[str, Any]], count: int, fallback_source: str) -> List[Dict[str, Any]]:
     out = list(items)
 
     placeholders = [
         {
             "source": fallback_source,
-            "title": "Qatar business source temporarily unavailable",
-            "summary": "The source feed returned no usable article in this cycle.",
+            "title": "Market news source temporarily unavailable",
+            "summary": "The approved source feed returned no usable article in this cycle.",
             "link": "",
             "published": "",
         },
         {
             "source": fallback_source,
-            "title": "Qatar corporate news feed refresh pending",
+            "title": "Business news feed refresh pending",
             "summary": "The workflow will retry the same approved source on the next run.",
             "link": "",
             "published": "",
         },
         {
             "source": fallback_source,
-            "title": "Qatar market coverage awaiting source update",
+            "title": "Market coverage awaiting source update",
             "summary": "Approved publisher feed did not return enough items for this report cycle.",
             "link": "",
             "published": "",
         },
         {
             "source": fallback_source,
-            "title": "Qatar economy headline stream incomplete",
+            "title": "Economy headline stream incomplete",
             "summary": "Only approved publisher sources are allowed for this section.",
             "link": "",
             "published": "",
@@ -605,8 +838,9 @@ def ensure_min_news(items: list[dict], count: int, fallback_source: str) -> list
     return out[:count]
 
 
-def _fallback_summarise_news(raw_items: list[dict], count: int) -> list[dict]:
+def _fallback_summarise_news(raw_items: List[Dict[str, Any]], count: int) -> List[Dict[str, Any]]:
     fallback = []
+
     for item in raw_items[:count]:
         source = item.get("source", "Feed")
         title = item.get("title", "")[:120]
@@ -651,11 +885,12 @@ def _fallback_summarise_news(raw_items: list[dict], count: int) -> list[dict]:
     return fallback[:count]
 
 
-def summarise_news(raw_items: list[dict], scope: str, count: int) -> list[dict]:
+def summarise_news(raw_items: List[Dict[str, Any]], scope: str, count: int) -> List[Dict[str, Any]]:
     if not raw_items:
         return []
 
     api_key = os.environ.get("ANTHROPIC_API_KEY")
+
     if not api_key:
         print("[WARN] ANTHROPIC_API_KEY not set, using fallback summarisation.")
         return _fallback_summarise_news(raw_items, count)
@@ -663,8 +898,8 @@ def summarise_news(raw_items: list[dict], scope: str, count: int) -> list[dict]:
     client = anthropic.Anthropic(api_key=api_key)
 
     headlines_txt = "\n".join(
-        f"[{i['source']}] {i['title']} — {i['summary']} (URL: {i['link']})"
-        for i in raw_items
+        f"[{item['source']}] {item['title']} — {item['summary']} (URL: {item['link']})"
+        for item in raw_items
     )
 
     system = (
@@ -699,11 +934,12 @@ News:
 
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-20250514"),
             max_tokens=1600,
             system=system,
             messages=[{"role": "user", "content": prompt}],
         )
+
         text = response.content[0].text.strip()
         text = re.sub(r"```json|```", "", text).strip()
         parsed = json.loads(text)
@@ -712,6 +948,7 @@ News:
             raise ValueError("Claude did not return a list")
 
         cleaned = []
+
         for item in parsed[:count]:
             cleaned.append({
                 "headline": item.get("headline", "")[:120] or "Market update",
@@ -739,16 +976,16 @@ News:
         return _fallback_summarise_news(raw_items, count)
 
 
-def build_kpis(market_data: dict) -> list[dict]:
-    def px(rows, name):
+def build_kpis(market_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def px(rows: List[Dict[str, Any]], name: str):
         row = _find_row(rows, name)
         return row.get("px_last", "N/A") if row else "N/A"
 
-    def chg(rows, name):
+    def chg(rows: List[Dict[str, Any]], name: str):
         row = _find_row(rows, name)
         return row.get("change_1d", "N/A") if row else "N/A"
 
-    def ytd(rows, name):
+    def ytd(rows: List[Dict[str, Any]], name: str):
         row = _find_row(rows, name)
         return row.get("ytd", "N/A") if row else "N/A"
 
@@ -762,13 +999,21 @@ def build_kpis(market_data: dict) -> list[dict]:
 
     brent_px = px(market_data.get("commodities", []), "Brent Crude")
     brent_ytd = ytd(market_data.get("commodities", []), "Brent Crude")
+
     gold_qar = px(market_data.get("commodities", []), "Gold (QAR)")
     gold_ytd = ytd(market_data.get("commodities", []), "Gold (QAR)")
+
     qse_px = px(market_data.get("gcc_indices", []), "Qatar QE Index")
     qse_1d = chg(market_data.get("gcc_indices", []), "Qatar QE Index")
     qse_ytd = ytd(market_data.get("gcc_indices", []), "Qatar QE Index")
+
     ust10_px = px(market_data.get("fixed_income", []), "UST 10-Year")
     ust10_ytd = ytd(market_data.get("fixed_income", []), "UST 10-Year")
+
+    def format_number(value):
+        if isinstance(value, (int, float)):
+            return f"{value:,.2f}"
+        return str(value)
 
     return [
         {
@@ -777,24 +1022,24 @@ def build_kpis(market_data: dict) -> list[dict]:
             "sublabel": f"US {sp_1d} · UK {uk_1d}",
         },
         {
-            "value": f"${brent_px}",
+            "value": f"${format_number(brent_px)}",
             "label": "Brent Crude",
             "sublabel": f"{brent_ytd} Year-to-Date",
         },
         {
-            "value": f"{gold_qar:,}" if isinstance(gold_qar, float) else str(gold_qar),
+            "value": format_number(gold_qar),
             "label": "Gold (QAR)",
             "sublabel": f"{gold_ytd} YTD · Safe-haven demand",
         },
         {
-            "value": f"{qse_px:,}" if isinstance(qse_px, float) else str(qse_px),
+            "value": format_number(qse_px),
             "label": "QSE Index",
             "sublabel": f"{qse_1d} today · {qse_ytd} YTD",
         },
         {
-            "value": f"{ust10_px}%",
+            "value": f"{format_number(ust10_px)}%",
             "label": "UST 10Y Yield",
-            "sublabel": f"{ust10_ytd} YTD · Rising yields",
+            "sublabel": f"{ust10_ytd} YTD · Treasury yield curve",
         },
         {
             "value": "4.50%",
@@ -804,44 +1049,56 @@ def build_kpis(market_data: dict) -> list[dict]:
     ]
 
 
-def run() -> dict:
+def run() -> Dict[str, Any]:
     today = datetime.date.today()
     cfg = CONFIG
+
     generated_at_utc = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
 
-    data = {
+    data: Dict[str, Any] = {
         "config": cfg,
         "generated_at": generated_at_utc,
         "generated_display_time": cfg.get("delivery_time_ast", "07:00") + " AST",
     }
 
-    section_map = {
-        "global_indices": GLOBAL_INDICES,
-        "gcc_indices": GCC_INDICES,
-        "spot_currency": SPOT_CURRENCY,
-        "qatari_banks": QATARI_BANKS,
-        "commodities": COMMODITIES,
-        "fixed_income": FIXED_INCOME,
-    }
+    print("▶ Fetching market data from Supabase ...")
 
-    print("▶ Fetching market data ...")
-    for section, tickers in section_map.items():
-        if not cfg["sections"].get(section, True):
-            data[section] = []
-            continue
-        print(f"  · {section}")
-        data[section] = fetch_section(tickers, today)
+    try:
+        market_sections, supabase_issues, effective_date = fetch_market_data_from_supabase(today)
 
-    if cfg["sections"].get("qar_cross_rates", True):
-        add_derived_rows(data, today)
-    else:
-        data["qar_cross_rates"] = []
+        for key, rows in market_sections.items():
+            if not cfg["sections"].get(key, True):
+                data[key] = []
+            else:
+                data[key] = rows
+
+            print(f"  · {key}: {len(data[key])} rows")
+
+        data["_supabase_issues"] = supabase_issues
+        data["market_as_of_date"] = effective_date.isoformat() if effective_date else None
+
+    except Exception as e:
+        print(f"[ERROR] Supabase market fetch failed: {e}")
+
+        for key in [
+            "global_indices",
+            "gcc_indices",
+            "spot_currency",
+            "qar_cross_rates",
+            "fixed_income",
+            "qatari_banks",
+            "commodities",
+        ]:
+            data[key] = []
+
+        data["_supabase_issues"] = [f"Supabase market fetch failed: {e}"]
+        data["market_as_of_date"] = None
 
     if cfg["sections"].get("global_news", True):
         print("  · global news")
         raw_global = dedupe_news(fetch_news(NEWS_FEEDS["global"]))
         raw_global = ensure_min_news(raw_global, 6, "Reuters/Bloomberg")
-        data["global_news"] = summarise_news(raw_global, "regional & global", 6)
+        data["global_news"] = summarise_news(raw_global, "regional and global", 6)
     else:
         data["global_news"] = []
 
@@ -860,17 +1117,25 @@ def run() -> dict:
     data["validation_issues"] = validation_issues
     data["report_status"] = "ok" if not validation_issues else "needs_review"
 
+    if "_supabase_issues" in data:
+        del data["_supabase_issues"]
+
     print("✓ Fetch complete.")
+
     if validation_issues:
         print("⚠ Validation issues found:")
         for issue in validation_issues:
             print(f"   - {issue}")
+    else:
+        print("✓ Validation passed.")
 
     return data
 
 
 if __name__ == "__main__":
     result = run()
+
     with open("market_data.json", "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, default=str)
+
     print("✓ Data written to market_data.json")
