@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-05-06T13:34:00Z",
+  "generated_at": "2026-05-06T13:57:11Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
@@ -442,52 +442,52 @@
   "market_as_of_date": "2026-05-06",
   "global_news": [
     {
-      "headline": "Stocks Rise Globally as Iran Peace Deal Hopes Mount",
-      "summary": "Global equities climbed while oil dropped on optimism that US and Iran are nearing agreement to end Middle East conflict.",
+      "headline": "Oil Prices Tumble Below $100 on US-Iran Diplomacy",
+      "summary": "Oil briefly drops below $100 per barrel as markets react positively to renewed diplomatic efforts between US and Iran to end conflict.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/videos/2026-05-06/oil-falls-as-us-iran-diplomatic-efforts-gain-traction-video",
+      "metric": "<$100",
+      "metric_label": "Oil price per barrel"
+    },
+    {
+      "headline": "Oil and Gas Plunge on Iran Peace Proposal",
+      "summary": "Energy markets tumble as Iran evaluates new US proposal to end nearly 10-week war, raising hopes for diplomatic resolution.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/oil-slumps-after-report-us-and-iran-near-deal-to-end-war",
+      "metric": "10 weeks",
+      "metric_label": "Duration of US-Iran conflict"
+    },
+    {
+      "headline": "Global Stocks Rise on Iran Deal Optimism",
+      "summary": "World stocks and bonds gain while oil falls as markets anticipate potential US-Iran agreement to end regional conflict.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-05-05/asian-stocks-to-track-us-gains-on-truce-optimism-markets-wrap",
-      "metric": "Oil down",
-      "metric_label": "Crude prices falling on peace ho"
+      "metric": "Rising",
+      "metric_label": "Global stock market trend"
     },
     {
-      "headline": "Gold and Silver Surge on Iran Deal Optimism",
-      "summary": "Precious metals posted biggest monthly gains amid Middle East peace hopes, weaker dollar boosting safe-haven demand.",
+      "headline": "Trump to Discuss China-Iran Oil Trade with Xi",
+      "summary": "US Trade Representative indicates President Trump will address China's Iranian oil purchases in upcoming meeting with Chinese leader.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-05/gold-steady-as-fragile-ceasefire-holds-in-gulf-after-flareup",
-      "metric": "Monthly high",
-      "metric_label": "Biggest precious metals gain in "
+      "url": "https://www.bloomberg.com/news/videos/2026-05-06/greer-on-eu-complying-with-trade-deal-trump-to-china-video",
+      "metric": "Next week",
+      "metric_label": "Timing of Trump-Xi meeting"
     },
     {
-      "headline": "Trump to Address China's Iranian Oil Purchases",
-      "summary": "US President will discuss China buying Iranian oil during Beijing meeting with Xi Jinping scheduled May 14-15.",
+      "headline": "Eli Lilly Seeks $8 Billion Bond Sale",
+      "summary": "Pharmaceutical giant plans major investment-grade bond offering to finance acquisition strategy and expand business operations.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/videos/2026-05-06/trump-will-address-iran-with-xi-greer-says-video",
-      "metric": "May 14-15",
-      "metric_label": "Trump-Xi summit dates in Beijing"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/eli-lilly-kicks-off-high-grade-bond-sale-in-push-to-fund-deals",
+      "metric": "$8B",
+      "metric_label": "Bond sale target amount"
     },
     {
-      "headline": "Europe Bond Market Hits Record Issuance Pace",
-      "summary": "Companies flood European bond markets at record levels, rushing to secure funding before potential rate increases.",
+      "headline": "Nvidia Stock Falls Despite AI Boom Momentum",
+      "summary": "Nvidia shares decline this earnings season as investors rotate into competitors entering artificial intelligence territory, despite positive AI trade news.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/companies-rush-to-sell-bonds-in-europe-s-market-at-record-pace",
-      "metric": "Record pace",
-      "metric_label": "European corporate bond issuance"
-    },
-    {
-      "headline": "Poland Holds Rates Amid Iran Energy Shock",
-      "summary": "Polish central bank maintains rates unchanged for second month as Iran conflict revives domestic inflation concerns.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/poland-holds-rates-as-iran-energy-shock-stokes-inflation",
-      "metric": "2nd month",
-      "metric_label": "Consecutive rate holds by Poland"
-    },
-    {
-      "headline": "US Treasury Maintains Debt Auction Strategy Through 2027",
-      "summary": "Treasury signals no changes to shortest-dated debt issuance strategy despite warnings about escalating borrowing risks.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/us-punts-again-on-debt-auctions-signaling-no-changes-into-2027",
-      "metric": "Through 2027",
-      "metric_label": "US debt auction strategy timelin"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/nvidia-is-facing-more-competition-and-it-s-spooking-investors",
+      "metric": "Falling",
+      "metric_label": "Nvidia stock performance"
     }
   ],
   "qatar_news": [],
