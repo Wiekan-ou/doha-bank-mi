@@ -37,34 +37,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install anthropic>=0.25.0 yfinance>=0.2.40 feedparser>=6.0.11 requests>=2.31.0 reportlab>=4.0.0 pandas>=2.0.0 supabase>=2.0.0
 
-      - name: Fetch market data
+      - name: Fetch market data and news
         run: |
           python3 fetcher.py
 
-      - name: Validate market data as warning only
+      - name: Validate report and set send gate
+        id: validate
         run: |
-          python3 - << 'PYEOF'
-          import json
-          import sys
-
-          try:
-              with open("market_data.json", "r", encoding="utf-8") as f:
-                  data = json.load(f)
-          except Exception as e:
-              print("WARNING: Could not read market_data.json")
-              print(str(e))
-              sys.exit(0)
-
-          issues = data.get("validation_issues", [])
-
-          if issues:
-              print("WARNING VALIDATION ISSUES:")
-              for issue in issues:
-                  print(f"- {issue}")
-              print("Workflow will continue. Report status remains needs_review.")
-          else:
-              print("Market data validation passed.")
-          PYEOF
+          python3 validate_report.py market_data.json
 
       - name: Generate PDF report
         run: |
@@ -84,6 +64,13 @@ jobs:
             git push
           fi
 
-      - name: Send approved report email
+      - name: Send report email only if validation passed
+        if: steps.validate.outputs.status == 'PASS'
         run: |
           python3 send_email.py
+
+      - name: Block distribution for non-pass reports
+        if: steps.validate.outputs.status != 'PASS'
+        run: |
+          echo "Report was generated and committed for internal review only."
+          echo "Email distribution blocked because validation status is ${{ steps.validate.outputs.status }}."
