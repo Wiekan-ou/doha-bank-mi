@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-05-06T14:14:54Z",
+  "generated_at": "2026-05-06T14:38:56Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
@@ -442,52 +442,52 @@
   "market_as_of_date": "2026-05-06",
   "global_news": [
     {
-      "headline": "Apollo Assets Surpass $1 Trillion Historic Milestone",
-      "summary": "Apollo Global Management eclipsed $1 trillion assets under management on record first-quarter inflows, beating Wall Street earnings estimates.",
+      "headline": "Fed's Musalem Says Inflation Risks Rising",
+      "summary": "Federal Reserve Bank of St. Louis President warns risks are shifting more toward inflation than employment amid economic uncertainty.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/fed-s-musalem-says-risks-are-shifting-more-toward-inflation",
+      "metric": "Rising",
+      "metric_label": "Inflation risk assessment"
+    },
+    {
+      "headline": "Apollo Assets Surpass $1 Trillion Milestone",
+      "summary": "Apollo Global Management crosses $1 trillion in assets under management for first time, beating earnings estimates on record inflows.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-05-06/apollo-assets-top-1-trillion-on-record-inflows-beats-estimates",
-      "metric": "$1T",
-      "metric_label": "Assets Under Management"
+      "metric": "$1T+",
+      "metric_label": "Assets under management"
     },
     {
-      "headline": "France Ready to Escort Ships Through Hormuz",
-      "summary": "Franco-British maritime coalition prepared to escort tankers through Strait of Hormuz if Iran accepts US war-ending proposal.",
+      "headline": "Latam Airlines Surges on Strong Earnings",
+      "summary": "Region's largest airline by market value beats expectations as demand remains resilient despite higher fares from rising jet fuel costs.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/france-says-maritime-coalition-ready-to-escort-tankers-in-hormuz",
-      "metric": "20%",
-      "metric_label": "Global Oil Transit Share"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-05/latam-airlines-changes-guidance-on-fuel-cost-despite-profit-jump",
+      "metric": "Beat",
+      "metric_label": "Earnings expectations"
     },
     {
-      "headline": "Global Stocks Rise on Iran Deal Optimism",
-      "summary": "World stocks climbed and oil fell as hopes mount for US-Iran deal to end conflict affecting markets and economy.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-05/asian-stocks-to-track-us-gains-on-truce-optimism-markets-wrap",
-      "metric": "-3.2%",
-      "metric_label": "Oil Price Decline"
-    },
-    {
-      "headline": "US Treasury Maintains Short-Term Debt Strategy",
-      "summary": "Treasury signals comfort with shortest-dated debt issuance to meet government borrowing needs despite emerging strategy risks.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/us-punts-again-on-debt-auctions-signaling-no-changes-into-2027",
-      "metric": "2027",
-      "metric_label": "Strategy Timeline"
-    },
-    {
-      "headline": "Disney Profits Beat Expectations Under New CEO",
-      "summary": "Disney posted stronger-than-expected results from improved streaming profitability, new movies, and increased resort guest spending.",
+      "headline": "Disney Reports Strong Quarter Under New CEO",
+      "summary": "Walt Disney exceeds Wall Street expectations with improved streaming profitability, successful films, and increased theme park and cruise spending.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-05-06/disney-s-films-parks-lift-profit-in-debut-quarter-for-new-ceo",
-      "metric": "+12%",
-      "metric_label": "Quarterly Revenue Growth"
+      "metric": "Above",
+      "metric_label": "Wall Street expectations"
     },
     {
-      "headline": "Charlotte Airport Secures $215M Runway Financing",
-      "summary": "Charlotte Douglas International Airport approved to issue $215 million revenue bonds for new runway construction project.",
+      "headline": "SharkNinja CEO Discusses Consumer Pressure Strategy",
+      "summary": "CEO Mark Barrocas explains company's growth strategy amid pressured consumers, focusing on viral products, global expansion, and AI integration.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-05/charlotte-airport-gets-approval-for-215-million-in-financing",
-      "metric": "$215M",
-      "metric_label": "Bond Issuance Amount"
+      "url": "https://www.bloomberg.com/news/videos/2026-05-06/sharkninja-ceo-consumers-are-under-pressure-video",
+      "metric": "Pressured",
+      "metric_label": "Consumer environment"
+    },
+    {
+      "headline": "Target's Dress Code Won't Fix Problems",
+      "summary": "Bloomberg Opinion argues Target's new employee dress code policy fails to address the company's underlying operational and strategic challenges.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/videos/2026-05-06/opinion-target-s-dress-code-isn-t-the-answer-video",
+      "metric": "Insufficient",
+      "metric_label": "Problem-solving approach"
     }
   ],
   "qatar_news": [],
