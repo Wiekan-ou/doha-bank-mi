@@ -1,13 +1,40 @@
 import os
+import json
 import base64
 import datetime
 import requests
+from pathlib import Path
 from supabase_client import get_supabase
 
 RESEND_API_KEY = os.environ["RESEND_API_KEY"]
 FROM_EMAIL = "Market Intelligence <updates@market-sigma.com>"
 REPORT_DATE = datetime.date.today().strftime("%d %B %Y")
-PDF_PATH = "report.pdf"
+PDF_PATH = Path("report.pdf")
+MARKET_DATA_PATH = Path("market_data.json")
+ALLOWED_STATUSES = {"PASS"}
+
+
+def assert_report_is_sendable() -> None:
+    if not MARKET_DATA_PATH.exists():
+        raise SystemExit("[BLOCKED] market_data.json not found. Email not sent.")
+
+    with MARKET_DATA_PATH.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    status = str(data.get("report_status") or "").upper()
+    allowed = bool(data.get("email_send_allowed", status in ALLOWED_STATUSES))
+    issues = data.get("validation_issues") or []
+
+    if status not in ALLOWED_STATUSES or not allowed:
+        print(f"[BLOCKED] Report status is {status or 'UNKNOWN'}. Email not sent.")
+        if issues:
+            print("Validation issues:")
+            for issue in issues:
+                print(f"- {issue}")
+        raise SystemExit(0)
+
+    if not PDF_PATH.exists():
+        raise SystemExit("[BLOCKED] report.pdf not found. Email not sent.")
 
 
 def load_email_recipients() -> list[str]:
@@ -24,13 +51,15 @@ def load_email_recipients() -> list[str]:
 
 
 def send():
+    assert_report_is_sendable()
+
     recipients = load_email_recipients()
 
     if not recipients:
         print("[WARN] No active email recipients found in Supabase")
         return
 
-    with open(PDF_PATH, "rb") as f:
+    with PDF_PATH.open("rb") as f:
         pdf_b64 = base64.b64encode(f.read()).decode()
 
     payload = {
@@ -39,9 +68,9 @@ def send():
         "subject": f"Market Intelligence – {REPORT_DATE}",
         "html": f"""
             <p>Dear Team,</p>
-            <p>Please find attached the <strong>Doha Bank Market Intelligence Report</strong>
+            <p>Please find attached the approved <strong>Doha Bank Market Intelligence Report</strong>
             for <strong>{REPORT_DATE}</strong>.</p>
-            <p>This report is auto-generated daily.</p>
+            <p>This report passed automated validation before distribution.</p>
         """,
         "attachments": [
             {
