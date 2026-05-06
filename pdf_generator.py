@@ -228,7 +228,7 @@ def cw5(w):
 # Header and footer
 # ------------------------------------------------------------
 
-def draw_header(c, report_date, generated_display_time, market_as_of_date=None, page=1, total=2, report_status="ok"):
+def draw_header(c, report_date, generated_display_time, market_as_of_date=None, page=1, total=2, report_status="PASS"):
     fr(c, 0, H - HDR_H, W, HDR_H, BLUE)
     fr(c, 0, H - HDR_H, 56 * mm, HDR_H, NAVY)
 
@@ -273,8 +273,11 @@ def draw_header(c, report_date, generated_display_time, market_as_of_date=None, 
 
     t(c, "Supabase  ·  Brave Search  ·  Reuters  ·  Bloomberg", W - M, H - HDR_H + 5.5 * mm, "Carlito", 5.5, SUBT, "right")
 
-    if report_status != "ok":
-        t(c, "Validation status: NEEDS REVIEW", W - M, H - HDR_H + 2.2 * mm, "Carlito-Bold", 5.5, WARN, "right")
+    status = str(report_status or "PASS").upper()
+    if status not in {"PASS", "OK"}:
+        t(c, f"Validation status: {status}", W - M, H - HDR_H + 2.2 * mm, "Carlito-Bold", 5.5, WARN, "right")
+    else:
+        t(c, "Validation status: PASS", W - M, H - HDR_H + 2.2 * mm, "Carlito-Bold", 5.5, UP, "right")
 
     fr(c, 0, H - HDR_H, W, 1.5 * mm, CYAN)
     return H - HDR_H
@@ -576,7 +579,7 @@ def generate(data, output_path):
     report_date = data.get("config", {}).get("report_date", dt.today().strftime("%d %B %Y"))
     generated_display_time = data.get("generated_display_time", "07:00 AST")
     market_as_of_date = data.get("market_as_of_date")
-    report_status = data.get("report_status", "ok")
+    report_status = data.get("report_status", "PASS")
 
     c = pdfcanvas.Canvas(output_path, pagesize=landscape(A4))
     c.setTitle(f"Doha Bank Market Intelligence - {report_date}")
