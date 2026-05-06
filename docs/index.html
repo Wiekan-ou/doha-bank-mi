@@ -212,9 +212,15 @@
     }
 
     function dataQualityPill(status) {
-      const s = String(status || "").toLowerCase();
-      if (s === "ok") return `<span class="live">● Validated</span>`;
-      return `<span class="review">● Needs Review</span>`;
+      const s = String(status || "").toUpperCase();
+      if (s === "PASS" || s === "OK") return `<span class="live">● PASS</span>`;
+      if (s === "FAIL") return `<span class="pill off">● FAIL</span>`;
+      return `<span class="review">● NEEDS REVIEW</span>`;
+    }
+
+    function isMarketDataSendable() {
+      const status = String(marketData?.report_status || "").toUpperCase();
+      return status === "PASS" && marketData?.email_send_allowed !== false;
     }
 
     function currentOperator() {
@@ -388,12 +394,13 @@
               <div class="report-stat"><strong>Status:</strong> ${reportStatusPill(latestReport.status)}</div>
               <div class="report-stat"><strong>Generated:</strong> ${escapeHtml(latestReport.generated_at ? new Date(latestReport.generated_at).toLocaleString() : "")}</div>
               <div class="report-stat"><strong>Approved By:</strong> ${escapeHtml(latestReport.approved_by || "Not approved yet")}</div>
+              <div class="report-stat"><strong>Data Quality:</strong> ${dataQualityPill(marketData?.report_status || "UNKNOWN")}</div>
             </div>
             <div class="report-meta">
               <div class="stack-actions">
-                <button class="btn green" onclick="approveLatestReport()">Approve</button>
-                ${SHOW_WHATSAPP_SECTION ? `<button class="btn orange" onclick="queueSendAll('whatsapp')">Queue WhatsApp to All</button>` : ``}
-                <button class="btn" onclick="queueSendAll('email')">Queue Email to All</button>
+                <button class="btn green" onclick="approveLatestReport()" ${isMarketDataSendable() ? "" : "disabled"}>Approve</button>
+                ${SHOW_WHATSAPP_SECTION ? `<button class="btn orange" onclick="queueSendAll('whatsapp')" ${isMarketDataSendable() ? "" : "disabled"}>Queue WhatsApp to All</button>` : ``}
+                <button class="btn" onclick="queueSendAll('email')" ${isMarketDataSendable() ? "" : "disabled"}>Queue Email to All</button>
               </div>
               <div class="stack-actions">
                 ${latestReport.pdf_url ? `<a class="btn outline" href="${escapeHtml(latestReport.pdf_url)}" target="_blank" rel="noopener">Preview PDF</a>` : ""}
@@ -709,6 +716,11 @@
         return;
       }
 
+      if (!isMarketDataSendable()) {
+        alert("Approval blocked. The latest market_data.json did not pass validation.");
+        return;
+      }
+
       const { error } = await sb.from("reports").update({
         status: "approved",
         approved_by: currentOperator(),
@@ -732,8 +744,14 @@
 
       if (!confirm(`Queue today's ${channel} report for this recipient?`)) return;
 
-      if ((latestReport.status || "").toLowerCase() === "draft") {
-        await window.approveLatestReport();
+      if (!isMarketDataSendable()) {
+        alert("Send blocked. The latest market data did not pass validation.");
+        return;
+      }
+
+      if ((latestReport.status || "").toLowerCase() !== "approved") {
+        alert("Send blocked. Approve the report first.");
+        return;
       }
 
       const { error } = await sb.from("dispatch_requests").insert({
@@ -763,8 +781,14 @@
 
       if (!confirm(`Queue today's ${channel} report for all active ${channel} recipients?`)) return;
 
-      if ((latestReport.status || "").toLowerCase() === "draft") {
-        await window.approveLatestReport();
+      if (!isMarketDataSendable()) {
+        alert("Send blocked. The latest market data did not pass validation.");
+        return;
+      }
+
+      if ((latestReport.status || "").toLowerCase() !== "approved") {
+        alert("Send blocked. Approve the report first.");
+        return;
       }
 
       const list = channel === "whatsapp"
