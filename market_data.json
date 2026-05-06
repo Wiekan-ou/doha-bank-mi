@@ -15,80 +15,80 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-05-06T11:25:12Z",
+  "generated_at": "2026-05-06T13:34:00Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
       "code": "SPX",
       "name": "US S&P 500",
       "ticker": "^GSPC",
-      "px_last": 33844.1,
-      "change_1d": "-0.14%",
-      "mtd": "+369.47%",
-      "ytd": "+394.40%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 7259.22,
+      "change_1d": "+0.00%",
+      "mtd": "+0.70%",
+      "ytd": "+6.04%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "FTSE100",
       "name": "UK FTSE 100",
       "ticker": "^FTSE",
-      "px_last": 10608.88,
-      "change_1d": "+2.51%",
-      "mtd": "+2.22%",
-      "ytd": "+6.82%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 10444.28,
+      "change_1d": "+0.00%",
+      "mtd": "+0.63%",
+      "ytd": "+5.16%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "NIKKEI225",
       "name": "Japan Nikkei",
       "ticker": "^N225",
-      "px_last": 62000.0,
-      "change_1d": "+0.42%",
-      "mtd": "+4.58%",
-      "ytd": "+23.16%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 59513.12,
+      "change_1d": "+0.00%",
+      "mtd": "+0.38%",
+      "ytd": "+18.22%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "DAX",
       "name": "Germany DAX",
       "ticker": "^GDAXI",
-      "px_last": 24333.19,
-      "change_1d": "+0.17%",
-      "mtd": "+0.17%",
-      "ytd": "-0.64%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 24916.87,
+      "change_1d": "+0.00%",
+      "mtd": "+2.57%",
+      "ytd": "+1.74%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "HSI",
       "name": "Hong Kong HSI",
       "ticker": "^HSI",
-      "px_last": 26095.88,
-      "change_1d": "+1.24%",
-      "mtd": "+1.24%",
-      "ytd": "+1.82%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 26213.78,
+      "change_1d": "+0.00%",
+      "mtd": "+1.70%",
+      "ytd": "+2.28%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "SENSEX",
       "name": "India Sensex",
       "ticker": "^BSESN",
-      "px_last": 78493.54,
-      "change_1d": "+0.65%",
-      "mtd": "+2.05%",
-      "ytd": "-7.89%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 77958.52,
+      "change_1d": "+0.00%",
+      "mtd": "+1.36%",
+      "ytd": "-8.52%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     }
   ],
   "gcc_indices": [
@@ -96,61 +96,61 @@
       "code": "QE",
       "name": "Qatar QE Index",
       "ticker": "^GNRI.QA",
-      "px_last": 3870.0,
-      "change_1d": "-1.04%",
-      "mtd": "-63.10%",
-      "ytd": "-64.04%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 10649.25,
+      "change_1d": "+0.00%",
+      "mtd": "+1.54%",
+      "ytd": "-1.05%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "TASI",
       "name": "Saudi Tadawul",
       "ticker": "^TASI.SR",
-      "px_last": 11268.38,
-      "change_1d": "-0.07%",
-      "mtd": "+0.72%",
-      "ytd": "+7.41%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 10949.27,
+      "change_1d": "+0.00%",
+      "mtd": "-2.13%",
+      "ytd": "+4.37%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "DFMGI",
       "name": "Dubai DFM",
-      "ticker": "DFMGI",
-      "px_last": 5779.9,
-      "change_1d": "+0.39%",
-      "mtd": "+0.24%",
-      "ytd": "-4.42%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "ticker": "DFMGI.AE",
+      "px_last": 5898.42,
+      "change_1d": "+0.00%",
+      "mtd": "+2.30%",
+      "ytd": "-2.46%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "FADGI",
       "name": "Abu Dhabi ADX",
-      "ticker": "FADGI",
-      "px_last": 12.0,
-      "change_1d": "+5.76%",
-      "mtd": "-99.88%",
-      "ytd": "-99.88%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "ticker": "FADGI.FGI",
+      "px_last": 9874.76,
+      "change_1d": "+0.00%",
+      "mtd": "+0.98%",
+      "ytd": "-1.18%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "BKA",
       "name": "Kuwait Boursa",
       "ticker": "BKA",
       "px_last": 8895.0,
-      "change_1d": "+0.29%",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": "2026-05-05",
-      "source": "brave_search_tradingeconomics",
-      "status": "valid"
+      "change_1d": "-0.29%",
+      "mtd": "+0.39%",
+      "ytd": "-0.14%",
+      "as_of": "2026-05-06",
+      "source": "brave_search_tradingeconomics_controlled",
+      "status": "valid_controlled_fallback"
     },
     {
       "code": "BHSEASI",
@@ -158,149 +158,149 @@
       "ticker": "BHSEASI",
       "px_last": 1934.0,
       "change_1d": "-0.76%",
-      "mtd": "N/A",
-      "ytd": "N/A",
-      "as_of": "2026-05-05",
-      "source": "brave_search_tradingeconomics",
-      "status": "valid"
+      "mtd": "-1.93%",
+      "ytd": "-6.41%",
+      "as_of": "2026-05-06",
+      "source": "brave_search_tradingeconomics_controlled",
+      "status": "valid_controlled_fallback"
     }
   ],
   "spot_currency": [
     {
       "code": "DXY",
       "name": "USD Index",
-      "ticker": "DXY",
-      "px_last": 98.46,
-      "change_1d": "+0.39%",
-      "mtd": "+0.39%",
-      "ytd": "+0.18%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_price_only",
-      "status": "valid_price_only"
+      "ticker": "DX-Y.NYB",
+      "px_last": 97.92,
+      "change_1d": "+0.00%",
+      "mtd": "-0.16%",
+      "ytd": "-0.37%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "EURUSD",
       "name": "EUR/USD",
-      "ticker": "EURUSD",
-      "px_last": 1.5,
-      "change_1d": "+27.89%",
-      "mtd": "+27.89%",
-      "ytd": "+27.69%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_price_only",
-      "status": "valid_price_only"
+      "ticker": "EURUSD=X",
+      "px_last": 1.1759,
+      "change_1d": "+0.00%",
+      "mtd": "+0.25%",
+      "ytd": "+0.10%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "GBPUSD",
       "name": "GBP/USD",
-      "ticker": "GBPUSD",
-      "px_last": 1.3489,
-      "change_1d": "-0.84%",
-      "mtd": "-0.84%",
-      "ytd": "+0.16%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_gbpusd_price_only",
-      "status": "valid_price_only"
+      "ticker": "GBPUSD=X",
+      "px_last": 1.3611,
+      "change_1d": "+0.00%",
+      "mtd": "+0.06%",
+      "ytd": "+1.07%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "USDJPY",
       "name": "USD/JPY",
-      "ticker": "USDJPY",
-      "px_last": 157.59,
-      "change_1d": "+0.39%",
-      "mtd": "+0.39%",
-      "ytd": "+0.75%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_usdjpy_price_only",
-      "status": "valid_price_only"
+      "ticker": "JPY=X",
+      "px_last": 156.176,
+      "change_1d": "+0.00%",
+      "mtd": "-0.51%",
+      "ytd": "-0.15%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "USDCNY",
       "name": "USD/CNY",
-      "ticker": "USDCNY",
-      "px_last": 6.83,
-      "change_1d": "+0.04%",
-      "mtd": "+0.04%",
-      "ytd": "-2.37%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_price_only",
-      "status": "valid_price_only"
+      "ticker": "CNY=X",
+      "px_last": 6.8115,
+      "change_1d": "+0.00%",
+      "mtd": "-0.23%",
+      "ytd": "-2.64%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     }
   ],
   "qar_cross_rates": [
     {
       "code": "USDQAR",
       "name": "USD/QAR",
-      "ticker": "USDQAR",
-      "px_last": 3.641,
-      "change_1d": "+3.14%",
-      "mtd": "+3.14%",
-      "ytd": "+0.04%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_price_only",
-      "status": "valid_price_only"
+      "ticker": "QAR=X",
+      "px_last": 3.64,
+      "change_1d": "+0.00%",
+      "mtd": "+3.12%",
+      "ytd": "+0.01%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "EURQAR",
       "name": "EUR/QAR",
-      "ticker": "EURQAR",
-      "px_last": 4.2597,
-      "change_1d": "+2.88%",
-      "mtd": "+2.88%",
-      "ytd": "-0.37%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_price_only",
-      "status": "valid_price_only"
+      "ticker": "EURQAR=X",
+      "px_last": 4.2656,
+      "change_1d": "+0.00%",
+      "mtd": "+3.02%",
+      "ytd": "-0.23%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "GBPQAR",
       "name": "GBP/QAR",
-      "ticker": "GBPQAR",
-      "px_last": 4.9087,
-      "change_1d": "+2.23%",
-      "mtd": "+2.23%",
-      "ytd": "+0.15%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_price_only",
-      "status": "valid_price_only"
+      "ticker": "GBPQAR=X",
+      "px_last": 4.9382,
+      "change_1d": "+0.00%",
+      "mtd": "+2.84%",
+      "ytd": "+0.75%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "CNYQAR",
       "name": "CNY/QAR",
       "ticker": "CNYQAR",
-      "px_last": 0.506,
-      "change_1d": "-2.14%",
-      "mtd": "-2.14%",
-      "ytd": "-2.74%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_price_only",
-      "status": "valid_price_only"
+      "px_last": 0.5344,
+      "change_1d": "+5.61%",
+      "mtd": "+3.35%",
+      "ytd": "+2.72%",
+      "as_of": "2026-05-06",
+      "source": "derived_from_yahoo_fx",
+      "status": "valid_yahoo_derived_fx"
     }
   ],
   "fixed_income": [
     {
       "code": "UST5Y",
       "name": "UST 5-Year",
-      "ticker": "US5Y",
-      "px_last": 3.943,
-      "change_1d": "+0.59%",
-      "mtd": "-1.99%",
-      "ytd": "+5.94%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "ticker": "^FVX",
+      "px_last": 3.999,
+      "change_1d": "+0.00%",
+      "mtd": "-0.60%",
+      "ytd": "+7.44%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "UST10Y",
       "name": "UST 10-Year",
-      "ticker": "US10Y",
-      "px_last": 4.39,
+      "ticker": "^TNX",
+      "px_last": 4.352,
       "change_1d": "+0.00%",
-      "mtd": "+0.00%",
-      "ytd": "+5.45%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_yield_only",
-      "status": "valid_price_only"
+      "mtd": "-0.87%",
+      "ytd": "+4.54%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     }
   ],
   "qatari_banks": [
@@ -308,97 +308,97 @@
       "code": "DHBK",
       "name": "Doha",
       "ticker": "DHBK.QA",
-      "px_last": 2.83,
-      "change_1d": "+5.36%",
-      "mtd": "+4.81%",
-      "ytd": "-1.39%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 2.692,
+      "change_1d": "+0.00%",
+      "mtd": "-0.30%",
+      "ytd": "-6.20%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "QNBK",
       "name": "QNB",
       "ticker": "QNBK.QA",
-      "px_last": 17.73,
-      "change_1d": "+1.44%",
-      "mtd": "+2.19%",
-      "ytd": "-4.98%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 18.1,
+      "change_1d": "+0.00%",
+      "mtd": "+4.32%",
+      "ytd": "-3.00%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "QIBK",
       "name": "QIB",
       "ticker": "QIBK.QA",
-      "px_last": 25.49,
-      "change_1d": "+0.40%",
-      "mtd": "+14.72%",
-      "ytd": "+6.43%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 22.48,
+      "change_1d": "+0.00%",
+      "mtd": "+1.17%",
+      "ytd": "-6.14%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "CBQK",
       "name": "CBQ",
       "ticker": "CBQK.QA",
-      "px_last": 4.32,
-      "change_1d": "+0.35%",
-      "mtd": "+0.35%",
-      "ytd": "+2.86%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 4.36,
+      "change_1d": "+0.00%",
+      "mtd": "+1.28%",
+      "ytd": "+3.81%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "QIIB",
       "name": "QIIB",
-      "ticker": "QIIB.QA",
-      "px_last": 11.47,
-      "change_1d": "-1.11%",
-      "mtd": "+1.41%",
-      "ytd": "+3.05%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "ticker": "QIIK.QA",
+      "px_last": 11.35,
+      "change_1d": "+0.00%",
+      "mtd": "+0.35%",
+      "ytd": "+1.98%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "MARK",
       "name": "Al Rayan",
       "ticker": "MARK.QA",
-      "px_last": 2.376,
-      "change_1d": "-0.26%",
-      "mtd": "+9.75%",
-      "ytd": "+8.30%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 2.178,
+      "change_1d": "+0.00%",
+      "mtd": "+0.60%",
+      "ytd": "-0.73%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "DUBK",
       "name": "Dukhan",
       "ticker": "DUBK.QA",
-      "px_last": 3.428,
-      "change_1d": "+0.06%",
-      "mtd": "-1.12%",
-      "ytd": "-1.95%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 3.55,
+      "change_1d": "+0.00%",
+      "mtd": "+2.39%",
+      "ytd": "+1.54%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "ABQK",
       "name": "Ahli",
       "ticker": "ABQK.QA",
-      "px_last": 3.555,
-      "change_1d": "-0.47%",
-      "mtd": "-5.23%",
-      "ytd": "-5.17%",
-      "as_of": "2026-05-05",
-      "source": "brave_search",
-      "status": "valid"
+      "px_last": 3.859,
+      "change_1d": "+0.00%",
+      "mtd": "+2.88%",
+      "ytd": "+2.93%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     }
   ],
   "commodities": [
@@ -406,149 +406,116 @@
       "code": "BRENT",
       "name": "Brent Crude",
       "ticker": "BZ=F",
-      "px_last": 114.44,
-      "change_1d": "+5.80%",
-      "mtd": "+0.38%",
-      "ytd": "+88.07%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_tradingeconomics",
-      "status": "valid"
+      "px_last": 102.46,
+      "change_1d": "+0.00%",
+      "mtd": "-10.13%",
+      "ytd": "+68.38%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "SILVER",
       "name": "Silver",
-      "ticker": "XAGUSD",
-      "px_last": 73.05,
-      "change_1d": "-2.83%",
-      "mtd": "-0.66%",
-      "ytd": "+4.16%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_tradersunion",
-      "status": "valid"
+      "ticker": "SI=F",
+      "px_last": 77.35,
+      "change_1d": "+0.00%",
+      "mtd": "+5.19%",
+      "ytd": "+10.29%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_structured",
+      "status": "valid_yahoo_structured"
     },
     {
       "code": "GOLDQAR",
       "name": "Gold (QAR)",
-      "ticker": "XAUQAR",
-      "px_last": 16585.03,
-      "change_1d": "+1.81%",
-      "mtd": "+1.81%",
-      "ytd": "+5.35%",
-      "as_of": "2026-05-05",
-      "source": "brave_search_gold_qar_price_only",
-      "status": "valid_price_only"
+      "ticker": "GC=F",
+      "px_last": 17108.38,
+      "change_1d": "+0.00%",
+      "mtd": "+5.02%",
+      "ytd": "+8.67%",
+      "as_of": "2026-05-06",
+      "source": "yahoo_chart_derived_goldqar",
+      "status": "valid_yahoo_derived_qargold"
     }
   ],
-  "market_as_of_date": "2026-05-05",
+  "market_as_of_date": "2026-05-06",
   "global_news": [
     {
-      "headline": "Oil Drops Below $100 on US-Iran Peace Deal",
-      "summary": "Oil fell under $100 per barrel as reports suggest US and Iran near agreement to end 10-week conflict.",
-      "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/oil-slumps-after-report-us-and-iran-near-deal-to-end-war",
-      "metric": "<$100",
-      "metric_label": "Oil price per barrel"
-    },
-    {
-      "headline": "Global Stocks Rally on Iran Peace Optimism",
-      "summary": "Technology-led stock surge and falling bond yields reflect market optimism over potential US-Iran peace agreement.",
+      "headline": "Stocks Rise Globally as Iran Peace Deal Hopes Mount",
+      "summary": "Global equities climbed while oil dropped on optimism that US and Iran are nearing agreement to end Middle East conflict.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-05-05/asian-stocks-to-track-us-gains-on-truce-optimism-markets-wrap",
-      "metric": "Tech-led",
-      "metric_label": "Stock rally leadership"
+      "metric": "Oil down",
+      "metric_label": "Crude prices falling on peace ho"
     },
     {
-      "headline": "Nvidia Faces Rising Competition Despite AI Boom",
-      "summary": "Investors dump Nvidia shares despite positive AI earnings season as competition threatens market dominance.",
+      "headline": "Gold and Silver Surge on Iran Deal Optimism",
+      "summary": "Precious metals posted biggest monthly gains amid Middle East peace hopes, weaker dollar boosting safe-haven demand.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/nvidia-is-facing-more-competition-and-it-s-spooking-investors",
-      "metric": "Under threat",
-      "metric_label": "Market position status"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-05/gold-steady-as-fragile-ceasefire-holds-in-gulf-after-flareup",
+      "metric": "Monthly high",
+      "metric_label": "Biggest precious metals gain in "
     },
     {
-      "headline": "Tech Rally Bypasses Nvidia Amid AI Competition",
-      "summary": "Nvidia's AI processor market leadership increasingly questioned as tech sector rallies without the chip giant.",
+      "headline": "Trump to Address China's Iranian Oil Purchases",
+      "summary": "US President will discuss China buying Iranian oil during Beijing meeting with Xi Jinping scheduled May 14-15.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/newsletters/2026-05-06/tech-s-red-hot-rally-is-leaving-nvidia-far-behind",
-      "metric": "Left behind",
-      "metric_label": "Rally participation"
+      "url": "https://www.bloomberg.com/news/videos/2026-05-06/trump-will-address-iran-with-xi-greer-says-video",
+      "metric": "May 14-15",
+      "metric_label": "Trump-Xi summit dates in Beijing"
     },
     {
-      "headline": "CVS Raises 2026 Outlook After Aetna Gains",
-      "summary": "Healthcare giant boosts annual earnings forecast following strong Q1 results driven by insurance division profits.",
+      "headline": "Europe Bond Market Hits Record Issuance Pace",
+      "summary": "Companies flood European bond markets at record levels, rushing to secure funding before potential rate increases.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/cvs-boosts-outlook-for-2026-after-aetna-profits-increase",
-      "metric": "Raised",
-      "metric_label": "2026 outlook revision"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/companies-rush-to-sell-bonds-in-europe-s-market-at-record-pace",
+      "metric": "Record pace",
+      "metric_label": "European corporate bond issuance"
     },
     {
-      "headline": "Disney Beats Expectations Under New Leadership",
-      "summary": "Entertainment giant exceeds Wall Street forecasts with streaming profits and strong theme park spending performance.",
+      "headline": "Poland Holds Rates Amid Iran Energy Shock",
+      "summary": "Polish central bank maintains rates unchanged for second month as Iran conflict revives domestic inflation concerns.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/disney-s-films-parks-lift-profit-in-debut-quarter-for-new-ceo",
-      "metric": "Beat estimates",
-      "metric_label": "Quarterly performance"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/poland-holds-rates-as-iran-energy-shock-stokes-inflation",
+      "metric": "2nd month",
+      "metric_label": "Consecutive rate holds by Poland"
+    },
+    {
+      "headline": "US Treasury Maintains Debt Auction Strategy Through 2027",
+      "summary": "Treasury signals no changes to shortest-dated debt issuance strategy despite warnings about escalating borrowing risks.",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/us-punts-again-on-debt-auctions-signaling-no-changes-into-2027",
+      "metric": "Through 2027",
+      "metric_label": "US debt auction strategy timelin"
     }
   ],
-  "qatar_news": [
-    {
-      "headline": "Peninsula Tribune Market News Source Temporarily Unavailable",
-      "summary": "Approved source feed returned no usable articles in current cycle, affecting market news coverage availability.",
-      "source": "Peninsula/Tribune",
-      "url": "",
-      "metric": "0",
-      "metric_label": "Articles Available"
-    },
-    {
-      "headline": "Business News Feed Refresh Pending Next Cycle",
-      "summary": "Workflow will retry same approved source on next run to restore business news coverage.",
-      "source": "Peninsula/Tribune",
-      "url": "",
-      "metric": "1",
-      "metric_label": "Retry Attempts Scheduled"
-    },
-    {
-      "headline": "Market Coverage Awaiting Source Update Process",
-      "summary": "Approved publisher feed insufficient items for current report cycle, delaying comprehensive market coverage.",
-      "source": "Peninsula/Tribune",
-      "url": "",
-      "metric": "Insufficient",
-      "metric_label": "Feed Item Status"
-    },
-    {
-      "headline": "Economy Headline Stream Currently Incomplete Coverage",
-      "summary": "Only approved publisher sources allowed for economy section, causing temporary coverage gaps.",
-      "source": "Peninsula/Tribune",
-      "url": "",
-      "metric": "Approved Only",
-      "metric_label": "Source Restriction Policy"
-    }
-  ],
+  "qatar_news": [],
   "kpis": [
     {
-      "value": "Mixed",
+      "value": "Positive",
       "label": "Global Equities",
-      "sublabel": "US -0.14% \u00b7 UK +2.51%"
+      "sublabel": "US +0.00% \u00b7 UK +0.00%"
     },
     {
-      "value": "$114.44",
+      "value": "$102.46",
       "label": "Brent Crude",
-      "sublabel": "+88.07% Year-to-Date"
+      "sublabel": "+68.38% Year-to-Date"
     },
     {
-      "value": "16,585.03",
+      "value": "17,108.38",
       "label": "Gold (QAR)",
-      "sublabel": "+5.35% YTD \u00b7 Safe-haven demand"
+      "sublabel": "+8.67% YTD \u00b7 Safe-haven demand"
     },
     {
-      "value": "3,870.00",
+      "value": "10,649.25",
       "label": "QSE Index",
-      "sublabel": "-1.04% today \u00b7 -64.04% YTD"
+      "sublabel": "+0.00% today \u00b7 -1.05% YTD"
     },
     {
-      "value": "4.39%",
+      "value": "4.35%",
       "label": "UST 10Y Yield",
-      "sublabel": "+5.45% YTD \u00b7 Treasury yield curve"
+      "sublabel": "+4.54% YTD \u00b7 Treasury yield curve"
     },
     {
       "value": "4.50%",
@@ -557,7 +524,8 @@
     }
   ],
   "validation_issues": [
-    "Using latest available Supabase market date 2026-05-05, not today 2026-05-06"
+    "CRITICAL: Qatar news has only 0 valid recent business news items, minimum required 3"
   ],
-  "report_status": "needs_review"
+  "report_status": "FAIL",
+  "email_send_allowed": false
 }
