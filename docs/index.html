@@ -207,6 +207,7 @@
       if (s === "approved") return `<span class="pill blue">Approved</span>`;
       if (s === "sent") return `<span class="pill">Sent</span>`;
       if (s === "partially_sent") return `<span class="pill orange">Partially Sent</span>`;
+      if (s === "needs_review") return `<span class="pill orange">Needs Review</span>`;
       if (s === "rejected") return `<span class="pill off">Rejected</span>`;
       return `<span class="pill orange">Draft</span>`;
     }
@@ -394,18 +395,19 @@
               <div class="report-stat"><strong>Status:</strong> ${reportStatusPill(latestReport.status)}</div>
               <div class="report-stat"><strong>Generated:</strong> ${escapeHtml(latestReport.generated_at ? new Date(latestReport.generated_at).toLocaleString() : "")}</div>
               <div class="report-stat"><strong>Approved By:</strong> ${escapeHtml(latestReport.approved_by || "Not approved yet")}</div>
-              <div class="report-stat"><strong>Data Quality:</strong> ${dataQualityPill(marketData?.report_status || "UNKNOWN")}</div>
+              <div class="report-stat"><strong>Validation:</strong> ${dataQualityPill(latestReport.validation_status || marketData?.report_status || "UNKNOWN")}</div>
+              <div class="report-stat"><strong>GitHub Run:</strong> ${escapeHtml(latestReport.github_run_number || latestReport.github_run_id || "N/A")}</div>
             </div>
             <div class="report-meta">
               <div class="stack-actions">
-                <button class="btn green" onclick="approveLatestReport()" ${isMarketDataSendable() ? "" : "disabled"}>Approve</button>
-                ${SHOW_WHATSAPP_SECTION ? `<button class="btn orange" onclick="queueSendAll('whatsapp')" ${isMarketDataSendable() ? "" : "disabled"}>Queue WhatsApp to All</button>` : ``}
-                <button class="btn" onclick="queueSendAll('email')" ${isMarketDataSendable() ? "" : "disabled"}>Queue Email to All</button>
+                <button class="btn green" onclick="approveLatestReport()" ${isLatestReportValidationPass() ? "" : "disabled"}>Approve</button>
+                ${SHOW_WHATSAPP_SECTION ? `<button class="btn orange" onclick="queueSendAll('whatsapp')" ${isLatestReportApprovedAndPass() ? "" : "disabled"}>Queue WhatsApp to All</button>` : ``}
+                <button class="btn" onclick="queueSendAll('email')" ${isLatestReportApprovedAndPass() ? "" : "disabled"}>Queue Email to All</button>
               </div>
               <div class="stack-actions">
                 ${latestReport.pdf_url ? `<a class="btn outline" href="${escapeHtml(latestReport.pdf_url)}" target="_blank" rel="noopener">Preview PDF</a>` : ""}
               </div>
-              <div class="helper">Any send action should only be used after reviewing the PDF. Sending now creates queue records for backend processing.</div>
+              <div class="helper">Generated reports appear here as Draft or Needs Review. Email queueing is enabled only after validation PASS and human approval.</div>
             </div>
           </div>
         </div>
@@ -664,7 +666,12 @@
 
     async function loadReports() {
       try {
-        const { data, error } = await sb.from("reports").select("*").order("report_date", { ascending: false }).limit(20);
+        const { data, error } = await sb
+          .from("reports")
+          .select("*")
+          .order("report_date", { ascending: false })
+          .order("generated_at", { ascending: false })
+          .limit(20);
         if (error) throw error;
         reports = data || [];
         latestReport = reports.length ? reports[0] : null;
@@ -710,21 +717,32 @@
       render();
     }
 
+    function isLatestReportValidationPass() {
+      const s = String(latestReport?.validation_status || marketData?.report_status || "").toUpperCase();
+      return ["PASS", "OK"].includes(s);
+    }
+
+    function isLatestReportApprovedAndPass() {
+      const status = String(latestReport?.status || "").toLowerCase();
+      return status === "approved" && isLatestReportValidationPass();
+    }
+
     window.approveLatestReport = async function() {
       if (!latestReport) {
         alert("No report found.");
         return;
       }
 
-      if (!isMarketDataSendable()) {
-        alert("Approval blocked. The latest market_data.json did not pass validation.");
+      if (!isLatestReportValidationPass()) {
+        alert("Approval blocked. This report did not pass validation.");
         return;
       }
 
       const { error } = await sb.from("reports").update({
         status: "approved",
         approved_by: currentOperator(),
-        approved_at: new Date().toISOString()
+        approved_at: new Date().toISOString(),
+        email_send_allowed: true
       }).eq("id", latestReport.id);
 
       if (error) {
@@ -744,8 +762,8 @@
 
       if (!confirm(`Queue today's ${channel} report for this recipient?`)) return;
 
-      if (!isMarketDataSendable()) {
-        alert("Send blocked. The latest market data did not pass validation.");
+      if (!isLatestReportValidationPass()) {
+        alert("Send blocked. This report did not pass validation.");
         return;
       }
 
@@ -781,8 +799,8 @@
 
       if (!confirm(`Queue today's ${channel} report for all active ${channel} recipients?`)) return;
 
-      if (!isMarketDataSendable()) {
-        alert("Send blocked. The latest market data did not pass validation.");
+      if (!isLatestReportValidationPass()) {
+        alert("Send blocked. This report did not pass validation.");
         return;
       }
 
