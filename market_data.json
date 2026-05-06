@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-05-06T09:18:40Z",
+  "generated_at": "2026-05-06T11:25:12Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
@@ -24,8 +24,8 @@
       "ticker": "^GSPC",
       "px_last": 33844.1,
       "change_1d": "-0.14%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+369.47%",
+      "ytd": "+394.40%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -36,8 +36,8 @@
       "ticker": "^FTSE",
       "px_last": 10608.88,
       "change_1d": "+2.51%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+2.22%",
+      "ytd": "+6.82%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -48,8 +48,8 @@
       "ticker": "^N225",
       "px_last": 62000.0,
       "change_1d": "+0.42%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+4.58%",
+      "ytd": "+23.16%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -60,8 +60,8 @@
       "ticker": "^GDAXI",
       "px_last": 24333.19,
       "change_1d": "+0.17%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+0.17%",
+      "ytd": "-0.64%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -72,8 +72,8 @@
       "ticker": "^HSI",
       "px_last": 26095.88,
       "change_1d": "+1.24%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+1.24%",
+      "ytd": "+1.82%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -84,8 +84,8 @@
       "ticker": "^BSESN",
       "px_last": 78493.54,
       "change_1d": "+0.65%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+2.05%",
+      "ytd": "-7.89%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -98,8 +98,8 @@
       "ticker": "^GNRI.QA",
       "px_last": 3870.0,
       "change_1d": "-1.04%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "-63.10%",
+      "ytd": "-64.04%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -110,8 +110,8 @@
       "ticker": "^TASI.SR",
       "px_last": 11268.38,
       "change_1d": "-0.07%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+0.72%",
+      "ytd": "+7.41%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -122,8 +122,8 @@
       "ticker": "DFMGI",
       "px_last": 5779.9,
       "change_1d": "+0.39%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+0.24%",
+      "ytd": "-4.42%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -134,8 +134,8 @@
       "ticker": "FADGI",
       "px_last": 12.0,
       "change_1d": "+5.76%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "-99.88%",
+      "ytd": "-99.88%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -171,9 +171,9 @@
       "name": "USD Index",
       "ticker": "DXY",
       "px_last": 98.46,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+0.39%",
+      "mtd": "+0.39%",
+      "ytd": "+0.18%",
       "as_of": "2026-05-05",
       "source": "brave_search_price_only",
       "status": "valid_price_only"
@@ -183,9 +183,9 @@
       "name": "EUR/USD",
       "ticker": "EURUSD",
       "px_last": 1.5,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+27.89%",
+      "mtd": "+27.89%",
+      "ytd": "+27.69%",
       "as_of": "2026-05-05",
       "source": "brave_search_price_only",
       "status": "valid_price_only"
@@ -195,9 +195,9 @@
       "name": "GBP/USD",
       "ticker": "GBPUSD",
       "px_last": 1.3489,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "-0.84%",
+      "mtd": "-0.84%",
+      "ytd": "+0.16%",
       "as_of": "2026-05-05",
       "source": "brave_search_gbpusd_price_only",
       "status": "valid_price_only"
@@ -207,9 +207,9 @@
       "name": "USD/JPY",
       "ticker": "USDJPY",
       "px_last": 157.59,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+0.39%",
+      "mtd": "+0.39%",
+      "ytd": "+0.75%",
       "as_of": "2026-05-05",
       "source": "brave_search_usdjpy_price_only",
       "status": "valid_price_only"
@@ -219,9 +219,9 @@
       "name": "USD/CNY",
       "ticker": "USDCNY",
       "px_last": 6.83,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+0.04%",
+      "mtd": "+0.04%",
+      "ytd": "-2.37%",
       "as_of": "2026-05-05",
       "source": "brave_search_price_only",
       "status": "valid_price_only"
@@ -233,9 +233,9 @@
       "name": "USD/QAR",
       "ticker": "USDQAR",
       "px_last": 3.641,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+3.14%",
+      "mtd": "+3.14%",
+      "ytd": "+0.04%",
       "as_of": "2026-05-05",
       "source": "brave_search_price_only",
       "status": "valid_price_only"
@@ -245,9 +245,9 @@
       "name": "EUR/QAR",
       "ticker": "EURQAR",
       "px_last": 4.2597,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+2.88%",
+      "mtd": "+2.88%",
+      "ytd": "-0.37%",
       "as_of": "2026-05-05",
       "source": "brave_search_price_only",
       "status": "valid_price_only"
@@ -257,9 +257,9 @@
       "name": "GBP/QAR",
       "ticker": "GBPQAR",
       "px_last": 4.9087,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+2.23%",
+      "mtd": "+2.23%",
+      "ytd": "+0.15%",
       "as_of": "2026-05-05",
       "source": "brave_search_price_only",
       "status": "valid_price_only"
@@ -269,9 +269,9 @@
       "name": "CNY/QAR",
       "ticker": "CNYQAR",
       "px_last": 0.506,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "-2.14%",
+      "mtd": "-2.14%",
+      "ytd": "-2.74%",
       "as_of": "2026-05-05",
       "source": "brave_search_price_only",
       "status": "valid_price_only"
@@ -284,8 +284,8 @@
       "ticker": "US5Y",
       "px_last": 3.943,
       "change_1d": "+0.59%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "-1.99%",
+      "ytd": "+5.94%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -295,9 +295,9 @@
       "name": "UST 10-Year",
       "ticker": "US10Y",
       "px_last": 4.39,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+0.00%",
+      "mtd": "+0.00%",
+      "ytd": "+5.45%",
       "as_of": "2026-05-05",
       "source": "brave_search_yield_only",
       "status": "valid_price_only"
@@ -310,8 +310,8 @@
       "ticker": "DHBK.QA",
       "px_last": 2.83,
       "change_1d": "+5.36%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+4.81%",
+      "ytd": "-1.39%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -322,8 +322,8 @@
       "ticker": "QNBK.QA",
       "px_last": 17.73,
       "change_1d": "+1.44%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+2.19%",
+      "ytd": "-4.98%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -334,8 +334,8 @@
       "ticker": "QIBK.QA",
       "px_last": 25.49,
       "change_1d": "+0.40%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+14.72%",
+      "ytd": "+6.43%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -346,8 +346,8 @@
       "ticker": "CBQK.QA",
       "px_last": 4.32,
       "change_1d": "+0.35%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+0.35%",
+      "ytd": "+2.86%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -358,8 +358,8 @@
       "ticker": "QIIB.QA",
       "px_last": 11.47,
       "change_1d": "-1.11%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+1.41%",
+      "ytd": "+3.05%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -370,8 +370,8 @@
       "ticker": "MARK.QA",
       "px_last": 2.376,
       "change_1d": "-0.26%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+9.75%",
+      "ytd": "+8.30%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -382,8 +382,8 @@
       "ticker": "DUBK.QA",
       "px_last": 3.428,
       "change_1d": "+0.06%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "-1.12%",
+      "ytd": "-1.95%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -394,8 +394,8 @@
       "ticker": "ABQK.QA",
       "px_last": 3.555,
       "change_1d": "-0.47%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "-5.23%",
+      "ytd": "-5.17%",
       "as_of": "2026-05-05",
       "source": "brave_search",
       "status": "valid"
@@ -408,8 +408,8 @@
       "ticker": "BZ=F",
       "px_last": 114.44,
       "change_1d": "+5.80%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "+0.38%",
+      "ytd": "+88.07%",
       "as_of": "2026-05-05",
       "source": "brave_search_tradingeconomics",
       "status": "valid"
@@ -420,8 +420,8 @@
       "ticker": "XAGUSD",
       "px_last": 73.05,
       "change_1d": "-2.83%",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "mtd": "-0.66%",
+      "ytd": "+4.16%",
       "as_of": "2026-05-05",
       "source": "brave_search_tradersunion",
       "status": "valid"
@@ -431,9 +431,9 @@
       "name": "Gold (QAR)",
       "ticker": "XAUQAR",
       "px_last": 16585.03,
-      "change_1d": "N/A",
-      "mtd": "N/A",
-      "ytd": "N/A",
+      "change_1d": "+1.81%",
+      "mtd": "+1.81%",
+      "ytd": "+5.35%",
       "as_of": "2026-05-05",
       "source": "brave_search_gold_qar_price_only",
       "status": "valid_price_only"
@@ -442,86 +442,86 @@
   "market_as_of_date": "2026-05-05",
   "global_news": [
     {
-      "headline": "Samsung Reaches Historic $1 Trillion Market Valuation",
-      "summary": "South Korean tech giant Samsung achieves milestone $1 trillion market capitalization amid strong technology sector performance and investor optimism.",
+      "headline": "Oil Drops Below $100 on US-Iran Peace Deal",
+      "summary": "Oil fell under $100 per barrel as reports suggest US and Iran near agreement to end 10-week conflict.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/videos/2026-05-06/samsung-hits-1-trillion-valuation-video-motufu3p",
-      "metric": "$1T",
-      "metric_label": "Market Cap Milestone"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/oil-slumps-after-report-us-and-iran-near-deal-to-end-war",
+      "metric": "<$100",
+      "metric_label": "Oil price per barrel"
     },
     {
-      "headline": "Stocks Rally on US-Iran Peace Deal Optimism",
-      "summary": "Global equity markets surge as investors anticipate potential diplomatic breakthrough between US and Iran, driving technology stocks higher.",
+      "headline": "Global Stocks Rally on Iran Peace Optimism",
+      "summary": "Technology-led stock surge and falling bond yields reflect market optimism over potential US-Iran peace agreement.",
       "source": "Bloomberg",
       "url": "https://www.bloomberg.com/news/articles/2026-05-05/asian-stocks-to-track-us-gains-on-truce-optimism-markets-wrap",
-      "metric": "Oil \u2193",
-      "metric_label": "Oil Prices Decline"
+      "metric": "Tech-led",
+      "metric_label": "Stock rally leadership"
     },
     {
-      "headline": "Yen Surges to 10-Week High Sparking Intervention",
-      "summary": "Japanese yen rallies sharply to highest level in 10 weeks amid broad dollar weakness, raising speculation of potential market intervention.",
+      "headline": "Nvidia Faces Rising Competition Despite AI Boom",
+      "summary": "Investors dump Nvidia shares despite positive AI earnings season as competition threatens market dominance.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/yen-rallies-as-much-as-1-4-amid-broad-dollar-weakness",
-      "metric": "1.4%",
-      "metric_label": "Yen Rally vs Dollar"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/nvidia-is-facing-more-competition-and-it-s-spooking-investors",
+      "metric": "Under threat",
+      "metric_label": "Market position status"
     },
     {
-      "headline": "Shipowners Struggle After Trump Drops Hormuz Plan",
-      "summary": "Maritime industry faces uncertainty as US suspends vessel guidance plan for Strait of Hormuz, leaving shipowners seeking alternative security solutions.",
+      "headline": "Tech Rally Bypasses Nvidia Amid AI Competition",
+      "summary": "Nvidia's AI processor market leadership increasingly questioned as tech sector rallies without the chip giant.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/shipowners-grapple-for-fixes-in-hormuz-after-trump-drops-plan",
-      "metric": "Strait Risk \u2191",
-      "metric_label": "Shipping Route Security"
+      "url": "https://www.bloomberg.com/news/newsletters/2026-05-06/tech-s-red-hot-rally-is-leaving-nvidia-far-behind",
+      "metric": "Left behind",
+      "metric_label": "Rally participation"
     },
     {
-      "headline": "CATL Bears Retreat After $5 Billion Share Sale",
-      "summary": "Short sellers quickly unwind positions against Chinese battery giant CATL following successful $5 billion equity raising and improved growth outlook.",
+      "headline": "CVS Raises 2026 Outlook After Aetna Gains",
+      "summary": "Healthcare giant boosts annual earnings forecast following strong Q1 results driven by insurance division profits.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/catl-bears-retreat-in-hong-kong-after-blockbuster-share-sale",
-      "metric": "$5B",
-      "metric_label": "Share Sale Proceeds"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/cvs-boosts-outlook-for-2026-after-aetna-profits-increase",
+      "metric": "Raised",
+      "metric_label": "2026 outlook revision"
     },
     {
-      "headline": "China Metals Exports Boom Amid Iran War",
-      "summary": "Chinese aluminum and metal exports surge as Middle East conflict disrupts regional supplies while driving demand for clean-tech alternatives.",
+      "headline": "Disney Beats Expectations Under New Leadership",
+      "summary": "Entertainment giant exceeds Wall Street forecasts with streaming profits and strong theme park spending performance.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/chinese-metals-demand-gets-lift-as-mideast-war-spurs-export-boom",
-      "metric": "Export \u2191",
-      "metric_label": "China Metal Shipments"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-06/disney-s-films-parks-lift-profit-in-debut-quarter-for-new-ceo",
+      "metric": "Beat estimates",
+      "metric_label": "Quarterly performance"
     }
   ],
   "qatar_news": [
     {
-      "headline": "Market News Source Temporarily Unavailable",
-      "summary": "Peninsula/Tribune approved source feed returned no usable articles in current reporting cycle, affecting market coverage.",
+      "headline": "Peninsula Tribune Market News Source Temporarily Unavailable",
+      "summary": "Approved source feed returned no usable articles in current cycle, affecting market news coverage availability.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "0",
-      "metric_label": "Articles Retrieved"
+      "metric_label": "Articles Available"
     },
     {
-      "headline": "Business News Feed Refresh Pending",
-      "summary": "Workflow scheduled to retry same approved source on next run to restore business news coverage.",
+      "headline": "Business News Feed Refresh Pending Next Cycle",
+      "summary": "Workflow will retry same approved source on next run to restore business news coverage.",
       "source": "Peninsula/Tribune",
       "url": "",
-      "metric": "Next Run",
-      "metric_label": "Retry Status"
+      "metric": "1",
+      "metric_label": "Retry Attempts Scheduled"
     },
     {
-      "headline": "Market Coverage Awaiting Source Update",
-      "summary": "Approved publisher feed insufficient items returned for complete market intelligence report cycle coverage.",
+      "headline": "Market Coverage Awaiting Source Update Process",
+      "summary": "Approved publisher feed insufficient items for current report cycle, delaying comprehensive market coverage.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "Insufficient",
-      "metric_label": "Feed Items"
+      "metric_label": "Feed Item Status"
     },
     {
-      "headline": "Economy Headlines Stream Incomplete",
-      "summary": "Only approved publisher sources permitted for economy section, current stream shows incomplete coverage.",
+      "headline": "Economy Headline Stream Currently Incomplete Coverage",
+      "summary": "Only approved publisher sources allowed for economy section, causing temporary coverage gaps.",
       "source": "Peninsula/Tribune",
       "url": "",
       "metric": "Approved Only",
-      "metric_label": "Source Policy"
+      "metric_label": "Source Restriction Policy"
     }
   ],
   "kpis": [
@@ -533,22 +533,22 @@
     {
       "value": "$114.44",
       "label": "Brent Crude",
-      "sublabel": "N/A Year-to-Date"
+      "sublabel": "+88.07% Year-to-Date"
     },
     {
       "value": "16,585.03",
       "label": "Gold (QAR)",
-      "sublabel": "N/A YTD \u00b7 Safe-haven demand"
+      "sublabel": "+5.35% YTD \u00b7 Safe-haven demand"
     },
     {
       "value": "3,870.00",
       "label": "QSE Index",
-      "sublabel": "-1.04% today \u00b7 N/A YTD"
+      "sublabel": "-1.04% today \u00b7 -64.04% YTD"
     },
     {
       "value": "4.39%",
       "label": "UST 10Y Yield",
-      "sublabel": "N/A YTD \u00b7 Treasury yield curve"
+      "sublabel": "+5.45% YTD \u00b7 Treasury yield curve"
     },
     {
       "value": "4.50%",
