@@ -50,12 +50,22 @@ jobs:
         run: |
           python3 pdf_generator.py market_data.json report.pdf
 
+      - name: Copy live files to dashboard docs
+        run: |
+          mkdir -p docs
+          cp market_data.json docs/market_data.json
+          cp report.pdf docs/report.pdf
+
+      - name: Register generated report for dashboard approval
+        run: |
+          python3 update_report_record.py
+
       - name: Commit generated files
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add market_data.json report.pdf docs/index.html || true
+          git add market_data.json report.pdf docs/market_data.json docs/report.pdf docs/index.html || true
 
           if git diff --cached --quiet; then
             echo "No generated file changes to commit."
@@ -64,13 +74,8 @@ jobs:
             git push
           fi
 
-      - name: Send report email only if validation passed
-        if: steps.validate.outputs.status == 'PASS'
+      - name: Distribution blocked pending dashboard approval
         run: |
-          python3 send_email.py
-
-      - name: Block distribution for non-pass reports
-        if: steps.validate.outputs.status != 'PASS'
-        run: |
-          echo "Report was generated and committed for internal review only."
-          echo "Email distribution blocked because validation status is ${{ steps.validate.outputs.status }}."
+          echo "Report generated and registered in dashboard."
+          echo "Automated email distribution is disabled. Human approval and queueing must be done from the dashboard."
+          echo "Validation status: ${{ steps.validate.outputs.status }}"
