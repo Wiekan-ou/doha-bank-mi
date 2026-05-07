@@ -605,25 +605,15 @@ def _group_history_by_code(rows: List[Dict[str, Any]]) -> Dict[str, List[Dict[st
     return grouped
 
 
+def _row_is_usable_for_calculation(row: Dict[str, Any], code: str = "") -> bool:
+    status = str(row.get("status") or "").lower()
+    if status.startswith("invalid") or "outlier" in status or "quarantine" in status:
+        return False
+    px = _to_float(row.get("px_last"))
+    return _is_valid_px_for_code(code, px)
+
+
 def _last_px_before_or_on(
-    history: List[Dict[str, Any]],
-    target_date: datetime.date,
-) -> Optional[float]:
-    found = None
-
-    for row in history:
-        row_date = _parse_date(row.get("as_of_date"))
-        if row_date is None:
-            continue
-        if row_date <= target_date:
-            px = _to_float(row.get("px_last"))
-            if px is not None:
-                found = px
-
-    return found
-
-
-def _previous_px_before_date(
     history: List[Dict[str, Any]],
     target_date: datetime.date,
     code: str = "",
@@ -632,14 +622,27 @@ def _previous_px_before_date(
 
     for row in history:
         row_date = _parse_date(row.get("as_of_date"))
+        if row_date is None:
+            continue
+        if row_date <= target_date and _row_is_usable_for_calculation(row, code):
+            found = _to_float(row.get("px_last"))
+
+    return found
+
+
+def _previous_valid_row_before_date(
+    history: List[Dict[str, Any]],
+    target_date: datetime.date,
+    code: str = "",
+) -> Optional[Dict[str, Any]]:
+    found = None
+
+    for row in history:
+        row_date = _parse_date(row.get("as_of_date"))
         if row_date is None or row_date >= target_date:
             continue
-        status = str(row.get("status") or "").lower()
-        if status.startswith("invalid") or "outlier" in status:
-            continue
-        px = _to_float(row.get("px_last"))
-        if _is_valid_px_for_code(code, px):
-            found = px
+        if _row_is_usable_for_calculation(row, code):
+            found = row
 
     return found
 
@@ -678,27 +681,27 @@ def _normalise_market_row(
     expected = EXPECTED_BY_CODE.get(code, {})
 
     px_last = _to_float(row.get("px_last"))
-    change_1d_pct = _to_float(row.get("change_1d_pct"))
-
     history = history_by_code.get(code, [])
-    prev_px = _previous_px_before_date(history, effective_date, code)
+    prev_row = _previous_valid_row_before_date(history, effective_date, code)
+    prev_px = _to_float(prev_row.get("px_last")) if prev_row else None
+    prev_date = _parse_date(prev_row.get("as_of_date")) if prev_row else None
 
     month_start = datetime.date(effective_date.year, effective_date.month, 1)
     year_start = datetime.date(effective_date.year, 1, 1)
 
-    month_base = _last_px_before_or_on(history, month_start - datetime.timedelta(days=1))
-    year_base = _last_px_before_or_on(history, year_start - datetime.timedelta(days=1))
+    month_base = _last_px_before_or_on(history, month_start - datetime.timedelta(days=1), code)
+    year_base = _last_px_before_or_on(history, year_start - datetime.timedelta(days=1), code)
 
     # 1D logic:
-    # 1) calculate from the previous valid Supabase row, but only if the resulting move is reasonable;
-    # 2) if the calculated move is absurd because a bad historical row is still present, fall back to
-    #    stored vendor percentage when that percentage is reasonable;
-    # 3) otherwise return N/A and let validation flag it instead of showing misleading percentages.
-    calc_1d_pct = _pct_float(px_last, prev_px)
+    # Calculate 1D only from Supabase price history.
+    # Do not use Make/Yahoo supplied change_1d_pct, because Make is now price-only.
+    # If no valid recent prior market row exists, show N/A rather than a false +0.00%.
+    calc_1d_pct = None
+    if prev_date is not None and 0 < (effective_date - prev_date).days <= 4:
+        calc_1d_pct = _pct_float(px_last, prev_px)
+
     if _reasonable_1d_pct(code, calc_1d_pct):
         change_1d = _format_pct_value(calc_1d_pct, 2)
-    elif _reasonable_1d_pct(code, change_1d_pct):
-        change_1d = _fmt_pct_from_value(change_1d_pct, 2)
     else:
         change_1d = "N/A"
 
