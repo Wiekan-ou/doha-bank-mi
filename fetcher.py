@@ -59,6 +59,72 @@ QATAR_NEWS_BRAVE_QUERIES = [
 ]
 
 
+
+
+PRICE_RANGES = {
+    "SPX": (5000, 9000),
+    "FTSE100": (7000, 12000),
+    "NIKKEI225": (30000, 80000),
+    "DAX": (15000, 35000),
+    "HSI": (15000, 40000),
+    "SENSEX": (50000, 110000),
+    "QE": (8000, 15000),
+    "TASI": (8000, 16000),
+    "DFMGI": (3000, 9000),
+    "FADGI": (7000, 13000),
+    "BKA": (6000, 12000),
+    "BHSEASI": (1500, 2500),
+    "DXY": (80, 120),
+    "EURUSD": (0.90, 1.30),
+    "GBPUSD": (1.00, 1.60),
+    "USDJPY": (100, 200),
+    "USDCNY": (5.50, 8.50),
+    "USDQAR": (3.60, 3.70),
+    "EURQAR": (3.20, 5.20),
+    "GBPQAR": (4.00, 6.00),
+    "CNYQAR": (0.40, 0.70),
+    "UST5Y": (0.50, 8.00),
+    "UST10Y": (0.50, 8.00),
+    "DHBK": (1.00, 6.00),
+    "QNBK": (10.00, 30.00),
+    "QIBK": (10.00, 40.00),
+    "CBQK": (2.00, 10.00),
+    "QIIB": (5.00, 20.00),
+    "MARK": (1.00, 6.00),
+    "DUBK": (1.00, 8.00),
+    "ABQK": (1.00, 8.00),
+    "BRENT": (40, 150),
+    "SILVER": (10, 120),
+    "GOLDQAR": (8000, 25000),
+}
+
+MAX_REASONABLE_1D_PCT = {
+    "default": 15.0,
+    "USDQAR": 0.25,
+    "EURQAR": 5.0,
+    "GBPQAR": 5.0,
+    "CNYQAR": 5.0,
+    "EURUSD": 5.0,
+    "GBPUSD": 5.0,
+    "USDJPY": 5.0,
+    "USDCNY": 5.0,
+    "UST5Y": 15.0,
+    "UST10Y": 15.0,
+    "DHBK": 10.0,
+    "QNBK": 10.0,
+    "QIBK": 10.0,
+    "CBQK": 10.0,
+    "QIIB": 10.0,
+    "MARK": 10.0,
+    "DUBK": 10.0,
+    "ABQK": 10.0,
+}
+
+QATAR_BUSINESS_PAGES = [
+    "https://www.qatar-tribune.com/business",
+    "https://thepeninsulaqatar.com/category/Qatar-Business",
+]
+
 REPORT_SECTION_TO_OUTPUT_KEY = {
     "GLOBAL INDICES": "global_indices",
     "GCC & REGIONAL INDICES": "gcc_indices",
@@ -332,7 +398,7 @@ NEWS_FEEDS = {
     "qatar": [
         {
             "source": "The Peninsula",
-            "url": "https://thepeninsulaqatar.com/rss/business",
+            "url": "https://thepeninsulaqatar.com/rss/category/Qatar-Business",
             "max": 10,
         },
         {
@@ -356,6 +422,42 @@ def _to_float(value: Any) -> Optional[float]:
         return float(value)
     except Exception:
         return None
+
+
+
+
+def _is_valid_px_for_code(code: str, px: Optional[float]) -> bool:
+    if px is None:
+        return False
+    rng = PRICE_RANGES.get(code)
+    if not rng:
+        return True
+    return rng[0] <= float(px) <= rng[1]
+
+
+def _pct_float(current: Optional[float], base: Optional[float]) -> Optional[float]:
+    if current is None or base in (None, 0):
+        return None
+    try:
+        return ((float(current) - float(base)) / float(base)) * 100.0
+    except Exception:
+        return None
+
+
+def _format_pct_value(value: Optional[float], digits: int = 2) -> str:
+    if value is None:
+        return "N/A"
+    try:
+        return f"{float(value):+.{digits}f}%"
+    except Exception:
+        return "N/A"
+
+
+def _reasonable_1d_pct(code: str, pct: Optional[float]) -> bool:
+    if pct is None:
+        return False
+    limit = MAX_REASONABLE_1D_PCT.get(code, MAX_REASONABLE_1D_PCT["default"])
+    return abs(float(pct)) <= limit
 
 
 def _to_int(value: Any, default: int = 999) -> int:
@@ -479,7 +581,7 @@ def _get_history_rows_for_calculations(as_of_date: datetime.date) -> List[Dict[s
     history_start = year_start - datetime.timedelta(days=10)
 
     params = {
-        "select": "instrument_code,px_last,change_1d_pct,as_of_date",
+        "select": "instrument_code,px_last,change_1d_pct,as_of_date,status,source",
         "as_of_date": f"gte.{history_start.isoformat()}",
         "order": "instrument_code.asc,as_of_date.asc",
     }
@@ -524,17 +626,20 @@ def _last_px_before_or_on(
 def _previous_px_before_date(
     history: List[Dict[str, Any]],
     target_date: datetime.date,
+    code: str = "",
 ) -> Optional[float]:
     found = None
 
     for row in history:
         row_date = _parse_date(row.get("as_of_date"))
-        if row_date is None:
+        if row_date is None or row_date >= target_date:
             continue
-        if row_date < target_date:
-            px = _to_float(row.get("px_last"))
-            if px is not None:
-                found = px
+        status = str(row.get("status") or "").lower()
+        if status.startswith("invalid") or "outlier" in status:
+            continue
+        px = _to_float(row.get("px_last"))
+        if _is_valid_px_for_code(code, px):
+            found = px
 
     return found
 
@@ -576,7 +681,7 @@ def _normalise_market_row(
     change_1d_pct = _to_float(row.get("change_1d_pct"))
 
     history = history_by_code.get(code, [])
-    prev_px = _previous_px_before_date(history, effective_date)
+    prev_px = _previous_px_before_date(history, effective_date, code)
 
     month_start = datetime.date(effective_date.year, effective_date.month, 1)
     year_start = datetime.date(effective_date.year, 1, 1)
@@ -584,14 +689,18 @@ def _normalise_market_row(
     month_base = _last_px_before_or_on(history, month_start - datetime.timedelta(days=1))
     year_base = _last_px_before_or_on(history, year_start - datetime.timedelta(days=1))
 
-    # 1D must be calculated from the previous available market row when possible.
-    # Some Make/Yahoo metadata paths return 0.00 even when the price moved, so using
-    # the stored change_1d_pct blindly produces misleading reports. The stored
-    # percentage is only used as a fallback when no prior price exists.
-    if prev_px not in (None, 0) and px_last is not None:
-        change_1d = _fmt_pct_number(px_last, prev_px, 2)
-    else:
+    # 1D logic:
+    # 1) calculate from the previous valid Supabase row, but only if the resulting move is reasonable;
+    # 2) if the calculated move is absurd because a bad historical row is still present, fall back to
+    #    stored vendor percentage when that percentage is reasonable;
+    # 3) otherwise return N/A and let validation flag it instead of showing misleading percentages.
+    calc_1d_pct = _pct_float(px_last, prev_px)
+    if _reasonable_1d_pct(code, calc_1d_pct):
+        change_1d = _format_pct_value(calc_1d_pct, 2)
+    elif _reasonable_1d_pct(code, change_1d_pct):
         change_1d = _fmt_pct_from_value(change_1d_pct, 2)
+    else:
+        change_1d = "N/A"
 
     mtd = _fmt_pct_number(px_last, month_base, 2)
     ytd = _fmt_pct_number(px_last, year_base, 2)
@@ -819,6 +928,54 @@ def _is_recent_qatar_business_item(item: Dict[str, Any], now_utc: datetime.datet
     return True
 
 
+
+
+def _extract_qatar_page_items() -> List[Dict[str, Any]]:
+    """Best-effort scraper for user-approved Qatar business pages.
+    It does not invent news. It extracts titles/links from the business pages,
+    then the recency filter is applied downstream where dates are available.
+    """
+    items: List[Dict[str, Any]] = []
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; DohaBankMarketIntel/1.0)",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    }
+    link_re = re.compile(r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', re.I | re.S)
+    date_re = re.compile(r'(\d{1,2}\s+[A-Z][a-z]{2}\s+2026|\d{1,2}/\d{1,2}/2026|2026-\d{2}-\d{2})')
+
+    for page_url in QATAR_BUSINESS_PAGES:
+        try:
+            resp = requests.get(page_url, headers=headers, timeout=30)
+            if resp.status_code >= 400:
+                print(f"[WARN] Qatar page fetch failed {page_url}: HTTP {resp.status_code}")
+                continue
+            html = resp.text
+            source = "Qatar Tribune" if "qatar-tribune" in page_url else "The Peninsula Qatar"
+            for href, anchor_html in link_re.findall(html):
+                title = _clean_text(anchor_html)
+                if len(title) < 12:
+                    continue
+                if title.lower() in {"business", "read more", "home", "next", "previous"}:
+                    continue
+                if href.startswith("/"):
+                    base = "https://www.qatar-tribune.com" if "qatar-tribune" in page_url else "https://thepeninsulaqatar.com"
+                    href = base + href
+                if not href.startswith("http"):
+                    continue
+                m = date_re.search(html[max(0, html.find(anchor_html) - 250): html.find(anchor_html) + 500] if anchor_html in html else "")
+                published = m.group(1) if m else ""
+                items.append({
+                    "source": source,
+                    "title": title,
+                    "summary": title,
+                    "link": href,
+                    "published": published,
+                })
+        except Exception as exc:
+            print(f"[WARN] Qatar business page scrape failed {page_url}: {exc}")
+    return items
+
+
 def _brave_qatar_news() -> List[Dict[str, Any]]:
     api_key = os.environ.get("BRAVE_API_KEY")
     if not api_key:
@@ -871,7 +1028,7 @@ def _brave_qatar_news() -> List[Dict[str, Any]]:
 
 def fetch_qatar_business_news() -> List[Dict[str, Any]]:
     now_utc = datetime.datetime.now(datetime.timezone.utc)
-    raw = dedupe_news(fetch_news(NEWS_FEEDS["qatar"]))
+    raw = dedupe_news(fetch_news(NEWS_FEEDS["qatar"]) + _extract_qatar_page_items())
     filtered = [item for item in raw if _is_recent_qatar_business_item(item, now_utc)]
 
     if len(filtered) < QATAR_NEWS_MIN_VALID_COUNT:
