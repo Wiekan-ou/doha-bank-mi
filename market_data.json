@@ -1,7 +1,7 @@
 {
   "config": {
     "client_name": "Doha Bank",
-    "report_date": "06 May 2026",
+    "report_date": "07 May 2026",
     "delivery_time_ast": "07:00",
     "sections": {
       "global_indices": true,
@@ -15,7 +15,7 @@
       "qatar_news": true
     }
   },
-  "generated_at": "2026-05-06T14:38:56Z",
+  "generated_at": "2026-05-07T08:09:14Z",
   "generated_display_time": "07:00 AST",
   "global_indices": [
     {
@@ -97,7 +97,7 @@
       "name": "Qatar QE Index",
       "ticker": "^GNRI.QA",
       "px_last": 10649.25,
-      "change_1d": "+175.17%",
+      "change_1d": "+1.54%",
       "mtd": "+1.54%",
       "ytd": "-1.05%",
       "as_of": "2026-05-06",
@@ -133,7 +133,7 @@
       "name": "Abu Dhabi ADX",
       "ticker": "FADGI.FGI",
       "px_last": 9874.76,
-      "change_1d": "+82189.67%",
+      "change_1d": "+0.98%",
       "mtd": "+0.98%",
       "ytd": "-1.18%",
       "as_of": "2026-05-06",
@@ -333,7 +333,7 @@
       "name": "QIB",
       "ticker": "QIBK.QA",
       "px_last": 22.48,
-      "change_1d": "-11.81%",
+      "change_1d": "+0.00%",
       "mtd": "+1.17%",
       "ytd": "-6.14%",
       "as_of": "2026-05-06",
@@ -442,55 +442,88 @@
   "market_as_of_date": "2026-05-06",
   "global_news": [
     {
-      "headline": "Fed's Musalem Says Inflation Risks Rising",
-      "summary": "Federal Reserve Bank of St. Louis President warns risks are shifting more toward inflation than employment amid economic uncertainty.",
+      "headline": "Malaysia Holds Key Rate Amid Middle East Risks",
+      "summary": "Malaysia maintains benchmark interest rate steady for fifth consecutive meeting despite heightened growth risks from prolonged Middle East conflict.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/fed-s-musalem-says-risks-are-shifting-more-toward-inflation",
-      "metric": "Rising",
-      "metric_label": "Inflation risk assessment"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-07/malaysia-holds-rate-as-strong-ringgit-tempers-inflation-pressure",
+      "metric": "5th meeting",
+      "metric_label": "Consecutive rate holds"
     },
     {
-      "headline": "Apollo Assets Surpass $1 Trillion Milestone",
-      "summary": "Apollo Global Management crosses $1 trillion in assets under management for first time, beating earnings estimates on record inflows.",
+      "headline": "UBS Fined \u20ac6 Million by Monaco AML Failures",
+      "summary": "UBS Group penalized for weak anti-money laundering controls, including filing suspicious transaction report 253 days late in Monaco.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/apollo-assets-top-1-trillion-on-record-inflows-beats-estimates",
-      "metric": "$1T+",
-      "metric_label": "Assets under management"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-07/ubs-fined-6-million-by-monaco-over-repeated-dirty-money-failures",
+      "metric": "\u20ac6M",
+      "metric_label": "Monaco AML fine"
     },
     {
-      "headline": "Latam Airlines Surges on Strong Earnings",
-      "summary": "Region's largest airline by market value beats expectations as demand remains resilient despite higher fares from rising jet fuel costs.",
+      "headline": "Silex Microsystems Soars in Stockholm IPO Debut",
+      "summary": "Specialist microchip-maker surges in first trading day after raising 2 billion Swedish kronor ($220 million) in IPO.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-05/latam-airlines-changes-guidance-on-fuel-cost-despite-profit-jump",
-      "metric": "Beat",
-      "metric_label": "Earnings expectations"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-07/chipmaker-silex-microsystems-s-shares-soar-in-stockholm-debut",
+      "metric": "$220M",
+      "metric_label": "IPO proceeds raised"
     },
     {
-      "headline": "Disney Reports Strong Quarter Under New CEO",
-      "summary": "Walt Disney exceeds Wall Street expectations with improved streaming profitability, successful films, and increased theme park and cruise spending.",
+      "headline": "American City Manufacturing Hub Transformation Discussed",
+      "summary": "Conversation with Allentown Pennsylvania mayor on city's evolution from deindustrialization to modern manufacturing and logistics hub.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/articles/2026-05-06/disney-s-films-parks-lift-profit-in-debut-quarter-for-new-ceo",
-      "metric": "Above",
-      "metric_label": "Wall Street expectations"
+      "url": "https://www.bloomberg.com/news/articles/2026-05-07/allentown-pa-is-moving-past-the-billy-joel-song",
+      "metric": "40%",
+      "metric_label": "US population within day's drive"
     },
     {
-      "headline": "SharkNinja CEO Discusses Consumer Pressure Strategy",
-      "summary": "CEO Mark Barrocas explains company's growth strategy amid pressured consumers, focusing on viral products, global expansion, and AI integration.",
+      "headline": "Baseball Softball Future Growth Strategy Explored",
+      "summary": "Alex Rodriguez and Jason Kelly discuss baseball momentum, softball growth with AJ Andrews focusing on storytelling for fan development.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/videos/2026-05-06/sharkninja-ceo-consumers-are-under-pressure-video",
-      "metric": "Pressured",
-      "metric_label": "Consumer environment"
+      "url": "https://www.bloomberg.com/news/videos/2026-05-07/aj-andrews-on-growing-baseball-s-audience-video",
+      "metric": "Next gen",
+      "metric_label": "Target fan demographic"
     },
     {
-      "headline": "Target's Dress Code Won't Fix Problems",
-      "summary": "Bloomberg Opinion argues Target's new employee dress code policy fails to address the company's underlying operational and strategic challenges.",
+      "headline": "Manufacturing Hub Podcast Features Allentown Transformation",
+      "summary": "Podcast explores Pennsylvania city's journey from steel decline to semiconductor precursor production and e-commerce logistics center.",
       "source": "Bloomberg",
-      "url": "https://www.bloomberg.com/news/videos/2026-05-06/opinion-target-s-dress-code-isn-t-the-answer-video",
-      "metric": "Insufficient",
-      "metric_label": "Problem-solving approach"
+      "url": "https://www.bloomberg.com/news/audio/2026-05-07/odd-lots-how-a-us-city-can-become-a-manufacturing-hub-podcast",
+      "metric": "1950s",
+      "metric_label": "First transistor production era"
     }
   ],
-  "qatar_news": [],
+  "qatar_news": [
+    {
+      "headline": "Global banking sector suffers under inflation pressure",
+      "summary": "Banking experts highlight challenges facing the global banking industry as inflationary pressures continue to impact financial institutions worldwide.",
+      "source": "Qatar Tribune",
+      "url": "https://www.qatar-tribune.com/article/232874/business/global-banking-sector-suffers-under-inflation-pressure-say-experts",
+      "metric": "Rising",
+      "metric_label": "Inflation pressure on banks"
+    },
+    {
+      "headline": "Finance minister meets senior global economic leaders",
+      "summary": "Qatar's Finance Minister holds discussions with key international economic and financial leaders to strengthen bilateral cooperation and partnerships.",
+      "source": "Qatar Tribune",
+      "url": "https://www.qatar-tribune.com/article/232858/business/finance-minister-meets-senior-global-economic-and-financial-leaders",
+      "metric": "High-level",
+      "metric_label": "Diplomatic engagement"
+    },
+    {
+      "headline": "Oil prices drop as Hormuz reopening hopes rise",
+      "summary": "Global oil prices decline while stock markets rally on optimistic expectations for the reopening of the strategic Strait of Hormuz.",
+      "source": "Qatar Tribune",
+      "url": "https://www.qatar-tribune.com/article/232863/business/oil-prices-sink-and-stocks-rally-worldwide-on-hopes-for-reopening-of-strait-of-hormuz",
+      "metric": "Falling",
+      "metric_label": "Oil price trend"
+    },
+    {
+      "headline": "QNB wins GlobalCapital MTN Awards for debt leadership",
+      "summary": "Qatar National Bank receives prestigious GlobalCapital MTN Awards 2026 recognition for excellence in debt capital markets operations.",
+      "source": "Qatar Tribune",
+      "url": "https://www.qatar-tribune.com/article/232831/business/qnb-wins-globalcapital-mtn-awards-2026-for-debt-capital-markets-leadership",
+      "metric": "Award Winner",
+      "metric_label": "Industry recognition"
+    }
+  ],
   "kpis": [
     {
       "value": "Mixed",
@@ -510,7 +543,7 @@
     {
       "value": "10,649.25",
       "label": "QSE Index",
-      "sublabel": "+175.17% today \u00b7 -1.05% YTD"
+      "sublabel": "+1.54% today \u00b7 -1.05% YTD"
     },
     {
       "value": "4.36%",
@@ -524,7 +557,7 @@
     }
   ],
   "validation_issues": [
-    "CRITICAL: Qatar news has only 0 valid recent business news items, minimum required 3"
+    "Using latest available Supabase market date 2026-05-06, not today 2026-05-07"
   ],
   "report_status": "NEEDS_REVIEW",
   "email_send_allowed": false
